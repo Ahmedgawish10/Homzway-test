@@ -202,8 +202,8 @@ const LoginPopup = ({ onClose }) => {
                                 {loginWithEmail && (
                                     <div className=" flex justify-center items-center dark:bg-gray-900">
                                         <div className="grid gap-8">
-                                            <div id="back-div" className="">
-                                                <div className=" border-transparent  dark:bg-gray-900  sm:p-2 m-2">
+                                            <div id="back-div" className=" bg-white">
+                                                <div className=" border-transparent    sm:p-2 m-2">
                                                     <div className="absolute top-[16px] arrow-back cursor-pointer" onClick={modelLoginWithEmail} >
                                                         <IoIosArrowBack className="text-xl" />
                                                     </div>
