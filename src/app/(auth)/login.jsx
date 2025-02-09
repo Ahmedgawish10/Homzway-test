@@ -36,7 +36,7 @@ const LoginPopup = ({ onClose }) => {
     const [createAccount, setCreateAccount] = useState(false);
     const [joinWithEmail, setJoinWithEmail] = useState(false);
     const [allModels, setAllModels] = useState(true);
-    // const fetchFCM = useSelector(Fcmtoken);
+     const fetchFCM = useSelector(Fcmtoken);
 
     // hide all models (login register etc....)
     const HideModels = (val) => {
@@ -116,6 +116,12 @@ const LoginPopup = ({ onClose }) => {
          }
     }
 
+    const onClose1 =()=>{
+        console.log("ggggg");
+        
+                onClose()
+                router.push("/")
+    }
     return (
         <>
             {allModels && (
@@ -125,7 +131,7 @@ const LoginPopup = ({ onClose }) => {
                         <div className=" flex items-center  relative p-4 w-auto max-w-md h-full md:h-auto">
 
                             <div className="relative bg-white rounded-lg shadow h-auto overflow-auto">
-                                <button onClick={() => onClose()}
+                                <button onClick={onClose1}
                                     type="button"
                                     className="absolute top-3 right-2.5 text-black bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center popup-close">
                                     <IoClose className='text-2xl' />

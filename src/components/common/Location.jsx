@@ -4,8 +4,6 @@ import CitySearch from "@/components/common/SeachCountry";
 import { IoIosArrowDown } from "react-icons/io";
 import { GrLocation } from "react-icons/gr";
 import { useDispatch, useSelector } from 'react-redux';
-import HI2 from "@/components/common/HI2"
-import Test2 from "@/components/common/Test2"
 
 export default function DropdownMenu() {
     const [isOpen, setIsOpen] = useState(false);
@@ -18,7 +16,7 @@ export default function DropdownMenu() {
     useEffect(() => {
        setCurrentLocation(language=="ar"?"مصر":"Egypt")
     }, [language]);
-    console.log("ll",language);
+    // console.log("ll",language);
     
     return (
         <div className="relative inline-block text-left w-full">
@@ -51,7 +49,6 @@ export default function DropdownMenu() {
                     <div className="py-1" role="none">
                         <form method="POST" action="#" role="none">
                             <CitySearch userLocationFun={userLocationFun} />
-                            {/* <HI2/> */}
                              {/* <Test2/> */}
                         </form>
                     </div>

@@ -57,7 +57,7 @@ const Header = ({ ToggleLoginPopupFunc }) => {
         dispatch(fetchSystemSettings())
             .unwrap()
             .then((response) => {
-                console.log('Fetched Data:', response);
+                // console.log('Fetched Data:', response);
                 dispatch(setCurrentLanguage(response?.default_language));
                 setLoading(false);
             })

@@ -64,7 +64,7 @@ const FirebaseData = () => {
               }
             })
             .catch((err) => {
-              console.error('Error retrieving token:', err);
+              // console.error('Error retrieving token:', err);
               // If the error is "no active Service Worker", try to register the service worker again
               if (err.message.includes('no active Service Worker')) {
                 registerServiceWorker();
@@ -76,7 +76,7 @@ const FirebaseData = () => {
         }
       }
     } catch (err) {
-      console.error('Error requesting notification permission:', err);
+      // console.error('Error requesting notification permission:', err);
     }
   };
 
