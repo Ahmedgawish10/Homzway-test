@@ -207,17 +207,17 @@ const LoginPopup = ({ onClose }) => {
                                                     <div className="absolute top-[16px] arrow-back cursor-pointer" onClick={modelLoginWithEmail} >
                                                         <IoIosArrowBack className="text-xl" />
                                                     </div>
-                                                    <h4 className="pt-2 pb-6 font-bold dark:text-gray-400 text-2xl text-center cursor-default">
+                                                    <h4 className="pt-2 pb-6 font-bold text-2xl text-center cursor-default">
                                                         Log in with Email
                                                     </h4>
                                                     <form className="space-y-4" onSubmit={Login}>
                                                         <div>
-                                                            <label htmlFor="email" className="mb-2 dark:text-gray-400 text-lg">
+                                                            <label htmlFor="email" className="mb-2 text-lg">
                                                                 Email address
                                                             </label>
                                                             <input
                                                                 id="email"
-                                                                className="border p-3 dark:bg-indigo-700 dark:text-gray-300 dark:border-gray-700 shadow-md placeholder:text-base focus:scale-105 ease-in-out duration-300 border-gray-300 rounded-lg w-full"
+                                                                className="border p-3   shadow-md placeholder:text-base focus:scale-105 ease-in-out duration-300 border-gray-300 rounded-lg w-full"
                                                                 type="email"
                                                                 placeholder=" Enter Email"
                                                                 required
@@ -225,12 +225,12 @@ const LoginPopup = ({ onClose }) => {
                                                             />
                                                         </div>
                                                         <div>
-                                                            <label htmlFor="password" className="mb-2 dark:text-gray-400 text-lg">
+                                                            <label htmlFor="password" className="mb-2  text-lg">
                                                                 Password
                                                             </label>
                                                             <input
                                                                 id="password"
-                                                                className="border p-3 shadow-md dark:bg-indigo-700 dark:text-gray-300 dark:border-gray-700 placeholder:text-base focus:scale-105 ease-in-out duration-300 border-gray-300 rounded-lg w-full"
+                                                                className="border p-3 shadow-md  placeholder:text-base focus:scale-105 ease-in-out duration-300 border-gray-300 rounded-lg w-full"
                                                                 type="password"
                                                                 placeholder="Enter Password"
                                                                 required
