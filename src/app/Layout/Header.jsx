@@ -120,9 +120,9 @@ const Header = ({ ToggleLoginPopupFunc }) => {
                         <div className="md:flex md:items-center md:gap-2">
                             <nav aria-label="Global" className="hidden md:block">
                                 <ul className="flex items-center gap-6 text-sm">
-                                    <li>
+                                    <li className=''>
                                         {loading ? (
-                                            <div className="text-gray-500"></div>
+                                            <div className="text-gray-500  w-[40px] opacity-0"></div>
                                         ) : (
                                             <>
                                                 <span
@@ -135,7 +135,7 @@ const Header = ({ ToggleLoginPopupFunc }) => {
                                     </li>
                                     {/* {currentLanguage} */}
 
-                                    <li>
+                                    <li className='flex-1'>
                                         <span onClick={() => setShowLoginPopup(true)}
                                             className="font-meduim text-[1.2rem]  cursor-pointer " >
                                             {language === "en" ? "Login" : "تسجيل الدخول"}
