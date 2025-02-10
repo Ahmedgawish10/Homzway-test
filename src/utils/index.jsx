@@ -484,3 +484,15 @@ export const handleFirebaseAuthError = (errorCode) => {
 //   const decimalPart = rating - integerPart;
 //   return decimalPart > 0 ? integerPart + 0.5 : integerPart;
 // };
+
+export function formatLocation(locationUser) {
+  if (typeof locationUser === "object" && locationUser !== null) {
+    const formattedAddressParts = locationUser.formattedAddress.split(" ");
+    const city = formattedAddressParts.length > 1 ? formattedAddressParts[1].replace(",", "") : "";
+    const state = locationUser?.state?.replace(" Governorate", "") || "";
+  
+    return city && state ? `${city}, ${state}` : state || "Location not available";
+  } else {
+    return locationUser || "Location not available";
+  }
+};

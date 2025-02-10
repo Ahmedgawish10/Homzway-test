@@ -8,6 +8,7 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 import { getKilometerRange, saveCity, setKilometerRange } from '@/store/slices/locationSlice';
 import { settingsData } from '@/store/slices/settingSlice';
+import { setLocationUser } from '@/store/slices/settingSlice';
 
 const LocationModal = ({ IsLocationModalOpen ,onClose2 }) => {
     const dispatch = useDispatch();
@@ -25,6 +26,7 @@ const LocationModal = ({ IsLocationModalOpen ,onClose2 }) => {
     const [KmRange, setKmRange] = useState(0);
     const [position, setPosition] = useState({ lat, lng });
     const appliedKilometer = useSelector(getKilometerRange);
+    const { location } = useSelector((state) => state.Settings)
 
     useEffect(() => {
         if (IsLocationModalOpen) {
@@ -81,6 +83,7 @@ const LocationModal = ({ IsLocationModalOpen ,onClose2 }) => {
                             country,
                             formattedAddress: address
                         };
+                         dispatch(setLocationUser(cityData))
                         setPosition({
                             lat: locationData.latitude,
                             lng: locationData.longitude
@@ -113,23 +116,18 @@ const LocationModal = ({ IsLocationModalOpen ,onClose2 }) => {
     }, []);
 
 
-    const Fo=()=>{
-        console.log("ggg");
-         onClose2()
-    }
 
     return (
         <div className={`modal-overlay `}>
             <div className="modal-content">
-                <div className="modal-header" onClick={Fo}>
-                    444444
+                <div className="modal-header" >
                     {/* <h5 className='head_loc'>{selectedCity ? t('editLocation') : t('addLocation')}</h5> */}
                 </div>
                 <div className="modal-body">
                     <div className="location_city">
                         <div className="row loc_input gx-0">
                             <div className="col-8">
-                            {selectedCity?.formatted_address || selectedCity?.formattedAddress || ""} 
+                           
                             </div>
                             <div className="col-4">
                                 <div className="useCurrentLocation ">

@@ -1,17 +1,18 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { useDispatch, useSelector } from 'react-redux';
 import CurrentLocationMaps from "@/components/common/CurrentLocationMaps";
 import { IoIosArrowForward } from "react-icons/io";
-
+import { useDispatch, useSelector } from 'react-redux';
+import { setLocationUser } from "@/store/slices/settingSlice";
 const CitySearch = ({ userLocationFun }) => {
   const [cities, setCities] = useState([]);
   const [governorates, setGovernorates] = useState([]);
   const [search, setSearch] = useState("");
   const [filteredResults, setFilteredResults] = useState([]);
   const { language } = useSelector((state) => state.Language)
-  
+  const dispatch = useDispatch()
+
   //here i use api to search the city or governmanete of country Egypt
   useEffect(() => {
     const fetchData = async () => {
@@ -77,8 +78,13 @@ const CitySearch = ({ userLocationFun }) => {
     return () => clearTimeout(DebounceSearchLocationFn);
   }, [search, cities, governorates]);
   const userLocation = (value) => {
-    userLocationFun(value)
+    //  userLocationFun(value);
+    console.log(value);
+    
+     dispatch(setLocationUser(value))
   }
+
+
   return (
     <div className="h-[300px] overflow-y-auto ">
       {/* here the input to make user search the current location of city or governmanete */}
@@ -94,11 +100,11 @@ const CitySearch = ({ userLocationFun }) => {
       {/* here we will dispay the all cites , governmates of user when he will search  */}
       <ul style={{ listStyle: "none", padding: 0, marginTop: "20px" }}>
         {filteredResults.length > 0 ? (
-          filteredResults.map((city) => (
+          filteredResults.map((city) => (            
             <li
-              onClick={() => userLocation(language == "ar" ? city.city_name_ar : city.city_name_en)}
+              onClick={() => userLocation(language == "ar" ? `${city.city_name_ar},${city.governorate_name_ar}` : `${city.city_name_en},${city.governorate_name_en}`)}
               key={city.id}
-              className="p-2 mb-1 bg-gray-100 rounded-md hover:bg-gray-200 cursor-pointer transition" >
+              className={`${language=="ar"?"text-right":"text-left "}  p-2  mb-1 bg-gray-100 rounded-md hover:bg-gray-200 cursor-pointer transition`} >
               <strong className="text-sm">
                 {language == "ar" ? city.city_name_ar : city.city_name_en}
               </strong> ,

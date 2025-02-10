@@ -32,6 +32,7 @@ const initialState = {
   loading: false,
   error: null,
   fcmToken: null,
+  locationUser:null
 };
 
 export const settingsSlice = createSlice({
@@ -53,6 +54,10 @@ export const settingsSlice = createSlice({
     getToken: (settings, action) => {
       settings.fcmToken = action.payload.data;
     },
+    setLocationUser:(settings,action)=>{
+      settings.locationUser = action.payload;
+
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -72,7 +77,7 @@ export const settingsSlice = createSlice({
   },
 });
 
-export const { settingsRequested, settingsSucess, settingsFailure, getToken } =
+export const { settingsRequested, settingsSucess, settingsFailure, getToken, setLocationUser } =
   settingsSlice.actions;
 export default settingsSlice.reducer;
 

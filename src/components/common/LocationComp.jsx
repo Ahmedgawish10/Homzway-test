@@ -3,26 +3,31 @@ import React, { useEffect, useState } from 'react'
 import SeachLocation from "@/components/common/SeachLocationInput";
 import { IoIosArrowDown } from "react-icons/io";
 import { GrLocation } from "react-icons/gr";
-import { useDispatch, useSelector } from 'react-redux';
 import CurrentLocationMaps from "@/components/common/CurrentLocationMaps";
+import { formatLocation } from '@/utils';
+import { setLocationUser } from '@/store/slices/settingSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 export default function DropdownMenu() {
     const [isOpen, setIsOpen] = useState(false);
     const { language } = useSelector((state) => state.Language)
     const [currentLocation, setCurrentLocation] = useState("")
     const [IsLocationModalOpen, setIsLocationModalOpen] = useState("")
+    const dispatch = useDispatch()
+
     const userLocationFun = (userLoaction) => {
         setCurrentLocation(userLoaction)
+       
     }
 
     useEffect(() => {
-        setCurrentLocation(language == "ar" ? "مصر" : "Egypt")
+         setCurrentLocation(language == "ar" ? "مصر" : "Egypt")
+        // dispatch(setLocationUser(currentLocation))
     }, [language]);
     // console.log("ll",language);
-    const userLocationFun22 = (userLoaction) => {
-        setCurrentLocation(userLoaction)
-    }
+    const { locationUser } = useSelector((state) => state.Settings)
 
+    
     return (
         <div className="relative inline-block text-left w-full">
             <div>
@@ -34,8 +39,11 @@ export default function DropdownMenu() {
                     aria-haspopup="true"
                     onClick={() => setIsOpen(!isOpen)}
                 >
-                    <span className={` ${language == "ar" ? "absolute top-1/2  right-5 transform -translate-x-1/2 -translate-y-1/2" : "absolute top-1/2  left-5 transform -translate-x-1/2 -translate-y-1/2"}  text-2xl text-red-600`}><GrLocation /></span>
-                    <span className={` ${language == "ar" ? "ps-12" : "px-6"} text-xl `}>  {currentLocation}</span>
+                    <span className={` ${language == "ar" ? " absolute top-1/2  right-5 transform -translate-x-1/2 -translate-y-1/2" : "absolute top-1/2  left-5 transform -translate-x-1/2 -translate-y-1/2"}  text-2xl text-red-600`}><GrLocation /></span>
+                    <span className={` text-sm md:text-[14px] truncate ${language == "ar" ? "ps-12" : "px-6"} `}>
+                         {locationUser?formatLocation(locationUser):currentLocation}
+                         
+                          </span>
                     {isOpen ? <IoIosArrowDown className="rotate-[180deg] text-2xl" /> : <IoIosArrowDown className="text-2xl" />}
                 </button>
             </div>
@@ -52,7 +60,7 @@ export default function DropdownMenu() {
                         <form method="POST" action="#" role="none">
                             <SeachLocation userLocationFun={userLocationFun} />
                             <div className="mt-5 hidden ">
-                                <CurrentLocationMaps IsLocationModalOpen={IsLocationModalOpen} onClose2={() => setShowLoginPopup(false)} />
+                                <CurrentLocationMaps IsLocationModalOpen={IsLocationModalOpen} />
                             </div>
                         </form>
                     </div>

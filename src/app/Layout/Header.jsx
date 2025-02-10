@@ -38,7 +38,8 @@ import fetchCategories from "@/store/slices/settingSlice"
 import { fetchSystemSettings } from "@/store/slices/settingSlice";
 import { IoSearchOutline } from "react-icons/io5";
 import { setTranslatedData } from '@/store/slices/languageSlice';
-import LocationComp from "@/components/common/LocationComp"
+import LocationComp from "@/components/common/LocationComp";
+
 const Header = ({ ToggleLoginPopupFunc }) => {
     const pathname = usePathname()
     const router = useRouter()
@@ -285,7 +286,7 @@ const Header = ({ ToggleLoginPopupFunc }) => {
                 </div>
                 <div className="container mx-auto px-3 sm:px-0">
                     {/* Hide Location when scrolled */}
-                    {isPageScrolled ? "LocationComp" : <LocationComp />}
+                    {isPageScrolled ? "LocationComp" : <LocationComp   />}
 
                     <div className={`flex-1 mt-3  ${isPageScrolled ? " w-[90%] fixed left-1/2 transform -translate-x-1/2 container mx-auto" : ""} top-0 bg-white z-50 shadow-md`}>
                         <div className="relative container mx-auto ">
