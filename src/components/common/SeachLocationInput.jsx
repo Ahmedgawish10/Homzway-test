@@ -66,8 +66,7 @@ const CitySearch = ({ userLocationFun }) => {
           const matchesCity = cityEn.includes(search.toLowerCase()) || cityAr.includes(search);
 
           // If search matches governorate, show all cities in that governorate
-          const matchesGovernorate =
-            matchedGovernorate && city.governorate_id === matchedGovernorate.id;
+          const matchesGovernorate = matchedGovernorate && city.governorate_id === matchedGovernorate.id;
 
           return matchesCity || matchesGovernorate;
         });

@@ -9,7 +9,7 @@ import toast from 'react-hot-toast';
 import { getKilometerRange, saveCity, setKilometerRange } from '@/store/slices/locationSlice';
 import { settingsData } from '@/store/slices/settingSlice';
 
-const LocationModal = ({ IsLocationModalOpen }) => {
+const LocationModal = ({ IsLocationModalOpen ,onClose2 }) => {
     const dispatch = useDispatch();
     const cityData = useSelector(state => state?.Location?.cityData);
     const lat = cityData?.lat;
@@ -34,17 +34,16 @@ const LocationModal = ({ IsLocationModalOpen }) => {
 
     useEffect(() => {
         if (isLoaded) {
-            setGoogleMaps(window.google);
+            setGoogleMaps(window.google);            
         }
     }, [isLoaded]);
 
- 
-
     const getCurrentLocation = async (e) => {        
-        e.preventDefault();
+        e.preventDefault();    
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
                 async (position) => {
+                      
                     try {
                         const locationData = {
                             latitude: position.coords.latitude,
@@ -88,7 +87,6 @@ const LocationModal = ({ IsLocationModalOpen }) => {
                         });
                         saveCity(cityData);
                         setSelectedCity(cityData);
-                        handleClose();
                         router.push('/');
                     } catch (error) {
                         console.error('Error fetching location data:', error);
@@ -103,6 +101,7 @@ const LocationModal = ({ IsLocationModalOpen }) => {
         }
     };
 
+// console.log(selectedCity);
 
     useEffect(() => {
         if (window.google && isLoaded) {
@@ -113,10 +112,17 @@ const LocationModal = ({ IsLocationModalOpen }) => {
         setKmRange(appliedKilometer);
     }, []);
 
+
+    const Fo=()=>{
+        console.log("ggg");
+         onClose2()
+    }
+
     return (
         <div className={`modal-overlay `}>
             <div className="modal-content">
-                <div className="modal-header">
+                <div className="modal-header" onClick={Fo}>
+                    444444
                     {/* <h5 className='head_loc'>{selectedCity ? t('editLocation') : t('addLocation')}</h5> */}
                 </div>
                 <div className="modal-body">

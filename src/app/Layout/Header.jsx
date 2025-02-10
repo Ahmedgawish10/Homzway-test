@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect, useState,useRef  } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import Image from 'next/image'
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { GiHamburgerMenu } from "react-icons/gi";
@@ -49,17 +49,17 @@ const Header = ({ ToggleLoginPopupFunc }) => {
     const [showLoginPopup, setShowLoginPopup] = useState(false);
     const [loading, setLoading] = useState(true); // Add loading state
     const { data } = useSelector((state) => state.Settings)
-    const { language,translatedData } = useSelector((state) => state.Language)
+    const { language, translatedData } = useSelector((state) => state.Language)
 
     //dispatch the system settings and fire and get default the language of sysytem and save it in store
     useEffect(() => {
         dispatch(fetchSystemSettings())
             .unwrap()
-            .then(async(response) => {
+            .then(async (response) => {
                 // console.log('Fetched Data:', response);
-                   let c= await handleLanguageChange(response?.default_language);                
-                dispatch(setCurrentLanguage(c?.data?.data?res?.data?.data:response?.default_language));
-                
+                let c = await handleLanguageChange(response?.default_language);
+                dispatch(setCurrentLanguage(c?.data?.data ? res?.data?.data : response?.default_language));
+
                 setLoading(false);
             })
             .catch((err) => {
@@ -93,7 +93,7 @@ const Header = ({ ToggleLoginPopupFunc }) => {
     }, [language]);
 
     const [isPageScrolled, setIsPageScrolled] = useState(false);
-    const prevScrollState = useRef(false); 
+    const prevScrollState = useRef(false);
     useEffect(() => {
         const handleScroll = () => {
             const shouldBeScrolled = window.scrollY > 200;
@@ -110,37 +110,38 @@ const Header = ({ ToggleLoginPopupFunc }) => {
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
-  
+    // console.log(data);
+
     return (
         <>
-            <header className="bg-white py-3 md:px-2 fixed top-0 w-full">
+            <header className="bg-white py-3 sm:px-4 fixed top-0 w-full hidden sm:block ">
                 <div className="mx-auto container px-3 sm:px-0 ">
                     <div className="flex gap-3  items-center justify-between">
                         {/* location */}
-                        <div className="location flex-[0.5] hidden md:block  ">
+                        <div className="location flex-[0.5]  ">
                             <LocationComp />
                         </div>
                         {/* search */}
-                        <div className="flex-1 hidden md:block ">
+                        <div className="flex-1  ">
                             <div className="relative">
                                 <form action="" >
-                                <input
-                                    className="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md pl-3 pr-28 py-4 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
-                                    placeholder={t('searchItem')} 
-                                />
-                                <button
-                                    className="absolute h-full top-0  right-[1px] flex items-center rounded bg-red-600 py-1 px-3 border border-transparent text-center text-sm text-white transition-all shadow-sm hover:shadow focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-                                    type="submit"
-                                >
-                                    <IoSearchOutline className='text-2xl' />
-                                </button>
+                                    <input
+                                        className="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md pl-3 pr-28 py-4 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
+                                        placeholder={t('searchItem')}
+                                    />
+                                    <button
+                                        className="absolute h-full top-0  right-[1px] flex items-center rounded bg-red-600 py-1 px-3 border border-transparent text-center text-sm text-white transition-all shadow-sm hover:shadow focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                                        type="submit"
+                                    >
+                                        <IoSearchOutline className='text-2xl' />
+                                    </button>
                                 </form>
                             </div>
                         </div>
 
                         {/* language & auth(login||user) */}
                         <div className="md:flex md:items-center md:gap-2">
-                            <nav aria-label="Global" className=" hidden md:block">
+                            <nav aria-label="Global" className="">
                                 <ul className="flex items-center gap-6 text-sm">
                                     <li className=''>
                                         {loading ? (
@@ -251,9 +252,7 @@ const Header = ({ ToggleLoginPopupFunc }) => {
 
                             </div>
 
-                            <div className=" block md:hidden ">
-                              <HiOutlineMenuAlt3 className='text-red-600 text-2xl  '/>
-                            </div>
+
                         </div>
 
                     </div>
@@ -262,30 +261,51 @@ const Header = ({ ToggleLoginPopupFunc }) => {
 
 
 
-        <header className="block sm:hidden tablet-screen relative">
-            <div className="container mx-auto px-3 sm:px-0">
-                {/* Hide Location when scrolled */}
-                {isPageScrolled ? "LocationComp" :<LocationComp />}
-                
-                <div className={`flex-1 mt-5  ${isPageScrolled?"fixed w-[100%]":""}  top-0 bg-white z-50 shadow-md`}>
-                    <div className="relative container ">
-                        <input
-                            className="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md pl-3 pr-28 py-4 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
-                            placeholder="UI Kits, Dashboards..."
-                        />
-                        <button
-                            className="absolute h-full top-0 right-[1px] flex items-center rounded bg-red-600 py-1 px-3 border border-transparent text-center text-sm text-white transition-all shadow-sm hover:shadow focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-                            type="button"
-                        >
-                            <IoSearchOutline className="text-2xl" />
-                        </button>
+            <header className="block sm:hidden tablet-screen relative">
+                <div className=" block md:hidden border-b mb-3 py-2">
+                    <div className=" flex items-center  md:hidden container mx-auto px-3 " >
+
+                        <HiOutlineMenuAlt3 className='text-red-600 text-2xl cursor-pointer ' />
+
+                        {data?.header_logo && (
+                            <Link href="/">
+                                <Image
+                                  priority
+                                    src={data.header_logo}
+                                    width={200}
+                                    height={100}
+                                    className="!h-[40px] w-[160px]"
+                                    alt="Logo"
+                                />
+                            </Link>
+
+                        )}
+                        {/* <Image src={data?.header_logo} width="200" height={10} className='!h-[50px]' alt="f"/> */}
                     </div>
                 </div>
-            </div>
-        </header>
+                <div className="container mx-auto px-3 sm:px-0">
+                    {/* Hide Location when scrolled */}
+                    {isPageScrolled ? "LocationComp" : <LocationComp />}
+
+                    <div className={`flex-1 mt-3  ${isPageScrolled ? " w-[90%] fixed left-1/2 transform -translate-x-1/2 container mx-auto" : ""} top-0 bg-white z-50 shadow-md`}>
+                        <div className="relative container mx-auto ">
+                            <input
+                                className="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md pl-3 pr-28 py-4 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
+                                placeholder={t('searchItem')}
+                            />
+                            <button
+                                className="absolute h-full top-0 right-[1px] flex items-center rounded bg-red-600 py-1 px-3 border border-transparent text-center text-sm text-white transition-all shadow-sm hover:shadow focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                                type="button"
+                            >
+                                <IoSearchOutline className="text-2xl" />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </header>
 
 
-      {showLoginPopup && <LoginPopup onClose={() => setShowLoginPopup(false)} />}
+            {showLoginPopup && <LoginPopup onClose={() => setShowLoginPopup(false)} />}
         </>
     )
 }

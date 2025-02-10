@@ -19,6 +19,9 @@ export default function DropdownMenu() {
         setCurrentLocation(language == "ar" ? "مصر" : "Egypt")
     }, [language]);
     // console.log("ll",language);
+    const userLocationFun22 = (userLoaction) => {
+        setCurrentLocation(userLoaction)
+    }
 
     return (
         <div className="relative inline-block text-left w-full">
@@ -49,7 +52,7 @@ export default function DropdownMenu() {
                         <form method="POST" action="#" role="none">
                             <SeachLocation userLocationFun={userLocationFun} />
                             <div className="mt-5 hidden ">
-                                <CurrentLocationMaps IsLocationModalOpen={IsLocationModalOpen}  />
+                                <CurrentLocationMaps IsLocationModalOpen={IsLocationModalOpen} onClose2={() => setShowLoginPopup(false)} />
                             </div>
                         </form>
                     </div>
