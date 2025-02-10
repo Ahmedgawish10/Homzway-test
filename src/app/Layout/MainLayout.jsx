@@ -23,7 +23,7 @@ const Layout = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isUserVerified, setUserIsVerified] = useState(false);
   const [showLoginPopup, setShowLoginPopup] = useState(false);
-  const [isAuthChecked, setIsAuthChecked] = useState(false); // Track if auth state is checked
+  const [isAuthChecked, setIsAuthChecked] = useState(false); 
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -34,6 +34,7 @@ const Layout = ({ children }) => {
       }
       setIsAuthChecked(true);
       setIsLoading(false);
+      document.body.style.overflow = 'auto'; 
     });
 
     return () => unsubscribe();
@@ -50,7 +51,10 @@ const Layout = ({ children }) => {
   }, [isProtectedRoute, isUserVerified, isAuthChecked]);
 
 
-  if (isLoading) return <Loader />; 
+
+  if (isLoading) {     
+    return <Loader />;
+  }
   return (
     <>
       {isAuthChecked && showLoginPopup ? ( 

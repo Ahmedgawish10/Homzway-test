@@ -1,3 +1,5 @@
+import { useDispatch, useSelector } from 'react-redux';
+
 import { useState } from "react";
 import { FaRegEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa6";
@@ -133,22 +135,23 @@ const SignUpForm = ({ HideModels }) => {
   const HideModelsFuc = () => {
     HideModels(!true)
   }
+  const { language,translatedData } = useSelector((state) => state.Language)
 
   return (
     <>
       <div className="flex items-center justify-center ">
         <div className=" w-full bg-white rounded  ">
-          <h2 className="text-xl font-bold text-center mb-4">Create account with Email</h2>
+          <h2 className="text-xl font-bold text-center mb-4">{translatedData?.file_name?.createAccount}</h2>
 
           {/* Form */}
           <form className="space-y-5" onSubmit={CreateAccount}>
             <div>
               <input
                 type="text"
-                name="username"
+                name={translatedData?.file_name?.enterEmail}
                 value={form.username}
                 onChange={handleInputChange}
-                placeholder="Username*"
+                placeholder={translatedData?.file_name?.enterName}
                 className="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:border-rose-500"
               />
             </div>
@@ -159,7 +162,7 @@ const SignUpForm = ({ HideModels }) => {
                 name="email"
                 value={form.email}
                 onChange={handleInputChange}
-                placeholder="Email*"
+                placeholder={translatedData?.file_name?.enterEmail}
                 className="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:border-rose-500"
               />
             </div>
@@ -170,13 +173,13 @@ const SignUpForm = ({ HideModels }) => {
                 name="password"
                 value={form.password}
                 onChange={handleInputChange}
-                placeholder="Password*"
+                placeholder={translatedData?.file_name?.enterPassword}
                 className="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:border-rose-500"
               />
               <button
                 type="button"
                 onClick={() => setShowPwd(!showPwd)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"
+                className={`absolute ${language=="ar"?"left-3":"right-3"} top-1/2 -translate-y-1/2 text-gray-500`}
               >
                 {showPwd ? <FaRegEye /> : <FaEyeSlash />}
               </button>

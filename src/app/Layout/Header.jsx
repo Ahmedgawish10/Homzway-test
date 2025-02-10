@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState,useRef  } from 'react'
 import Image from 'next/image'
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { GiHamburgerMenu } from "react-icons/gi";
@@ -25,7 +25,6 @@ import { isLogin } from '@/utils/index';
 import { CategoryData, CurrentPage, LastPage, setCatCurrentPage, setCatLastPage, setCateData, setTreeData } from '@/store/slices/categorySlice'
 import { categoryApi } from '@/api/apiCalling'
 // import FilterTree from '../Category/FilterTree';
-// import LocationModal from '../LandingPage/LocationModal';
 import { saveOfferData } from '@/store/slices/offerSlice';
 // import HeaderCategories from './HeaderCategories';
 import LoginPopup from '@/app/(auth)/login.jsx';
@@ -38,8 +37,8 @@ import fetchCategories from "@/store/slices/settingSlice"
 // import { fetchSystemSettings } from '@/store/slices/SsdSlice';
 import { fetchSystemSettings } from "@/store/slices/settingSlice";
 import { IoSearchOutline } from "react-icons/io5";
-
-import Location from "@/components/common/Location"
+import { setTranslatedData } from '@/store/slices/languageSlice';
+import LocationComp from "@/components/common/LocationComp"
 const Header = ({ ToggleLoginPopupFunc }) => {
     const pathname = usePathname()
     const router = useRouter()
@@ -50,15 +49,17 @@ const Header = ({ ToggleLoginPopupFunc }) => {
     const [showLoginPopup, setShowLoginPopup] = useState(false);
     const [loading, setLoading] = useState(true); // Add loading state
     const { data } = useSelector((state) => state.Settings)
-    const { language } = useSelector((state) => state.Language)
+    const { language,translatedData } = useSelector((state) => state.Language)
 
     //dispatch the system settings and fire and get default the language of sysytem and save it in store
     useEffect(() => {
         dispatch(fetchSystemSettings())
             .unwrap()
-            .then((response) => {
+            .then(async(response) => {
                 // console.log('Fetched Data:', response);
-                dispatch(setCurrentLanguage(response?.default_language));
+                   let c= await handleLanguageChange(response?.default_language);                
+                dispatch(setCurrentLanguage(c?.data?.data?res?.data?.data:response?.default_language));
+                
                 setLoading(false);
             })
             .catch((err) => {
@@ -72,14 +73,17 @@ const Header = ({ ToggleLoginPopupFunc }) => {
             if (res?.data?.error) {
                 toast.error(res?.data?.message);
             } else {
+                // console.log(res?.data?.data); 
                 dispatch(setCurrentLanguage(language_code));
+                dispatch(setTranslatedData(res?.data?.data));
                 // toast.success(`Language changed to ${language_code}`);
             }
         } catch (error) {
             console.error(error);
         }
     };
-    //  console.log(language);
+
+    // dircetion page rtl or ltr
     useEffect(() => {
         if (language == "ar") {
             document.documentElement.dir = "rtl";
@@ -88,37 +92,55 @@ const Header = ({ ToggleLoginPopupFunc }) => {
         }
     }, [language]);
 
+    const [isPageScrolled, setIsPageScrolled] = useState(false);
+    const prevScrollState = useRef(false); 
+    useEffect(() => {
+        const handleScroll = () => {
+            const shouldBeScrolled = window.scrollY > 200;
+            // Only update state if it has actually changed            
+            if (prevScrollState.current !== shouldBeScrolled) {
+                prevScrollState.current = shouldBeScrolled;
+                setIsPageScrolled(shouldBeScrolled);
+                // console.log("Scroll state changed:", shouldBeScrolled);
+            }
+        };
+
+        // Use passive listener for better performance
+        window.addEventListener("scroll", handleScroll, { passive: true });
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
+
+  
     return (
         <>
-            {/* <div className="" onClick={() => setShowLoginPopup(1)}>main header</div> */}
-
-            <header className="bg-white py-3">
+            <header className="bg-white py-3 md:px-2 fixed top-0 w-full">
                 <div className="mx-auto container px-3 sm:px-0 ">
                     <div className="flex gap-3  items-center justify-between">
-                         {/* location */}
-                         <div className="location flex-[0.5] ">
-                         <Location />
-                         </div>
+                        {/* location */}
+                        <div className="location flex-[0.5] hidden md:block  ">
+                            <LocationComp />
+                        </div>
                         {/* search */}
-                        <div className="flex-1 ">
+                        <div className="flex-1 hidden md:block ">
                             <div className="relative">
+                                <form action="" >
                                 <input
                                     className="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md pl-3 pr-28 py-4 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
-                                    placeholder="UI Kits, Dashboards..."
+                                    placeholder={t('searchItem')} 
                                 />
                                 <button
                                     className="absolute h-full top-0  right-[1px] flex items-center rounded bg-red-600 py-1 px-3 border border-transparent text-center text-sm text-white transition-all shadow-sm hover:shadow focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-                                    type="button"
+                                    type="submit"
                                 >
-                                    <IoSearchOutline className='text-2xl'/>
-
+                                    <IoSearchOutline className='text-2xl' />
                                 </button>
+                                </form>
                             </div>
                         </div>
 
-
+                        {/* language & auth(login||user) */}
                         <div className="md:flex md:items-center md:gap-2">
-                            <nav aria-label="Global" className="hidden md:block">
+                            <nav aria-label="Global" className=" hidden md:block">
                                 <ul className="flex items-center gap-6 text-sm">
                                     <li className=''>
                                         {loading ? (
@@ -133,8 +155,6 @@ const Header = ({ ToggleLoginPopupFunc }) => {
                                             </>
                                         )}
                                     </li>
-                                    {/* {currentLanguage} */}
-
                                     <li className='flex-1'>
                                         <span onClick={() => setShowLoginPopup(true)}
                                             className="font-meduim text-[1.2rem]  cursor-pointer " >
@@ -145,7 +165,6 @@ const Header = ({ ToggleLoginPopupFunc }) => {
 
                                 </ul>
                             </nav>
-
 
                             <div className="hidden md:relative md:block">
                                 <div className="Sell">
@@ -232,23 +251,41 @@ const Header = ({ ToggleLoginPopupFunc }) => {
 
                             </div>
 
-                            <div className="block md:hidden">
-                                <button
-                                    className="rounded-sm bg-gray-100 p-2 text-gray-600 transition hover:text-gray-600/75"
-                                >
-                                    <HiOutlineMenuAlt3 />
-                                </button>
+                            <div className=" block md:hidden ">
+                              <HiOutlineMenuAlt3 className='text-red-600 text-2xl  '/>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </header>
 
 
 
+        <header className="block sm:hidden tablet-screen relative">
+            <div className="container mx-auto px-3 sm:px-0">
+                {/* Hide Location when scrolled */}
+                {isPageScrolled ? "LocationComp" :<LocationComp />}
+                
+                <div className={`flex-1 mt-5  ${isPageScrolled?"fixed w-[100%]":""}  top-0 bg-white z-50 shadow-md`}>
+                    <div className="relative container ">
+                        <input
+                            className="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md pl-3 pr-28 py-4 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
+                            placeholder="UI Kits, Dashboards..."
+                        />
+                        <button
+                            className="absolute h-full top-0 right-[1px] flex items-center rounded bg-red-600 py-1 px-3 border border-transparent text-center text-sm text-white transition-all shadow-sm hover:shadow focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                            type="button"
+                        >
+                            <IoSearchOutline className="text-2xl" />
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
 
 
-            {showLoginPopup && <LoginPopup onClose={() => setShowLoginPopup(false)} />}
+      {showLoginPopup && <LoginPopup onClose={() => setShowLoginPopup(false)} />}
         </>
     )
 }

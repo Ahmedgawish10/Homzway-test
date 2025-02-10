@@ -2,6 +2,7 @@ import { createSelector, createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     language:"en",
+    translatedData:null
 };
 
 export const languageSlice = createSlice({
@@ -11,14 +12,16 @@ export const languageSlice = createSlice({
         setCurrentLanguage: (state, action) => {
             state.language = action.payload;
         },
-        resetCurrentLanguage: (state, action) => {
-            state.language = action.payload;
+        setTranslatedData: (state, action) => {
+            state.translatedData = action.payload;
+            console.log(action.payload?.file_name);
+            
         },
     },
 });
 
 export default languageSlice.reducer;
-export const { setCurrentLanguage,resetCurrentLanguage } = languageSlice.actions;
+export const { setCurrentLanguage,setTranslatedData } = languageSlice.actions;
 
 export const CurrentLanguageData = createSelector(
     (state) => state.CurrentLanguage,

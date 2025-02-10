@@ -115,10 +115,10 @@ const LoginPopup = ({ onClose }) => {
             setAllModels(false)
          }
     }
+    const { language,translatedData } = useSelector((state) => state.Language)
 
     const onClose1 =()=>{
-        console.log("ggggg");
-        
+        // console.log("ggggg");
                 onClose()
                 router.push("/")
     }
@@ -129,17 +129,18 @@ const LoginPopup = ({ onClose }) => {
                     <div id="login-popup" tabIndex="-1"
                         className="bg-black/50 overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50  h-full items-center justify-center flex" >
                         <div className=" flex items-center  relative p-4 w-auto max-w-md h-full md:h-auto">
-
+                                     
                             <div className="relative bg-white rounded-lg shadow h-auto overflow-auto">
                                 <button onClick={onClose1}
                                     type="button"
                                     className="absolute top-3 right-2.5 text-black bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center popup-close">
-                                    <IoClose className='text-2xl' />
                                     <span className="sr-only">Close popup</span>
+                                    <IoClose className='text-2xl'/>
                                 </button>
                                 <div className="logo flex justify-center"> <Image
                                     src={Logo1} alt="GitHub"
                                     className="h-[6rem] w-[180px] mb-[-20px] " />
+                                    
                                 </div>
 
                                 {/* first section for login homzway */}
@@ -194,7 +195,7 @@ const LoginPopup = ({ onClose }) => {
                                         <div
                                             onClick={modelCreateAccount}
                                             className="mt-6 text-center cursor-pointer text-red-600 font-extrabold">
-                                            New to Homzway? Create an account
+                                           {translatedData?.file_name?.createAccount}
                                         </div>
                                     </div>
                                 )}
@@ -204,42 +205,42 @@ const LoginPopup = ({ onClose }) => {
                                         <div className="grid gap-8">
                                             <div id="back-div" className=" bg-white">
                                                 <div className=" border-transparent    sm:p-2 m-2">
-                                                    <div className="absolute top-[16px] arrow-back cursor-pointer" onClick={modelLoginWithEmail} >
+                                                    <div className={`absolute  ${language=="ar"?"left-1":" "} top-[15px]  arrow-back cursor-pointer`} onClick={modelLoginWithEmail} >
                                                         <IoIosArrowBack className="text-xl" />
                                                     </div>
                                                     <h4 className="pt-2 pb-6 font-bold text-2xl text-center cursor-default">
-                                                        Log in with Email
+                                                    {translatedData?.file_name?.signInWithEmail}
                                                     </h4>
                                                     <form className="space-y-4" onSubmit={Login}>
                                                         <div>
-                                                            <label htmlFor="email" className="mb-2 text-lg">
+                                                            <label htmlFor="email" className="mb-2 text-lg hidden">
                                                                 Email address
                                                             </label>
                                                             <input
                                                                 id="email"
                                                                 className="border p-3   shadow-md placeholder:text-base focus:scale-105 ease-in-out duration-300 border-gray-300 rounded-lg w-full"
                                                                 type="email"
-                                                                placeholder=" Enter Email"
+                                                                placeholder={translatedData?.file_name?.enterEmail}
                                                                 required
                                                                 onChange={(e) => setEmail(e.target.value)}
                                                             />
                                                         </div>
                                                         <div>
-                                                            <label htmlFor="password" className="mb-2  text-lg">
+                                                            <label htmlFor="password" className="mb-2  text-lg hidden">
                                                                 Password
                                                             </label>
                                                             <input
                                                                 id="password"
                                                                 className="border p-3 shadow-md  placeholder:text-base focus:scale-105 ease-in-out duration-300 border-gray-300 rounded-lg w-full"
                                                                 type="password"
-                                                                placeholder="Enter Password"
+                                                                placeholder={translatedData?.file_name?.enterPassword}
                                                                 required
                                                                 onChange={(e) => setPassword(e.target.value)}
                                                             />
                                                         </div>
                                                         <div className=" !mt-1 ">
                                                             <span className="cursor-pointer font-extrabold text-red-600  bg-left-bottom bg-gradient-to-r text-sm from-blue-400 to-blue-400 bg-[length:0%_2px] bg-no-repeat group-hover:bg-[length:100%_2px] transition-all duration-500 ease-out">
-                                                                Forget your password?
+                                                            {translatedData?.file_name?.forgtPassword}
                                                             </span>
                                                         </div>
                                                         <button
@@ -247,7 +248,7 @@ const LoginPopup = ({ onClose }) => {
                                                             className={`bg-gradient-to-r dark:text-gray-300 from-blue-500 to-purple-500 shadow-lg mt-6 p-2 text-white rounded-lg w-full hover:scale-105 hover:from-purple-500 hover:to-blue-500 transition duration-300 ease-in-out ${email && password?"":"cursor-no-drop"} `}
                                                             type="submit"
                                                         >
-                                                            LOG IN
+                                                            {translatedData?.file_name?.signIn}
                                                         </button>
                                                     </form>
                                                     <div className="flex w-full items-center gap-2 py-6 pb-3 text-sm text-slate-600">
@@ -267,7 +268,8 @@ const LoginPopup = ({ onClose }) => {
                                                     <div
                                                         onClick={modelCreateAccount}
                                                         className="mt-2 text-center   cursor-pointer text-red-600 font-extrabold">
-                                                        New to Homzway? Create an account
+                                                        {translatedData?.file_name?.createAccount}
+
                                                         {/* <a href="/signup" className="font-medium text-[#4285f4]">Sign up</a> */}
                                                     </div>
 
@@ -329,25 +331,21 @@ const LoginPopup = ({ onClose }) => {
                                         </div>
                                         <div className="text-gray-500 flex text-center flex-col mt-4 items-center text-sm">
                                             <p className="cursor-default">
-                                                By signing in, you agree to our
                                                 <a className="group text-blue-400 transition-all duration-100 ease-in-out" href="#">
                                                     <span className="cursor-pointer bg-left-bottom bg-gradient-to-r from-blue-400 to-blue-400 bg-[length:0%_2px] bg-no-repeat group-hover:bg-[length:100%_2px] transition-all duration-500 ease-out">
-                                                        Terms
+                                                    {translatedData?.file_name?.agreeCreateAccount}
+
                                                     </span>
                                                 </a>
-                                                and
-                                                <a className="group text-blue-400 transition-all duration-100 ease-in-out" href="#">
-                                                    <span className="cursor-pointer bg-left-bottom bg-gradient-to-r from-blue-400 to-blue-400 bg-[length:0%_2px] bg-no-repeat group-hover:bg-[length:100%_2px] transition-all duration-500 ease-out">
-                                                        Privacy Policy
-                                                    </span>
-                                                </a>
+
                                             </p>
                                         </div>
 
                                         <div
                                             onClick={modelCreateAccount}
                                             className="mt-6 text-center   cursor-pointer text-red-600 font-extrabold">
-                                            Already have an account? Log in
+                                            {translatedData?.file_name?.haveAccount}
+
                                             {/* <a href="/signup" className="font-medium text-[#4285f4]">Sign up</a> */}
                                         </div>
                                     </div>
@@ -361,7 +359,7 @@ const LoginPopup = ({ onClose }) => {
                                             <div
                                                 onClick={modelLoginWithEmail}
                                                 className="mt-6 text-center   cursor-pointer text-red-600 font-extrabold">
-                                                Already have an account? Log in
+                                                 {translatedData?.file_name?.haveAccount}
                                                 {/* <a href="/signup" className="font-medium text-[#4285f4]">Sign up</a> */}
                                             </div>
                                         </div>

@@ -11,39 +11,48 @@ import { useJsApiLoader } from '@react-google-maps/api';
 const GOOGLE_MAPS_LIBRARIES = ['geometry', 'drawing', 'places'];
 
 // Utility Functions state 
-export const placeholderImage = (e) => {
+// export const placeholderImage = (e) => {
+//   const settings = store.getState()?.Settings?.data?.data;
+//   const placeholderLogo = settings?.placeholder_image;
+
+//   if (placeholderLogo) {
+//     e.target.src = placeholderLogo;
+//   }
+// };
+
+// export const isLogin = () => {
+//   const userData = store.getState()?.UserSignup?.data;
+//   return !!userData?.token;
+// };
+
+// export const IsLandingPageOn = () => {
+//   const settings = store.getState()?.Settings?.data?.data;
+//   return Number(settings?.show_landing_page);
+// };
+
+// export const getDefaultLatLong = () => {
+//   const settings = store.getState()?.Settings?.data?.data;
+//   const default_latitude = Number(settings?.default_latitude);
+//   const default_longitude = Number(settings?.default_longitude);
+
+//   return {
+//     latitude: default_latitude,
+//     longitude: default_longitude,
+//   };
+// };
+
+// export const getPlaceApiKey = () => {
+//   const settings = store.getState()?.Settings?.data?.data;
+//   return "AIzaSyDNMOkBx54Xdt8Jp4AQKDHVH8MpDn0NhLY";
+// };
+
+export const loadGoogleMaps = () => {
   const settings = store.getState()?.Settings?.data?.data;
-  const placeholderLogo = settings?.placeholder_image;
-
-  if (placeholderLogo) {
-    e.target.src = placeholderLogo;
-  }
-};
-
-export const isLogin = () => {
-  const userData = store.getState()?.UserSignup?.data;
-  return !!userData?.token;
-};
-
-export const IsLandingPageOn = () => {
-  const settings = store.getState()?.Settings?.data?.data;
-  return Number(settings?.show_landing_page);
-};
-
-export const getDefaultLatLong = () => {
-  const settings = store.getState()?.Settings?.data?.data;
-  const default_latitude = Number(settings?.default_latitude);
-  const default_longitude = Number(settings?.default_longitude);
-
-  return {
-    latitude: default_latitude,
-    longitude: default_longitude,
-  };
-};
-
-export const getPlaceApiKey = () => {
-  const settings = store.getState()?.Settings?.data?.data;
-  return settings?.place_api_key;
+  return useJsApiLoader({
+    id: 'google-map-script',
+    googleMapsApiKey: "AIzaSyDNMOkBx54Xdt8Jp4AQKDHVH8MpDn0NhLY",
+    libraries: GOOGLE_MAPS_LIBRARIES,
+  });
 };
 
 export const getSlug = (pathname) => {
@@ -51,60 +60,60 @@ export const getSlug = (pathname) => {
   return segments[segments.length - 1];
 };
 
-export const formatDate = (createdAt) => {
-  const date = new Date(createdAt);
-  const now = new Date();
-  const diff = now.getTime() - date.getTime();
-  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+// export const formatDate = (createdAt) => {
+//   const date = new Date(createdAt);
+//   const now = new Date();
+//   const diff = now.getTime() - date.getTime();
+//   const days = Math.floor(diff / (1000 * 60 * 60 * 24));
 
-  if (days === 0) {
-    return t('today');
-  } else if (days === 1) {
-    return t('yesterday');
-  } else if (days < 30) {
-    return `${days} ${t('daysAgo')}`;
-  } else if (days < 365) {
-    const months = Math.floor(days / 30);
-    return `${months} ${t('month')}${months > 1 ? t('s') : ''} ${t('ago')}`;
-  } else {
-    const years = Math.floor(days / 365);
-    return `${years} ${t('year')}${years > 1 ? t('s') : ''} ${t('ago')}`;
-  }
-};
+//   if (days === 0) {
+//     return t('today');
+//   } else if (days === 1) {
+//     return t('yesterday');
+//   } else if (days < 30) {
+//     return `${days} ${t('daysAgo')}`;
+//   } else if (days < 365) {
+//     const months = Math.floor(days / 30);
+//     return `${months} ${t('month')}${months > 1 ? t('s') : ''} ${t('ago')}`;
+//   } else {
+//     const years = Math.floor(days / 365);
+//     return `${years} ${t('year')}${years > 1 ? t('s') : ''} ${t('ago')}`;
+//   }
+// };
 
-export const exactPrice = (price) => {
-  const countryCode = process.env.NEXT_PUBLIC_DEFAULT_COUNTRY?.toUpperCase() || 'US';
-  const locale = countryLocaleMap[countryCode] || 'en-US';
-  const settingsData = store.getState()?.Settings?.data?.data;
-  const currencyPosition = settingsData?.currency_symbol_position;
-  const currencySymbol = settingsData?.currency_symbol;
+// export const exactPrice = (price) => {
+//   const countryCode = process.env.NEXT_PUBLIC_DEFAULT_COUNTRY?.toUpperCase() || 'US';
+//   const locale = countryLocaleMap[countryCode] || 'en-US';
+//   const settingsData = store.getState()?.Settings?.data?.data;
+//   const currencyPosition = settingsData?.currency_symbol_position;
+//   const currencySymbol = settingsData?.currency_symbol;
 
-  const formattedNumber = new Intl.NumberFormat(locale, {
-    maximumFractionDigits: 2,
-    useGrouping: true,
-  }).format(Number(price));
+//   const formattedNumber = new Intl.NumberFormat(locale, {
+//     maximumFractionDigits: 2,
+//     useGrouping: true,
+//   }).format(Number(price));
 
-  return currencyPosition === 'right'
-    ? `${formattedNumber} ${currencySymbol}`
-    : `${currencySymbol} ${formattedNumber}`;
-};
+//   return currencyPosition === 'right'
+//     ? `${formattedNumber} ${currencySymbol}`
+//     : `${currencySymbol} ${formattedNumber}`;
+// };
 
-export const formatPriceAbbreviated = (price) => {
-  const settingsData = store.getState()?.Settings?.data?.data;
-  const currencySymbol = settingsData?.currency_symbol;
-  const currencyPosition = settingsData?.currency_symbol_position;
-  const countryCode = process.env.NEXT_PUBLIC_DEFAULT_COUNTRY?.toUpperCase() || 'US';
-  const locale = countryLocaleMap[countryCode] || 'en-US';
+// export const formatPriceAbbreviated = (price) => {
+//   const settingsData = store.getState()?.Settings?.data?.data;
+//   const currencySymbol = settingsData?.currency_symbol;
+//   const currencyPosition = settingsData?.currency_symbol_position;
+//   const countryCode = process.env.NEXT_PUBLIC_DEFAULT_COUNTRY?.toUpperCase() || 'US';
+//   const locale = countryLocaleMap[countryCode] || 'en-US';
 
-  const formattedNumber = new Intl.NumberFormat(locale, {
-    maximumFractionDigits: 2,
-    useGrouping: true,
-  }).format(Number(price));
+//   const formattedNumber = new Intl.NumberFormat(locale, {
+//     maximumFractionDigits: 2,
+//     useGrouping: true,
+//   }).format(Number(price));
 
-  return currencyPosition === 'right'
-    ? `${formattedNumber} ${currencySymbol}`
-    : `${currencySymbol} ${formattedNumber}`;
-};
+//   return currencyPosition === 'right'
+//     ? `${formattedNumber} ${currencySymbol}`
+//     : `${currencySymbol} ${formattedNumber}`;
+// };
 
 export const createStickyNote = () => {
   const stickyNote = document.createElement('div');
@@ -139,7 +148,9 @@ export const createStickyNote = () => {
 };
 
 export const t = (label) => {
-  const langData = store.getState().CurrentLanguage?.language?.file_name?.[label];
+  const langData = store.getState().Language?.translatedData?.file_name?.[label];
+  //  console.log(langData);
+  
   return langData || enTranslation[label];
 };
 
@@ -258,226 +269,220 @@ export const handleFirebaseAuthError = (errorCode) => {
   }
 };
 
-export const truncate = (text, maxLength) => {
-  if (!text) return '';
-  const stringText = String(text);
-  return stringText.length <= maxLength ? text : `${stringText.slice(0, maxLength)}...`;
-};
+// export const truncate = (text, maxLength) => {
+//   if (!text) return '';
+//   const stringText = String(text);
+//   return stringText.length <= maxLength ? text : `${stringText.slice(0, maxLength)}...`;
+// };
 
-export const formatDateMonth = (timestamp) => {
-  const months = [
-    'January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December',
-  ];
-  const date = new Date(timestamp);
-  const year = date.getFullYear();
-  const month = months[date.getMonth()];
-  const day = String(date.getDate()).padStart(2, '0');
-  return `${month} ${parseInt(day, 10)}, ${year}`;
-};
 
-export const loadStripeApiKey = () => {
-  const STRIPEData = store.getState()?.Settings;
-  return STRIPEData?.data?.stripe_publishable_key || false;
-};
 
-export const useIsRtl = () => {
-  const lang = useSelector(CurrentLanguageData);
-  return lang?.rtl === true;
-};
 
-export const logout = () => {
-  store.dispatch(logoutSuccess());
-};
+// export const formatDateMonth = (timestamp) => {
+//   const months = [
+//     'January', 'February', 'March', 'April', 'May', 'June',
+//     'July', 'August', 'September', 'October', 'November', 'December',
+//   ];
+//   const date = new Date(timestamp);
+//   const year = date.getFullYear();
+//   const month = months[date.getMonth()];
+//   const day = String(date.getDate()).padStart(2, '0');
+//   return `${month} ${parseInt(day, 10)}, ${year}`;
+// };
 
-export const loadGoogleMaps = () => {
-  const settings = store.getState()?.Settings?.data?.data;
-  return useJsApiLoader({
-    id: 'google-map-script',
-    googleMapsApiKey: settings?.place_api_key,
-    libraries: GOOGLE_MAPS_LIBRARIES,
-  });
-};
+// export const loadStripeApiKey = () => {
+//   const STRIPEData = store.getState()?.Settings;
+//   return STRIPEData?.data?.stripe_publishable_key || false;
+// };
 
-export const generateSlug = (text) => {
-  return text
-    .toLowerCase()
-    .replace(/[^a-z0-9\s-]/g, '')
-    .replace(/\s+/g, '-')
-    .replace(/-+/g, '-')
-    .replace(/^-+|-+$/g, '');
-};
+// export const useIsRtl = () => {
+//   const lang = useSelector(CurrentLanguageData);
+//   return lang?.rtl === true;
+// };
 
-export const isEmptyObject = (obj) => {
-  // console.log(obj);
+// export const logout = () => {
+//   store.dispatch(logoutSuccess());
+// };
+
+// export const generateSlug = (text) => {
+//   return text
+//     .toLowerCase()
+//     .replace(/[^a-z0-9\s-]/g, '')
+//     .replace(/\s+/g, '-')
+//     .replace(/-+/g, '-')
+//     .replace(/^-+|-+$/g, '');
+// };
+
+// export const isEmptyObject = (obj) => {
+//   // console.log(obj);
   
-  return obj && typeof obj === 'object' && Object.keys(obj).length === 0;
-}
+//   return obj && typeof obj === 'object' && Object.keys(obj).length === 0;
+// }
 
-export const measureCategoryWidth = (categoryName) => {
-  const tempElement = document.createElement('span');
-  tempElement.style.display = 'inline-block';
-  tempElement.style.visibility = 'hidden';
-  tempElement.style.position = 'absolute';
-  tempElement.innerText = categoryName;
-  document.body.appendChild(tempElement);
-  const width = tempElement.offsetWidth + 15; // icon width(12) + gap(3)
-  document.body.removeChild(tempElement);
-  return width;
-};
+// export const measureCategoryWidth = (categoryName) => {
+//   const tempElement = document.createElement('span');
+//   tempElement.style.display = 'inline-block';
+//   tempElement.style.visibility = 'hidden';
+//   tempElement.style.position = 'absolute';
+//   tempElement.innerText = categoryName;
+//   document.body.appendChild(tempElement);
+//   const width = tempElement.offsetWidth + 15; // icon width(12) + gap(3)
+//   document.body.removeChild(tempElement);
+//   return width;
+// };
 
-export const formatTime = (dateString) => {
-  const date = new Date(dateString);
-  const now = new Date();
-  const diffInSeconds = Math.floor((now - date) / 1000);
-  const diffInMinutes = Math.floor(diffInSeconds / 60);
-  const diffInHours = Math.floor(diffInMinutes / 60);
-  const diffInDays = Math.floor(diffInHours / 24);
-  const diffInWeeks = Math.floor(diffInDays / 7);
-  const diffInMonths = Math.floor(diffInDays / 30);
-  const diffInYears = Math.floor(diffInDays / 365);
+// export const formatTime = (dateString) => {
+//   const date = new Date(dateString);
+//   const now = new Date();
+//   const diffInSeconds = Math.floor((now - date) / 1000);
+//   const diffInMinutes = Math.floor(diffInSeconds / 60);
+//   const diffInHours = Math.floor(diffInMinutes / 60);
+//   const diffInDays = Math.floor(diffInHours / 24);
+//   const diffInWeeks = Math.floor(diffInDays / 7);
+//   const diffInMonths = Math.floor(diffInDays / 30);
+//   const diffInYears = Math.floor(diffInDays / 365);
 
-  if (diffInSeconds < 60) {
-    return t('now');
-  } else if (diffInMinutes < 60) {
-    return `${diffInMinutes}m`;
-  } else if (diffInHours < 24) {
-    return `${diffInHours}h`;
-  } else if (diffInDays === 1) {
-    return t('yesterday');
-  } else if (diffInDays < 7) {
-    return `${diffInDays}d`;
-  } else if (diffInWeeks < 4) {
-    return `${diffInWeeks}w`;
-  } else if (diffInMonths < 12) {
-    return `${diffInMonths}mo`;
-  } else {
-    return `${diffInYears}y`;
-  }
-};
+//   if (diffInSeconds < 60) {
+//     return t('now');
+//   } else if (diffInMinutes < 60) {
+//     return `${diffInMinutes}m`;
+//   } else if (diffInHours < 24) {
+//     return `${diffInHours}h`;
+//   } else if (diffInDays === 1) {
+//     return t('yesterday');
+//   } else if (diffInDays < 7) {
+//     return `${diffInDays}d`;
+//   } else if (diffInWeeks < 4) {
+//     return `${diffInWeeks}w`;
+//   } else if (diffInMonths < 12) {
+//     return `${diffInMonths}mo`;
+//   } else {
+//     return `${diffInYears}y`;
+//   }
+// };
 
-export const isValidURL = (url) => {
-  const pattern = /^(ftp|http|https):\/\/[^ "]+$/;
-  return pattern.test(url);
-};
+// export const isValidURL = (url) => {
+//   const pattern = /^(ftp|http|https):\/\/[^ "]+$/;
+//   return pattern.test(url);
+// };
 
-export const formatDuration = (duration) => {
-  const minutes = Math.floor(duration / 60);
-  const seconds = duration % 60;
-  return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-};
+// export const formatDuration = (duration) => {
+//   const minutes = Math.floor(duration / 60);
+//   const seconds = duration % 60;
+//   return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+// };
 
-export const formatChatMessageTime = (dateString) => {
-  const date = new Date(dateString);
-  return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
-};
+// export const formatChatMessageTime = (dateString) => {
+//   const date = new Date(dateString);
+//   return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
+// };
 
-export const formatMessageDate = (dateString) => {
-  const messageDate = new Date(dateString);
-  const today = new Date();
-  const yesterday = new Date(today);
-  yesterday.setDate(yesterday.getDate() - 1);
+// export const formatMessageDate = (dateString) => {
+//   const messageDate = new Date(dateString);
+//   const today = new Date();
+//   const yesterday = new Date(today);
+//   yesterday.setDate(yesterday.getDate() - 1);
 
-  if (messageDate.toDateString() === today.toDateString()) {
-    return t('today');
-  } else if (messageDate.toDateString() === yesterday.toDateString()) {
-    return t('yesterday');
-  } else {
-    return messageDate.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' });
-  }
-};
+//   if (messageDate.toDateString() === today.toDateString()) {
+//     return t('today');
+//   } else if (messageDate.toDateString() === yesterday.toDateString()) {
+//     return t('yesterday');
+//   } else {
+//     return messageDate.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' });
+//   }
+// };
 
-export const validateForm = (formData) => {
-  const { name, email, subject, message } = formData;
+// export const validateForm = (formData) => {
+//   const { name, email, subject, message } = formData;
 
-  if (!name) {
-    toast.error(t('nameRequired'));
-    return false;
-  }
-  if (!email) {
-    toast.error(t('emailRequired'));
-    return false;
-  }
-  if (!subject) {
-    toast.error(t('subjectRequired'));
-    return false;
-  }
-  if (!message) {
-    toast.error(t('messageRequired'));
-    return false;
-  }
+//   if (!name) {
+//     toast.error(t('nameRequired'));
+//     return false;
+//   }
+//   if (!email) {
+//     toast.error(t('emailRequired'));
+//     return false;
+//   }
+//   if (!subject) {
+//     toast.error(t('subjectRequired'));
+//     return false;
+//   }
+//   if (!message) {
+//     toast.error(t('messageRequired'));
+//     return false;
+//   }
 
-  return true;
-};
+//   return true;
+// };
 
-export const isPdf = (url) => url?.toLowerCase().endsWith('.pdf');
+// export const isPdf = (url) => url?.toLowerCase().endsWith('.pdf');
 
-export const IsAdExpired = (SingleListing) => {
-  if (!SingleListing?.expiry_date) return false;
-  const expiryDate = new Date(SingleListing.expiry_date);
-  const currentDate = new Date();
-  return expiryDate < currentDate;
-};
+// export const IsAdExpired = (SingleListing) => {
+//   if (!SingleListing?.expiry_date) return false;
+//   const expiryDate = new Date(SingleListing.expiry_date);
+//   const currentDate = new Date();
+//   return expiryDate < currentDate;
+// };
 
-export const formatMyListingDate = (dateStr) => {
-  const date = new Date(dateStr);
-  if (isNaN(date.getTime())) return 'Invalid date';
+// export const formatMyListingDate = (dateStr) => {
+//   const date = new Date(dateStr);
+//   if (isNaN(date.getTime())) return 'Invalid date';
 
-  const options = { month: 'short', day: '2-digit', year: 'numeric' };
-  const formattedDate = new Intl.DateTimeFormat('en-US', options).format(date);
-  const [month, day, year] = formattedDate.split(' ');
-  return `${month}, ${day.slice(0, -1)}, ${year}`;
-};
+//   const options = { month: 'short', day: '2-digit', year: 'numeric' };
+//   const formattedDate = new Intl.DateTimeFormat('en-US', options).format(date);
+//   const [month, day, year] = formattedDate.split(' ');
+//   return `${month}, ${day.slice(0, -1)}, ${year}`;
+// };
 
-export const getYouTubeVideoId = (url) => {
-  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-  const match = url?.match(regExp);
-  return match && match[2].length === 11 ? match[2] : null;
-};
+// export const getYouTubeVideoId = (url) => {
+//   const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+//   const match = url?.match(regExp);
+//   return match && match[2].length === 11 ? match[2] : null;
+// };
 
-export const getImageClass = (src) => {
-  if (src?.endsWith('.svg') || src?.endsWith('.png')) {
-    return 'svgPngBackground';
-  }
-  return 'jpgNoBackround';
-};
+// export const getImageClass = (src) => {
+//   if (src?.endsWith('.svg') || src?.endsWith('.png')) {
+//     return 'svgPngBackground';
+//   }
+//   return 'jpgNoBackround';
+// };
 
-export const formatProdDate = (dateString) => {
-  if (!dateString) return '';
-  const date = new Date(dateString);
-  const options = { year: 'numeric', month: 'short', day: 'numeric' };
-  return new Intl.DateTimeFormat('en-US', options).format(date);
-};
+// export const formatProdDate = (dateString) => {
+//   if (!dateString) return '';
+//   const date = new Date(dateString);
+//   const options = { year: 'numeric', month: 'short', day: 'numeric' };
+//   return new Intl.DateTimeFormat('en-US', options).format(date);
+// };
 
-export const extractYear = (dateString) => {
-  const date = new Date(dateString);
-  return date.getFullYear();
-};
+// export const extractYear = (dateString) => {
+//   const date = new Date(dateString);
+//   return date.getFullYear();
+// };
 
-export const calculateRatingPercentages = (ratings) => {
-  const ratingCount = { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 };
-  ratings?.forEach((rating) => {
-    const roundedRating = Math.round(rating?.ratings);
-    if (roundedRating >= 1 && roundedRating <= 5) {
-      ratingCount[roundedRating] += 1;
-    }
-  });
+// export const calculateRatingPercentages = (ratings) => {
+//   const ratingCount = { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 };
+//   ratings?.forEach((rating) => {
+//     const roundedRating = Math.round(rating?.ratings);
+//     if (roundedRating >= 1 && roundedRating <= 5) {
+//       ratingCount[roundedRating] += 1;
+//     }
+//   });
 
-  const totalRatings = ratings.length;
-  const ratingPercentages = {
-    5: (ratingCount[5] / totalRatings) * 100,
-    4: (ratingCount[4] / totalRatings) * 100,
-    3: (ratingCount[3] / totalRatings) * 100,
-    2: (ratingCount[2] / totalRatings) * 100,
-    1: (ratingCount[1] / totalRatings) * 100,
-  };
+//   const totalRatings = ratings.length;
+//   const ratingPercentages = {
+//     5: (ratingCount[5] / totalRatings) * 100,
+//     4: (ratingCount[4] / totalRatings) * 100,
+//     3: (ratingCount[3] / totalRatings) * 100,
+//     2: (ratingCount[2] / totalRatings) * 100,
+//     1: (ratingCount[1] / totalRatings) * 100,
+//   };
 
-  return { ratingCount, ratingPercentages };
-};
+//   return { ratingCount, ratingPercentages };
+// };
 
-export const getRoundedRating = (rating) => {
-  if (!rating) return 0;
-  const integerPart = Math.floor(rating);
-  const decimalPart = rating - integerPart;
-  return decimalPart > 0 ? integerPart + 0.5 : integerPart;
-};
+// export const getRoundedRating = (rating) => {
+//   if (!rating) return 0;
+//   const integerPart = Math.floor(rating);
+//   const decimalPart = rating - integerPart;
+//   return decimalPart > 0 ? integerPart + 0.5 : integerPart;
+// };

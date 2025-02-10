@@ -1,20 +1,18 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import Layout from "@/app/Layout/MainLayout";
 import Link from "next/link";
-import { GrLocation } from "react-icons/gr";
 import { useDispatch, useSelector } from 'react-redux';
+import CurrentLocationMaps from "@/components/common/CurrentLocationMaps";
+import { IoIosArrowForward } from "react-icons/io";
 
-const CitySearch = ({userLocationFun}) => {
+const CitySearch = ({ userLocationFun }) => {
   const [cities, setCities] = useState([]);
   const [governorates, setGovernorates] = useState([]);
   const [search, setSearch] = useState("");
   const [filteredResults, setFilteredResults] = useState([]);
-
   const { language } = useSelector((state) => state.Language)
   
-
-
+  //here i use api to search the city or governmanete of country Egypt
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -37,7 +35,7 @@ const CitySearch = ({userLocationFun}) => {
 
     fetchData();
   }, []);
-
+  //here our depounce func to reduce and optmize the search for current destination
   useEffect(() => {
     const DebounceSearchLocationFn = setTimeout(() => {
       if (search === "") {
@@ -79,47 +77,53 @@ const CitySearch = ({userLocationFun}) => {
 
     return () => clearTimeout(DebounceSearchLocationFn);
   }, [search, cities, governorates]);
-   const userLocation=(value)=>{
+  const userLocation = (value) => {
     userLocationFun(value)
-   }
+  }
   return (
-    //   <Link href="/" prefetch>ads</Link>
-
-
-      <div style={{ padding: "20px", textAlign: "center" }} className="h-[350px] overflow-y-auto">
-        <input
-          type="text"
-          placeholder="Search For Location"
+    <div className="h-[300px] overflow-y-auto ">
+      {/* here the input to make user search the current location of city or governmanete */}
+      <div className="input mx-2 mt-2">
+        <input type="text" placeholder="Search For Location"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="w-full rounded-md border border-gray-400 px-2 py-3 outline-0"
+          className="w-full px-3 rounded-md border border-gray-400  py-3 outline-0"
         />
-        <ul style={{ listStyle: "none", padding: 0, marginTop: "20px" }}>
-
-          {filteredResults.length > 0 ? (
-            filteredResults.map((city) => (
-              <li
-              onClick={()=>userLocation(city.city_name_ar)}
-                key={city.id}
-                className="p-2 mb-1 bg-gray-100 rounded-md hover:bg-gray-200 cursor-pointer transition"
-
-              >
-                <strong>
-                  {city.city_name_en}
-                  {/* ({city.city_name_ar}) */}
-                </strong>{" "}
-                - {city.governorate_name_en}
-                {/* ({city.governorate_name_ar}) */}
-              </li>
-            ))
-          ) : (
-            search && <p>No results found</p>
-          )}
-        </ul>
-
       </div>
+      {/* the current location of user if he slecetd by react google maps */}
+      <CurrentLocationMaps />
+      {/* here we will dispay the all cites , governmates of user when he will search  */}
+      <ul style={{ listStyle: "none", padding: 0, marginTop: "20px" }}>
+        {filteredResults.length > 0 ? (
+          filteredResults.map((city) => (
+            <li
+              onClick={() => userLocation(language == "ar" ? city.city_name_ar : city.city_name_en)}
+              key={city.id}
+              className="p-2 mb-1 bg-gray-100 rounded-md hover:bg-gray-200 cursor-pointer transition" >
+              <strong className="text-sm">
+                {language == "ar" ? city.city_name_ar : city.city_name_en}
+              </strong> ,
+              {language == "ar" ? city.governorate_name_ar : city.governorate_name_en}
+            </li>
 
 
+
+          ))
+        ) : (
+          search && <p>No results found</p>
+        )}
+      </ul>
+      {/* in default display all the governamtes of egypt */}
+      {governorates.length && filteredResults.length == 0 > 0 &&
+        governorates.map((governorate) => (
+          <h1 className={` ${language == "ar" ? "text-right" : ""} flex justify-between  px-3 hover:bg-[#ff757557] transition-all cursor-pointer py-2 `}
+            key={governorate.id} onClick={() => setSearch(language === "ar" ? governorate.governorate_name_ar : governorate.governorate_name_en)}>
+            <span> {language === "ar" ? governorate.governorate_name_ar : governorate.governorate_name_en}</span>
+            <span><IoIosArrowForward /></span>
+          </h1>
+        ))
+      }
+    </div>
   );
 };
 
