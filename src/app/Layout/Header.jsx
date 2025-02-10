@@ -40,6 +40,8 @@ import { IoSearchOutline } from "react-icons/io5";
 import { setTranslatedData } from '@/store/slices/languageSlice';
 import LocationComp from "@/components/common/LocationComp";
 
+import MenuMobile from "@/components/common/MenuMobile"
+
 const Header = ({ ToggleLoginPopupFunc }) => {
     const pathname = usePathname()
     const router = useRouter()
@@ -110,8 +112,17 @@ const Header = ({ ToggleLoginPopupFunc }) => {
         window.addEventListener("scroll", handleScroll, { passive: true });
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
-
     // console.log(data);
+
+
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const handleToggleMenu = (newState) => {
+        setIsMenuOpen((prev) => {
+            const newState = !prev; 
+            document.body.style.overflow = newState ? "hidden" : "auto";
+            return newState;
+          });
+      };
 
     return (
         <>
@@ -264,9 +275,9 @@ const Header = ({ ToggleLoginPopupFunc }) => {
 
             <header className="block sm:hidden tablet-screen relative">
                 <div className=" block md:hidden border-b mb-3 py-2">
-                    <div className=" flex items-center  md:hidden container mx-auto px-3 " >
+                    <div className=" flex items-center relative  md:hidden container mx-auto px-3 " >
 
-                        <HiOutlineMenuAlt3 className='text-red-600 text-2xl cursor-pointer ' />
+                        <HiOutlineMenuAlt3 className='text-red-600 text-2xl cursor-pointer ' onClick={handleToggleMenu} />
 
                         {data?.header_logo && (
                             <Link href="/">
@@ -281,11 +292,17 @@ const Header = ({ ToggleLoginPopupFunc }) => {
                             </Link>
 
                         )}
-                        {/* <Image src={data?.header_logo} width="200" height={10} className='!h-[50px]' alt="f"/> */}
+
+                      <MenuMobile isMenuOpen={isMenuOpen}   handleToggleMenu={handleToggleMenu}/>
+                         
+
+
+
                     </div>
+
+
                 </div>
                 <div className="container mx-auto px-3 sm:px-0">
-                    {/* Hide Location when scrolled */}
                     {isPageScrolled ? "LocationComp" : <LocationComp   />}
 
                     <div className={`flex-1 mt-3  ${isPageScrolled ? " w-[90%] fixed left-1/2 transform -translate-x-1/2 container mx-auto" : ""} top-0 bg-white z-50 shadow-md`}>

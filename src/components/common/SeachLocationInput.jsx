@@ -97,7 +97,7 @@ const CitySearch = ({ userLocationFun }) => {
       </div>
       {/* the current location of user if he slecetd by react google maps */}
       <CurrentLocationMaps />
-      {/* here we will dispay the all cites , governmates of user when he will search  */}
+      {/* here dispay the all cites , governmates of user when he will search  */}
       <ul style={{ listStyle: "none", padding: 0, marginTop: "20px" }}>
         {filteredResults.length > 0 ? (
           filteredResults.map((city) => (            
@@ -119,7 +119,7 @@ const CitySearch = ({ userLocationFun }) => {
         )}
       </ul>
       {/* in default display all the governamtes of egypt */}
-      {governorates.length && filteredResults.length == 0 > 0 &&
+      {governorates.length &&
         governorates.map((governorate) => (
           <h1 className={` ${language == "ar" ? "text-right" : ""} flex justify-between  px-3 hover:bg-[#ff757557] transition-all cursor-pointer py-2 `}
             key={governorate.id} onClick={() => setSearch(language === "ar" ? governorate.governorate_name_ar : governorate.governorate_name_en)}>

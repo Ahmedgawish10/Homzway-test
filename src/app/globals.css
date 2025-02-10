@@ -23,3 +23,15 @@ body{
 
 }
 
+.gg{
+  /* height: 100vh; */
+  transition:  1s;
+  visibility: visible;
+  z-index: 0;
+}
+
+.ggg{
+  /* height: 0px; */
+  visibility: hidden;
+  transition:  5s;
+}
