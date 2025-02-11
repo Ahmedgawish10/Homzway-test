@@ -9,7 +9,7 @@ const MainHeader = () => {
   const pathname = usePathname()
    
   return (
-    <div className="mb-[90px]" >
+    <div className="sm:mb-[90px]" >
       {pathname === '/home' ? (
         <>ffff</>
         // <LandingPageHeader />

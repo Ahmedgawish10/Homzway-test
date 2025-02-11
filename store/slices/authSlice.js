@@ -3,7 +3,8 @@ import { store } from "../store";  // Ensure this import path is correct
 
 const initialState = {
     data: null,
-    loading: false
+    loading: false,
+    authUser:null
 };
 
 export const authSlice = createSlice({
@@ -18,12 +19,15 @@ export const authSlice = createSlice({
             usersignup.data.data = action.payload.data;
         },
         userLogout: (usersignup) => {
-            usersignup.data = null; // Clear data when user logs out
+            usersignup.data = null; 
+        },
+        loggedUser: (usersignup,action) => {
+            usersignup.authUser = action.payload; 
         }
     },
 });
 
-export const { updateDataSuccess, userUpdateData, userLogout } = authSlice.actions;
+export const { updateDataSuccess, userUpdateData, userLogout,loggedUser } = authSlice.actions;
 export default authSlice.reducer;
 
 export const loadUpdateData = (data) => {

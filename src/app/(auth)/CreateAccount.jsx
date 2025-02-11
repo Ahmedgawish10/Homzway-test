@@ -10,7 +10,7 @@ import { handleFirebaseAuthError, t } from "@/utils";
 import { userSignUpApi } from "@/api/apiCalling";
 import MailSentSucessfully from "@/app/(auth)/MailSentSucessfully";
 import { validateForm } from '@/utils';
-const SignUpForm = ({ HideModels }) => {
+const SignUpForm = ({ HideModels,onClose }) => {
   const { auth, handleGoogleSignup } = FirebaseData();
 
   const [form, setForm] = useState({
@@ -118,7 +118,7 @@ const SignUpForm = ({ HideModels }) => {
           type: "email",
           registration: true
         });
-        // OnHide()
+        onClose()
         // CC("dd")
       } catch (error) {
         console.log("errdor", error);
@@ -185,7 +185,7 @@ const SignUpForm = ({ HideModels }) => {
               </button>
             </div>
             <button
-              type="submit"
+              type="submit" 
               className="w-full bg-rose-700 text-white py-3 rounded text-lg hover:bg-rose-800 transition"
             >
               Verify email address

@@ -1,13 +1,11 @@
 "use client";
 import Image from "next/image";
-import Test from "@/components/test";
+import dynamic from 'next/dynamic';
 import Electronics from "../../public/icons/electronics.svg";
 import Property from "../../public/icons/property.svg";
 import JsonLd from "@/app/_seo/JsonLd";
-
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect } from "react";
-
+import { useEffect, useMemo, useCallback } from "react";
 import { setCateData } from "@/store/slices/categorySlice";
 import Link from "next/link";
 import axios from "axios";
@@ -15,43 +13,41 @@ import { CategoryData } from "@/store/slices/categorySlice";
 import { fetchCategories } from "@/store/slices/categorySlice";
 import { fetchAllProducts, fetchFeaturedSections } from '@/store/slices/productsSlice';
 import { setJsonLdData } from "@/store/slices/SeoJsonLdSlice";
+const CatgoriesMin = dynamic(() => import('@/components/categories/CatgoriesMin'), { ssr: false });
 
 export default function Home() {
   const dispatch = useDispatch();
-  //   const AllCaetgories = useSelector(CategoryData);
   const { cateData, totalCatItems, catLastPage, catCurrentPage } = useSelector((state) => state.Category);
   const { productsData, featuredSections } = useSelector((state) => state.Products);
 
   useEffect(() => {
-    //fetch all categories and saved it to sote 
-    cateData?.length > 0 ? console.log(" all catgories from store to reduce requests on server", cateData) :
-      dispatch(fetchCategories())
-    //fetch all products and saved it to sote 
-    productsData?.length > 0 ? console.log(" all productsData from store to reduce requests on server", productsData) :
-      dispatch(fetchAllProducts())
-    //fetch all featuredSections and saved it to sote 
-    featuredSections?.length > 0 ? console.log(" all FeaturedSections data from store to reduce requests on server", featuredSections) :
-      dispatch(fetchFeaturedSections())
+    if (cateData.length === 0) {
+      dispatch(fetchCategories());
+    }
+    if (productsData.length === 0) {
+      dispatch(fetchAllProducts());
+    }
+    if (featuredSections.length === 0) {
+      dispatch(fetchFeaturedSections());
+    }
+  }, [dispatch, cateData.length, productsData.length, featuredSections.length]);
 
-  }, [])
-   
-  const existingSlugs = new Set(productsData.map(product => product.slug));
-  let featuredItems = [];
-  featuredSections?.forEach((section) => {
-    //   section?.section_data?.slice(0, 4).forEach(item => {
-    //        console.log(item);
+  const existingSlugs = useMemo(() => new Set(productsData.map(product => product.slug)), [productsData]);
 
-    // });
-
-    section?.section_data?.slice(0, 4).forEach(item => {
-      if (!existingSlugs.has(item.slug)) {
-        featuredItems.push(item);
-        existingSlugs.add(item.slug);  // Mark this item as included
-      }
+  const featuredItems = useMemo(() => {
+    const items = [];
+    featuredSections?.forEach((section) => {
+      section?.section_data?.slice(0, 4).forEach(item => {
+        if (!existingSlugs.has(item.slug)) {
+          items.push(item);
+          existingSlugs.add(item.slug);
+        }
+      });
     });
-  });
-   //seo of homzway json 
-  const jsonLd = {
+    return items;
+  }, [featuredSections, existingSlugs]);
+
+  const jsonLd = useMemo(() => ({
     "@context": "https://schema.org",
     "@type": "ItemList",
     itemListElement: [
@@ -59,14 +55,14 @@ export default function Home() {
         "@type": "ListItem",
         position: index + 1,
         item: {
-          "@type": "Thing", // No "Category" type in Schema.org
+          "@type": "Thing",
           name: category?.name,
           url: `${process.env.NEXT_PUBLIC_WEB_URL}/category/${category?.slug}`
         }
       })),
       ...productsData.map((product, index) => ({
         "@type": "ListItem",
-        position: cateData?.length + index + 1, // Ensure unique positions
+        position: cateData?.length + index + 1,
         item: {
           "@type": "Product",
           name: product?.name,
@@ -85,9 +81,9 @@ export default function Home() {
       })),
       ...featuredItems.map((item, index) => ({
         "@type": "ListItem",
-        position: cateData.length + productsData.length + index + 1, // Ensure unique positions
+        position: cateData.length + productsData.length + index + 1,
         item: {
-          "@type": "Product", // Assuming items from featured sections are products
+          "@type": "Product",
           name: item?.name,
           productID: item?.id,
           description: item?.description,
@@ -103,20 +99,18 @@ export default function Home() {
         }
       }))
     ]
-  };
-   //set seo of website to store when it ready
+  }), [cateData, productsData, featuredItems]);
+
   useEffect(() => {
     if (cateData.length > 0 && productsData.length > 0 && featuredSections.length > 0) {
       dispatch(setJsonLdData(jsonLd));
     }
-  }, [cateData.length, productsData.length, featuredSections.length]);
-  
+  }, [dispatch, cateData.length, productsData.length, featuredSections.length, jsonLd]);
+
   return (
     <>
       <div className="">
-        {/* <Test /> */}
-        {/* <h2 onClick={()=>dispatch(fetchCategories())}>ggggggggggg</h2> */}
-        {/* <Image src={Electronics} alt=""  /> */}
+        <CatgoriesMin />
         <Link href="/ads">test</Link>
       </div>
     </>

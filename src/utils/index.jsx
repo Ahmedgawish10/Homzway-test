@@ -148,7 +148,7 @@ export const createStickyNote = () => {
 };
 
 export const t = (label) => {
-  const langData = store.getState().Language?.translatedData?.file_name?.[label];  
+  const langData = store.getState().Language?.translatedData?.file_name?.[label];
   return langData || enTranslation[label];
 };
 
@@ -259,7 +259,7 @@ const ERROR_CODES = {
   'auth/web-storage-unsupported': t('webStorageUnsupported'),
 };
 
-export const handleFirebaseAuthError = (errorCode) => {  
+export const handleFirebaseAuthError = (errorCode) => {
   if (ERROR_CODES[errorCode]) {
     toast.error(ERROR_CODES[errorCode]);
   } else {
@@ -313,7 +313,7 @@ export const handleFirebaseAuthError = (errorCode) => {
 
 // export const isEmptyObject = (obj) => {
 //   // console.log(obj);
-  
+
 //   return obj && typeof obj === 'object' && Object.keys(obj).length === 0;
 // }
 
@@ -391,12 +391,13 @@ export const handleFirebaseAuthError = (errorCode) => {
 // };
 
 export const validateForm = (formData) => {
-  const { username, email , password } = formData;
-console.log(email);
-
-  if (!username) {
-    toast.error(t('nameRequired'));
-    return false;
+  const { username, email, password, isLogin } = formData;
+  console.log(formData);
+  if (!isLogin) {
+    if (!isLogin && !username) {
+      toast.error(t('nameRequired'));
+      return false;
+    }
   }
   if (!email) {
     toast.error(t('emailRequired'));
@@ -484,15 +485,15 @@ console.log(email);
 
 export function formatLocation(locationUser) {
   // console.log(locationUser);
-  
-  if (typeof locationUser === "object" && locationUser !== null  ) {
-     const formattedAddressParts = locationUser?.formattedAddress?.split(" ");
-     const city = formattedAddressParts?.length > 1 ? formattedAddressParts[1]?.replace(",", "") : "";
-     const state = locationUser?.state?.replace(" Governorate", "") || "";
 
-    return city && state ? `${city}, ${state}` : state ;
-  
-    
+  if (typeof locationUser === "object" && locationUser !== null) {
+    const formattedAddressParts = locationUser?.formattedAddress?.split(" ");
+    const city = formattedAddressParts?.length > 1 ? formattedAddressParts[1]?.replace(",", "") : "";
+    const state = locationUser?.state?.replace(" Governorate", "") || "";
+
+    return city && state ? `${city}, ${state}` : state;
+
+
     return locationUser.city
   } else {
     return locationUser || "Location not available";
