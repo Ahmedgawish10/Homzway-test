@@ -38,16 +38,17 @@ import fetchCategories from "@/store/slices/settingSlice"
 import { fetchSystemSettings } from "@/store/slices/settingSlice";
 import { IoSearchOutline } from "react-icons/io5";
 import { setTranslatedData } from '@/store/slices/languageSlice';
-import LocationComp from "@/components/common/LocationComp";
+import LocationComp from "@/components/common/(location)/LocationComp";
 import { getCityData } from '@/store/slices/locationSlice';
 import MenuMobile from "@/components/common/MenuMobile"
-
+import useLanguage from '@/hooks/useLanguage';
 const Header = ({ ToggleLoginPopupFunc }) => {
     const pathname = usePathname()
     const router = useRouter()
     const dispatch = useDispatch()
     const UserData = useSelector(userSignUpData)
-    
+    const { handleLanguageChange } = useLanguage()
+
 
     const { signOut } = FirebaseData();
     const catCurrentPage = useSelector(CurrentPage)
@@ -64,30 +65,12 @@ const Header = ({ ToggleLoginPopupFunc }) => {
                 // console.log('Fetched Data:', response);
                 let c = await handleLanguageChange(response?.default_language);
                 dispatch(setCurrentLanguage(c?.data?.data ? res?.data?.data : response?.default_language));
-
                 setLoading(false);
             })
             .catch((err) => {
                 console.error('Fetch Error:', err);
             });
     }, [dispatch]);
-    //chnage the language to Ar or En in default lang is En current we customized two languages
-    const handleLanguageChange = async (language_code) => {
-        try {
-            const res = await getLanguageApi.getLanguage({ language_code, type: 'web' });
-            if (res?.data?.error) {
-                toast.error(res?.data?.message);
-            } else {
-                // console.log(res?.data?.data); 
-                dispatch(setCurrentLanguage(language_code));
-                dispatch(setTranslatedData(res?.data?.data));
-                // toast.success(`Language changed to ${language_code}`);
-            }
-        } catch (error) {
-            console.error(error);
-        }
-    };
-
     // dircetion page rtl or ltr
     useEffect(() => {
         if (language == "ar") {
@@ -120,13 +103,13 @@ const Header = ({ ToggleLoginPopupFunc }) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const handleToggleMenu = (newState) => {
         setIsMenuOpen((prev) => {
-            const newState = !prev; 
+            const newState = !prev;
             document.body.style.overflow = newState ? "hidden" : "auto";
             return newState;
-          });
-      };
+        });
+    };
 
-      
+
     return (
         <>
             <header className="bg-white py-3 sm:px-4 fixed top-0 w-full hidden sm:block ">
@@ -165,7 +148,7 @@ const Header = ({ ToggleLoginPopupFunc }) => {
                                             <>
                                                 <span
                                                     className="font-meduim text-[1.2rem]  cursor-pointer "
-                                                    onClick={() => handleLanguageChange(language === 'ar' ? 'en' : 'ar')}>
+                                                    onClick={() => handleLanguageChange(language == "ar" ? "en" : "ar")}>
                                                     {language === "en" ? "ألعربيه" : "English"}
                                                 </span>
                                             </>
@@ -174,7 +157,7 @@ const Header = ({ ToggleLoginPopupFunc }) => {
                                     <li className='flex-1'>
                                         <span onClick={() => setShowLoginPopup(true)}
                                             className="font-meduim text-[1.2rem]  cursor-pointer " >
-                                            {language === "en" ? "Login" : "تسجيل الدخول"}
+                                            {translatedData?.file_name?.login}
                                         </span>
                                     </li>
 
@@ -273,41 +256,23 @@ const Header = ({ ToggleLoginPopupFunc }) => {
                     </div>
                 </div>
             </header>
-
-
-
-            <header className="block sm:hidden tablet-screen relative">
+            {/* tablet navbar and less screen */}
+            <header className="tablet-screen block sm:hidden  relative">
                 <div className=" block md:hidden border-b mb-3 py-2">
                     <div className=" flex items-center relative  md:hidden container mx-auto px-3 " >
-
                         <HiOutlineMenuAlt3 className='text-red-600 text-2xl cursor-pointer ' onClick={handleToggleMenu} />
-
+                        <MenuMobile isMenuOpen={isMenuOpen} handleToggleMenu={handleToggleMenu} setShowLoginPopup={setShowLoginPopup} />
                         {data?.header_logo && (
                             <Link href="/">
-                                <Image
-                                  priority
-                                    src={data.header_logo}
-                                    width={200}
-                                    height={100}
-                                    className="!h-[40px] w-[160px]"
-                                    alt="Logo"
-                                />
+                                <Image priority  src={data.header_logo}  width={200} height={100}
+                                className="!h-[30px] w-[160px]"  alt="Logo"/>
                             </Link>
-
                         )}
-
-                      <MenuMobile isMenuOpen={isMenuOpen}   handleToggleMenu={handleToggleMenu}/>
-                         
-
-
-
                     </div>
-
-
                 </div>
+                {/* location section */}
                 <div className="container mx-auto px-3 sm:px-0">
-                    {isPageScrolled ? "LocationComp" : <LocationComp   />}
-
+                    {isPageScrolled ? "LocationComp" : <LocationComp />}
                     <div className={`flex-1 mt-3  ${isPageScrolled ? " w-[90%] fixed left-1/2 transform -translate-x-1/2 container mx-auto" : ""} top-0 bg-white z-50 shadow-md`}>
                         <div className="relative container mx-auto ">
                             <input
@@ -323,6 +288,7 @@ const Header = ({ ToggleLoginPopupFunc }) => {
                         </div>
                     </div>
                 </div>
+            
             </header>
 
 

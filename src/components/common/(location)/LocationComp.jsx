@@ -1,13 +1,13 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import SeachLocation from "@/components/common/SeachLocationInput";
+import SeachLocation from "@/components/common/(location)/SeachLocationInput";
 import { IoIosArrowDown } from "react-icons/io";
 import { GrLocation } from "react-icons/gr";
-import CurrentLocationMaps from "@/components/common/CurrentLocationMaps";
+import CurrentLocationMaps from "@/components/common/(location)/CurrentLocationMaps";
 import { formatLocation } from '@/utils';
-import { setLocationUser } from '@/store/slices/settingSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCityData } from '@/store/slices/locationSlice';
+import { saveLocationUser } from "@/store/slices/locationSlice";
 
 export default function DropdownMenu() {
     const [isOpen, setIsOpen] = useState(false);
@@ -15,14 +15,12 @@ export default function DropdownMenu() {
     const [currentLocation, setCurrentLocation] = useState("")
     const [IsLocationModalOpen, setIsLocationModalOpen] = useState("")
     const dispatch = useDispatch()
-
-
-    useEffect(() => {
-         setCurrentLocation(language == "ar" ? "مصر" : "Egypt")
-    }, [language]);
     const UserDatad = useSelector(getCityData)
 
-    // console.log(UserDatad);
+    useEffect(() => {
+      setCurrentLocation(UserDatad.country=="" &&language == "ar" ? "مصر" : "Egypt")  
+    }, [language]);
+    const c = useSelector(getCityData)
     
     return (
         <div className="relative inline-block text-left w-full">

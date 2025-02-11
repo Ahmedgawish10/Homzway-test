@@ -1,8 +1,8 @@
 // utils/getAuthHeaders.js
-import { store } from '@/store/store'; // Import store here
+import { store } from '@/store/store'; 
 
 export const getAuthHeaders = () => {
-  const state = store.getState(); // Access store dynamically
+  const state = store.getState(); 
   const token = state?.UserSignup?.data?.token;
   const langCode = state?.CurrentLanguage?.language?.code;
 

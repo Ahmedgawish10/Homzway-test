@@ -390,28 +390,25 @@ export const handleFirebaseAuthError = (errorCode) => {
 //   }
 // };
 
-// export const validateForm = (formData) => {
-//   const { name, email, subject, message } = formData;
+export const validateForm = (formData) => {
+  const { username, email , password } = formData;
+console.log(email);
 
-//   if (!name) {
-//     toast.error(t('nameRequired'));
-//     return false;
-//   }
-//   if (!email) {
-//     toast.error(t('emailRequired'));
-//     return false;
-//   }
-//   if (!subject) {
-//     toast.error(t('subjectRequired'));
-//     return false;
-//   }
-//   if (!message) {
-//     toast.error(t('messageRequired'));
-//     return false;
-//   }
+  if (!username) {
+    toast.error(t('nameRequired'));
+    return false;
+  }
+  if (!email) {
+    toast.error(t('emailRequired'));
+    return false;
+  }
+  if (!password) {
+    toast.error(t('passwordRequired'));
+    return false;
+  }
 
-//   return true;
-// };
+  return true;
+};
 
 // export const isPdf = (url) => url?.toLowerCase().endsWith('.pdf');
 

@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { loadGoogleMaps, t } from '@/utils/index';
-import { MdClose } from 'react-icons/md';
 import { useRouter } from 'next/navigation';
 import { useDispatch, useSelector } from 'react-redux';
 import { BiCurrentLocation } from 'react-icons/bi';
@@ -10,30 +9,28 @@ import { getKilometerRange, saveLocationUser, setKilometerRange } from '@/store/
 import { settingsData } from '@/store/slices/settingSlice';
 import { setLocationUser } from '@/store/slices/settingSlice';
 
-const LocationModal = ({ IsLocationModalOpen ,onClose2 }) => {
+const LocationModal = ({ IsLocationModalOpen, onClose2 }) => {
     const dispatch = useDispatch();
     const cityData = useSelector(state => state?.Location?.cityData);
     const lat = cityData?.lat;
     const lng = cityData?.long;
-    const { isLoaded } = loadGoogleMaps();
-    const [googleMaps, setGoogleMaps] = useState(null);
     const router = useRouter();
     const systemSettingsData = useSelector(settingsData);
     const settings = systemSettingsData?.data;
-    const searchBoxRef = useRef(null);
     const [isValidLocation, setIsValidLocation] = useState(false);
-    const [selectedCity, setSelectedCity] = useState(cityData || {}); 
+    const [selectedCity, setSelectedCity] = useState(cityData || {});
     const [KmRange, setKmRange] = useState(0);
     const [position, setPosition] = useState({ lat, lng });
     const appliedKilometer = useSelector(getKilometerRange);
+    const { language, translatedData } = useSelector((state) => state.Language)
 
 
-    const getCurrentLocation = async (e) => {        
-        e.preventDefault();    
+    const getCurrentLocation = async (e) => {
+        e.preventDefault();
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
                 async (position) => {
-                      
+
                     try {
                         const locationData = {
                             latitude: position.coords.latitude,
@@ -89,24 +86,20 @@ const LocationModal = ({ IsLocationModalOpen ,onClose2 }) => {
             toast.error(t('geoLocationNotSupported'));
         }
     };
-
     useEffect(() => {
         setKmRange(appliedKilometer);
     }, []);
 
-    const { language, translatedData } = useSelector((state) => state.Language)
 
     return (
         <div className={`modal-overlay `}>
             <div className="modal-content">
                 <div className="modal-header" >
-                    {/* <h5 className='head_loc'>{selectedCity ? t('editLocation') : t('addLocation')}</h5> */}
                 </div>
                 <div className="modal-body">
                     <div className="location_city">
                         <div className="row loc_input gx-0">
                             <div className="col-8">
-                           
                             </div>
                             <div className="col-4">
                                 <div className="useCurrentLocation px-2">
@@ -115,7 +108,7 @@ const LocationModal = ({ IsLocationModalOpen ,onClose2 }) => {
                                             <BiCurrentLocation className='text-2xl text-red-600' />
                                         </span>
                                         <span className='curr_loc'>
-                                         {translatedData?.file_name?.locateMe ??"Locate m0e"}
+                                            {translatedData?.file_name?.locateMe ?? "Locate m0e"}
                                         </span>
                                     </button>
                                 </div>

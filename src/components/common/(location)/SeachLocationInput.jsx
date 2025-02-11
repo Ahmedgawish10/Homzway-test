@@ -1,11 +1,11 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import CurrentLocationMaps from "@/components/common/CurrentLocationMaps";
+import CurrentLocationMaps from "@/components/common/(location)/CurrentLocationMaps";
 import { IoIosArrowForward } from "react-icons/io";
 import { useDispatch, useSelector } from 'react-redux';
 import { saveLocationUser } from "@/store/slices/locationSlice";
-
+import { getCityData } from "@/store/slices/locationSlice";
 const CitySearch = ({ userLocationFun }) => {
   const [cities, setCities] = useState([]);
   const [governorates, setGovernorates] = useState([]);
@@ -13,6 +13,8 @@ const CitySearch = ({ userLocationFun }) => {
   const [filteredResults, setFilteredResults] = useState([]);
   const { language } = useSelector((state) => state.Language)
   const dispatch = useDispatch()
+  const UserDatad = useSelector(getCityData)
+
   //here i use api to search the city or governmanete of country Egypt
   useEffect(() => {
     const fetchData = async () => {
@@ -77,12 +79,14 @@ const CitySearch = ({ userLocationFun }) => {
 
     return () => clearTimeout(DebounceSearchLocationFn);
   }, [search, cities, governorates]);
-  const userLocation = (value) => {
-    saveLocationUser(value)
+// save the location user using search in governamete
+const userLocation = (locationValue) => {
+    saveLocationUser(locationValue)
   }
+//  func back to egypt
 const backToEgypt=(value)=>{
   saveLocationUser(language == "ar" ? "مصر" : "Egypt")
-  setSearch(language == "ar" ? "" : "")
+   setSearch(language == "ar" ? "" : "")
 }
 
   return (

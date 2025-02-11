@@ -9,10 +9,9 @@ import FirebaseData from '@/config/firebase';
 import { handleFirebaseAuthError, t } from "@/utils";
 import { userSignUpApi } from "@/api/apiCalling";
 import MailSentSucessfully from "@/app/(auth)/MailSentSucessfully";
-
+import { validateForm } from '@/utils';
 const SignUpForm = ({ HideModels }) => {
   const { auth, handleGoogleSignup } = FirebaseData();
-  //  console.log(setX);
 
   const [form, setForm] = useState({
     username: "",
@@ -100,6 +99,7 @@ const SignUpForm = ({ HideModels }) => {
 
   const CreateAccount = async (e) => {
     e.preventDefault();
+    if (!validateForm(form, t)) return;
     try {
       // setShowLoader(true)
       const userCredential = await createUserWithEmailAndPassword(auth, form.email, form.password);
@@ -148,8 +148,8 @@ const SignUpForm = ({ HideModels }) => {
             <div>
               <input
                 type="text"
-                name={translatedData?.file_name?.enterEmail}
-                value={form.username}
+                name="username"
+                value={form.name}
                 onChange={handleInputChange}
                 placeholder={translatedData?.file_name?.enterName}
                 className="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:border-rose-500"
