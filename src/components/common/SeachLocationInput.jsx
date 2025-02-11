@@ -107,7 +107,7 @@ const backToEgypt=(value)=>{
             <li
               onClick={() => userLocation(language == "ar" ? `${city.city_name_ar},${city.governorate_name_ar}` : `${city.city_name_en},${city.governorate_name_en}`)}
               key={city.id}
-              className={`${language == "ar" ? "text-right" : "text-left "}  p-2  mb-1 bg-gray-100 rounded-md hover:bg-gray-200 cursor-pointer transition`} >
+              className={`${language == "ar" ? "text-right" : "text-left "}  p-2  mb-1 hover:bg-[#ff757557] cursor-pointer transition`} >
               <strong className="text-sm">
                 {language == "ar" ? city.city_name_ar : city.city_name_en}
               </strong> ,

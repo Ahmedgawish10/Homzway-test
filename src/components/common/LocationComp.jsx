@@ -38,7 +38,7 @@ export default function DropdownMenu() {
                     <span className={` ${language == "ar" ? " absolute top-1/2  right-5 transform -translate-x-1/2 -translate-y-1/2" : "absolute top-1/2  left-5 transform -translate-x-1/2 -translate-y-1/2"}  text-2xl text-red-600`}><GrLocation /></span>
                     <span className={` text-sm md:text-[14px] truncate ${language == "ar" ? "ps-12" : "px-6"} `}>
                          {UserDatad?.lat!==""?formatLocation(UserDatad):currentLocation}
-                         {formatLocation(UserDatad)}
+                         
                           </span>
                     {isOpen ? <IoIosArrowDown className="rotate-[180deg] text-2xl" /> : <IoIosArrowDown className="text-2xl" />}
                 </button>

@@ -109,7 +109,7 @@ const LocationModal = ({ IsLocationModalOpen ,onClose2 }) => {
                            
                             </div>
                             <div className="col-4">
-                                <div className="useCurrentLocation ">
+                                <div className="useCurrentLocation px-2">
                                     <button onClick={getCurrentLocation} className=" flex gap-2 mt-3">
                                         <span>
                                             <BiCurrentLocation className='text-2xl text-red-600' />
