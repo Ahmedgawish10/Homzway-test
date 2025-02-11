@@ -44,7 +44,7 @@ export const { setCityData, setIsBrowserSupported, setKilometerRange, setMinLeng
 
 
 // Action to store location 
-export const saveCity = (data) => {
+export const saveLocationUser = (data) => {    
     store.dispatch(setCityData({ data }));
 }
 

@@ -7,6 +7,7 @@ import CurrentLocationMaps from "@/components/common/CurrentLocationMaps";
 import { formatLocation } from '@/utils';
 import { setLocationUser } from '@/store/slices/settingSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import { getCityData } from '@/store/slices/locationSlice';
 
 export default function DropdownMenu() {
     const [isOpen, setIsOpen] = useState(false);
@@ -15,18 +16,13 @@ export default function DropdownMenu() {
     const [IsLocationModalOpen, setIsLocationModalOpen] = useState("")
     const dispatch = useDispatch()
 
-    const userLocationFun = (userLoaction) => {
-        setCurrentLocation(userLoaction)
-       
-    }
 
     useEffect(() => {
          setCurrentLocation(language == "ar" ? "مصر" : "Egypt")
-        // dispatch(setLocationUser(currentLocation))
     }, [language]);
-    // console.log("ll",language);
-    const { locationUser } = useSelector((state) => state.Settings)
+    const UserDatad = useSelector(getCityData)
 
+    // console.log(UserDatad);
     
     return (
         <div className="relative inline-block text-left w-full">
@@ -41,8 +37,8 @@ export default function DropdownMenu() {
                 >
                     <span className={` ${language == "ar" ? " absolute top-1/2  right-5 transform -translate-x-1/2 -translate-y-1/2" : "absolute top-1/2  left-5 transform -translate-x-1/2 -translate-y-1/2"}  text-2xl text-red-600`}><GrLocation /></span>
                     <span className={` text-sm md:text-[14px] truncate ${language == "ar" ? "ps-12" : "px-6"} `}>
-                         {locationUser?formatLocation(locationUser):currentLocation}
-                         
+                         {UserDatad?.lat!==""?formatLocation(UserDatad):currentLocation}
+                         {formatLocation(UserDatad)}
                           </span>
                     {isOpen ? <IoIosArrowDown className="rotate-[180deg] text-2xl" /> : <IoIosArrowDown className="text-2xl" />}
                 </button>
@@ -58,7 +54,7 @@ export default function DropdownMenu() {
                 >
                     <div className="py-1" role="none">
                         <form method="POST" action="#" role="none">
-                            <SeachLocation userLocationFun={userLocationFun} />
+                            <SeachLocation  />
                             <div className="mt-5 hidden ">
                                 <CurrentLocationMaps IsLocationModalOpen={IsLocationModalOpen} />
                             </div>

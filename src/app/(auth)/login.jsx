@@ -112,7 +112,7 @@ const LoginPopup = ({ onClose }) => {
     const SignWithGoogle=async()=>{
        const Response= await handleGoogleSignup();
          if (!Response) {
-            setAllModels(false)
+             onClose()
          }
     }
     const { language,translatedData } = useSelector((state) => state.Language)
@@ -121,7 +121,10 @@ const LoginPopup = ({ onClose }) => {
         // console.log("ggggg");
                 onClose()
                 router.push("/")
+                
     }
+    // console.log(onClose());
+    
     return (
         <>
             {allModels && (

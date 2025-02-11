@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { BiCurrentLocation } from 'react-icons/bi';
 import axios from 'axios';
 import toast from 'react-hot-toast';
-import { getKilometerRange, saveCity, setKilometerRange } from '@/store/slices/locationSlice';
+import { getKilometerRange, saveLocationUser, setKilometerRange } from '@/store/slices/locationSlice';
 import { settingsData } from '@/store/slices/settingSlice';
 import { setLocationUser } from '@/store/slices/settingSlice';
 
@@ -26,19 +26,7 @@ const LocationModal = ({ IsLocationModalOpen ,onClose2 }) => {
     const [KmRange, setKmRange] = useState(0);
     const [position, setPosition] = useState({ lat, lng });
     const appliedKilometer = useSelector(getKilometerRange);
-    const { location } = useSelector((state) => state.Settings)
 
-    useEffect(() => {
-        if (IsLocationModalOpen) {
-            setSelectedCity(cityData || {}); 
-        }
-    }, [IsLocationModalOpen]);
-
-    useEffect(() => {
-        if (isLoaded) {
-            setGoogleMaps(window.google);            
-        }
-    }, [isLoaded]);
 
     const getCurrentLocation = async (e) => {        
         e.preventDefault();    
@@ -83,13 +71,11 @@ const LocationModal = ({ IsLocationModalOpen ,onClose2 }) => {
                             country,
                             formattedAddress: address
                         };
-                         dispatch(setLocationUser(cityData))
                         setPosition({
                             lat: locationData.latitude,
                             lng: locationData.longitude
                         });
-                        saveCity(cityData);
-                        setSelectedCity(cityData);
+                        saveLocationUser(cityData);
                         router.push('/');
                     } catch (error) {
                         console.error('Error fetching location data:', error);
@@ -104,18 +90,11 @@ const LocationModal = ({ IsLocationModalOpen ,onClose2 }) => {
         }
     };
 
-// console.log(selectedCity);
-
-    useEffect(() => {
-        if (window.google && isLoaded) {
-        }
-    }, [isLoaded]);
-
     useEffect(() => {
         setKmRange(appliedKilometer);
     }, []);
 
-
+    const { language, translatedData } = useSelector((state) => state.Language)
 
     return (
         <div className={`modal-overlay `}>
@@ -136,7 +115,7 @@ const LocationModal = ({ IsLocationModalOpen ,onClose2 }) => {
                                             <BiCurrentLocation className='text-2xl text-red-600' />
                                         </span>
                                         <span className='curr_loc'>
-                                            {t('currentLocation')}
+                                         {translatedData?.file_name?.locateMe ??"Locate m0e"}
                                         </span>
                                     </button>
                                 </div>

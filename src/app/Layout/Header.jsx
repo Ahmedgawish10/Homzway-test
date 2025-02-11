@@ -39,7 +39,7 @@ import { fetchSystemSettings } from "@/store/slices/settingSlice";
 import { IoSearchOutline } from "react-icons/io5";
 import { setTranslatedData } from '@/store/slices/languageSlice';
 import LocationComp from "@/components/common/LocationComp";
-
+import { getCityData } from '@/store/slices/locationSlice';
 import MenuMobile from "@/components/common/MenuMobile"
 
 const Header = ({ ToggleLoginPopupFunc }) => {
@@ -47,6 +47,8 @@ const Header = ({ ToggleLoginPopupFunc }) => {
     const router = useRouter()
     const dispatch = useDispatch()
     const UserData = useSelector(userSignUpData)
+    
+
     const { signOut } = FirebaseData();
     const catCurrentPage = useSelector(CurrentPage)
     const [showLoginPopup, setShowLoginPopup] = useState(false);
@@ -112,7 +114,7 @@ const Header = ({ ToggleLoginPopupFunc }) => {
         window.addEventListener("scroll", handleScroll, { passive: true });
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
-    // console.log(data);
+    //  console.log("ffffffff",UserDatad);
 
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -124,6 +126,7 @@ const Header = ({ ToggleLoginPopupFunc }) => {
           });
       };
 
+      
     return (
         <>
             <header className="bg-white py-3 sm:px-4 fixed top-0 w-full hidden sm:block ">
@@ -323,7 +326,7 @@ const Header = ({ ToggleLoginPopupFunc }) => {
             </header>
 
 
-            {showLoginPopup && <LoginPopup onClose={() => setShowLoginPopup(false)} />}
+            {showLoginPopup && <LoginPopup onClose={() => setShowLoginPopup(0)} />}
         </>
     )
 }

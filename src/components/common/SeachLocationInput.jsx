@@ -4,7 +4,8 @@ import Link from "next/link";
 import CurrentLocationMaps from "@/components/common/CurrentLocationMaps";
 import { IoIosArrowForward } from "react-icons/io";
 import { useDispatch, useSelector } from 'react-redux';
-import { setLocationUser } from "@/store/slices/settingSlice";
+import { saveLocationUser } from "@/store/slices/locationSlice";
+
 const CitySearch = ({ userLocationFun }) => {
   const [cities, setCities] = useState([]);
   const [governorates, setGovernorates] = useState([]);
@@ -12,7 +13,6 @@ const CitySearch = ({ userLocationFun }) => {
   const [filteredResults, setFilteredResults] = useState([]);
   const { language } = useSelector((state) => state.Language)
   const dispatch = useDispatch()
-
   //here i use api to search the city or governmanete of country Egypt
   useEffect(() => {
     const fetchData = async () => {
@@ -78,12 +78,12 @@ const CitySearch = ({ userLocationFun }) => {
     return () => clearTimeout(DebounceSearchLocationFn);
   }, [search, cities, governorates]);
   const userLocation = (value) => {
-    //  userLocationFun(value);
-    console.log(value);
-    
-     dispatch(setLocationUser(value))
+    saveLocationUser(value)
   }
-
+const backToEgypt=(value)=>{
+  saveLocationUser(language == "ar" ? "مصر" : "Egypt")
+  setSearch(language == "ar" ? "" : "")
+}
 
   return (
     <div className="h-[300px] overflow-y-auto ">
@@ -94,17 +94,20 @@ const CitySearch = ({ userLocationFun }) => {
           onChange={(e) => setSearch(e.target.value)}
           className="w-full px-3 rounded-md border border-gray-400  py-3 outline-0"
         />
+        <h1 className={`${search==""?"hidden":""}  text-blue-500  cursor-pointer text-start px-3 py-2 `}  onClick={backToEgypt} >
+          {search ? (language === "ar" ? "العودة الي مصر" : "Back to egypt") : ""}
+        </h1>
       </div>
       {/* the current location of user if he slecetd by react google maps */}
       <CurrentLocationMaps />
       {/* here dispay the all cites , governmates of user when he will search  */}
       <ul style={{ listStyle: "none", padding: 0, marginTop: "20px" }}>
         {filteredResults.length > 0 ? (
-          filteredResults.map((city) => (            
+          filteredResults.map((city) => (
             <li
               onClick={() => userLocation(language == "ar" ? `${city.city_name_ar},${city.governorate_name_ar}` : `${city.city_name_en},${city.governorate_name_en}`)}
               key={city.id}
-              className={`${language=="ar"?"text-right":"text-left "}  p-2  mb-1 bg-gray-100 rounded-md hover:bg-gray-200 cursor-pointer transition`} >
+              className={`${language == "ar" ? "text-right" : "text-left "}  p-2  mb-1 bg-gray-100 rounded-md hover:bg-gray-200 cursor-pointer transition`} >
               <strong className="text-sm">
                 {language == "ar" ? city.city_name_ar : city.city_name_en}
               </strong> ,
@@ -119,7 +122,7 @@ const CitySearch = ({ userLocationFun }) => {
         )}
       </ul>
       {/* in default display all the governamtes of egypt */}
-      {governorates.length &&
+      {governorates.length && search == "" &&
         governorates.map((governorate) => (
           <h1 className={` ${language == "ar" ? "text-right" : ""} flex justify-between  px-3 hover:bg-[#ff757557] transition-all cursor-pointer py-2 `}
             key={governorate.id} onClick={() => setSearch(language === "ar" ? governorate.governorate_name_ar : governorate.governorate_name_en)}>

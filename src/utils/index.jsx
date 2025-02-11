@@ -486,12 +486,17 @@ export const handleFirebaseAuthError = (errorCode) => {
 // };
 
 export function formatLocation(locationUser) {
-  if (typeof locationUser === "object" && locationUser !== null) {
-    const formattedAddressParts = locationUser.formattedAddress.split(" ");
-    const city = formattedAddressParts.length > 1 ? formattedAddressParts[1].replace(",", "") : "";
-    const state = locationUser?.state?.replace(" Governorate", "") || "";
+  // console.log(locationUser);
   
-    return city && state ? `${city}, ${state}` : state || "Location not available";
+  if (typeof locationUser === "object" && locationUser !== null  ) {
+     const formattedAddressParts = locationUser?.formattedAddress?.split(" ");
+     const city = formattedAddressParts?.length > 1 ? formattedAddressParts[1]?.replace(",", "") : "";
+     const state = locationUser?.state?.replace(" Governorate", "") || "";
+
+    return city && state ? `${city}, ${state}` : state ;
+  
+    
+    return locationUser.city
   } else {
     return locationUser || "Location not available";
   }
