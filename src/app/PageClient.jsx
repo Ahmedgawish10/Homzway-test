@@ -111,7 +111,7 @@ export default function Home() {
     <>
       <div className="">
         <CatgoriesMin />
-        <Link href="/ads">test</Link>
+        {/* <Link href="/ads">test</Link> */}
       </div>
     </>
   );
