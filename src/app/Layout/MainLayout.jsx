@@ -4,7 +4,6 @@ import LayoutHeader from '@/app/Layout/LayoutHeader.jsx';
 import Loader from '@/components/Loader/Loader.jsx';
 import { usePathname, useRouter } from 'next/navigation';
 import { useDispatch, useSelector } from 'react-redux';
-
 import dynamic from 'next/dynamic';
 import { protectedRoutes } from '@/components/routes/routes';
 import LoginPopup from '@/app/(auth)/login.jsx';
@@ -15,7 +14,7 @@ import { useIsRtl } from '@/utils/index.jsx';
 import {fetchDefaultLanguage} from "@/store/slices/languageSlice.js"
 const PushNotificationLayout = dynamic( () => import('../../components/firebaseNotification/PushNotificationLayout.jsx'), { ssr: false });
 import useLanguage from '@/hooks/useLanguage';
-
+import { setUserVerfied } from '@/store/slices/authSlice.js';
 const Layout = ({ children }) => {
   const pathname = usePathname();
   const router = useRouter();
@@ -28,16 +27,17 @@ const Layout = ({ children }) => {
   const [isUserVerified, setUserIsVerified] = useState(false);
   const [showLoginPopup, setShowLoginPopup] = useState(false);
   const [isAuthChecked, setIsAuthChecked] = useState(false);
-  const [defaultSystem, setDefaultSystem] = useState(false);
-  const { language, translatedData } = useSelector((state) => state.Language)
-  const { data } = useSelector((state) => state.Settings)
+  const { language, translatedData } = useSelector((state) => state.Language);
+  const {userVerfied} = useSelector((state) => state.Auth)
+  
 
   //check if user looged in and is verfied or not ?
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {      
       if (user && user.emailVerified) {
         setUserIsVerified(true);
-        // console.log(user?.emailVerified);
+        dispatch(setUserVerfied(user))
+        console.log(user?.emailVerified);
       } else {
         setUserIsVerified(false);
         // console.log(user?.emailVerified);
@@ -65,7 +65,7 @@ const Layout = ({ children }) => {
       document.documentElement.dir = "ltr";
     }
   }, [language]);
-
+  //  if there is no language get the default language from sysytem 
   useEffect(() => {
     if (translatedData ==null) {
       dispatch(fetchSystemSettings()).then((res) => {
@@ -74,11 +74,10 @@ const Layout = ({ children }) => {
     }
   }, [dispatch ]);
 
-  //  console.log(data);
-
   if (isLoading) {
     return <Loader />;
   }
+  // console.log(userVerfied)
   return (
     <>
       {isAuthChecked && showLoginPopup ? (

@@ -22,7 +22,6 @@ import SsdSlice from './slices/SsdSlice';
 import {thunk} from "redux-thunk"; 
 
 
-// Combine reducers if you have multiple
 const rootReducer = combineReducers({
         Settings: settingsReducer,
         Slider: sliderReducer,

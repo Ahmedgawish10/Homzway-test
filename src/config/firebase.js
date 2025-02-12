@@ -109,7 +109,7 @@ const FirebaseData = () => {
     }
   };
   const signOut = () => {
-    return authentication.signOut();
+    return auth.signOut()
   };
 
   const handleGoogleSignup = async () => {

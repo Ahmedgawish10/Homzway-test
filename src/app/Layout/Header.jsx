@@ -55,11 +55,13 @@ const Header = ({ ToggleLoginPopupFunc }) => {
     const catCurrentPage = useSelector(CurrentPage)
     const { data } = useSelector((state) => state.Settings)
     const { language, translatedData } = useSelector((state) => state.Language)
+    const { userVerfied } = useSelector((state) => state.Auth)
     const { handleLanguageChange } = useLanguage()
     const [showLoginPopup, setShowLoginPopup] = useState(false);
     const [loading, setLoading] = useState(0);
     const [isPageScrolled, setIsPageScrolled] = useState(false);
-  
+    const [isProfileOpen, setIsProfileOpen] = useState(false);
+
     const prevScrollState = useRef(false);
     useEffect(() => {
         const handleScroll = () => {
@@ -89,7 +91,10 @@ const Header = ({ ToggleLoginPopupFunc }) => {
         setShowLoginPopup(true);
         document.body.style.overflow = "hidden";
     }
-    
+    const TooglePoupProfile=()=>{
+        setIsProfileOpen((prev)=>!prev)
+    }
+
     return (
         <>
             <header className="bg-white py-3 z-[5] sm:px-4 fixed top-0 w-full hidden sm:block ">
@@ -114,32 +119,34 @@ const Header = ({ ToggleLoginPopupFunc }) => {
                         </div>
 
                         {/* language & auth(login||user) */}
-                        <div className="md:flex md:items-center md:gap-2">
+                        <div className="flex md:items-center justify-between md:justify-end items-center md:gap-2 flex-1 md:flex-none">
                             <nav aria-label="Global" className="">
                                 <ul className="flex items-center gap-6 text-sm">
                                     <li className=''>
-                                      
-                                            <>
-                                                <span
-                                                    className="font-meduim text-[1.2rem]  cursor-pointer "
-                                                    onClick={() => handleLanguageChange(language)}>
-                                                    {language === "en" ? "ألعربيه" : "English"}
-                                                </span>
-                                            </>
-                                       
+
+                                        <>
+                                            <span
+                                                className="font-meduim text-[1.2rem]  cursor-pointer "
+                                                onClick={() => handleLanguageChange(language)}>
+                                                {language === "en" ? "ألعربيه" : "English"}
+                                            </span>
+                                        </>
+
                                     </li>
-                                    <li className='flex-1'>
-                                        <span onClick={TooglePoupLogin}
-                                            className="font-meduim text-[1.2rem]  cursor-pointer " >
-                                            {translatedData?.file_name?.login}
-                                        </span>
-                                    </li>
+                                    {!userVerfied?.emailVerified && (
+                                        <li className='flex-1'>
+                                            <span onClick={TooglePoupLogin}
+                                                className="font-meduim text-[1.2rem]  cursor-pointer " >
+                                                {translatedData?.file_name?.login}
+                                            </span>
+                                        </li>
+                                    )}
 
 
                                 </ul>
                             </nav>
 
-                            <div className="hidden md:relative md:block">
+                            <div className=" md:relative flex  gap-2">
                                 <div className="Sell">
                                     <span
                                         onClick={() => setShowLoginPopup(true)}
@@ -148,79 +155,69 @@ const Header = ({ ToggleLoginPopupFunc }) => {
                                         <span className="text-xl font-medium ">{translatedData?.file_name?.selling}  </span>
                                     </span>
                                 </div>
+                                {userVerfied?.emailVerified && (
+                                    <div className="profile order-[-2] ">
+                                        <div className="profile-img h-full flex items-center">
+                                            <button type="button"
+                                                onClick={TooglePoupProfile}
 
-                                <div className="profile hidden">
-                                    <button
-                                        type="button"
-                                        className="overflow-hidden rounded-full border border-gray-300 shadow-inner"
-                                    >
-                                        <span className="sr-only">Toggle dashboard menu</span>
-
-                                        <img
-                                            src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                                            alt=""
-                                            className="size-10 object-cover"
-                                        />
-                                    </button>
-
-                                    <div
-                                        className="absolute end-0 z-10 mt-0.5 w-56 divide-y divide-gray-100 rounded-md border border-gray-100 bg-white shadow-lg"
-                                        role="menu"
-                                    >
-                                        <div className="p-2">
-                                            <a
-                                                href="#"
-                                                className="block rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
-                                                role="menuitem"
-                                            >
-                                                My profile
-                                            </a>
-
-                                            <a
-                                                href="#"
-                                                className="block rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
-                                                role="menuitem"
-                                            >
-                                                Billing summary
-                                            </a>
-
-                                            <a
-                                                href="#"
-                                                className="block rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
-                                                role="menuitem"
-                                            >
-                                                Team settings
-                                            </a>
+                                                className="overflow-hidden rounded-full border border-gray-300 shadow-inner">
+                                                <img
+                                                    src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                                                    alt=""
+                                                    className="size-10 object-cover" />
+                                            </button>
                                         </div>
 
-                                        <div className="p-2">
-                                            <form method="POST" action="#">
+                                       {isProfileOpen&&( <div
+                                            className="absolute end-0 z-10 mt-4 w-56 divide-y divide-gray-100 rounded-md border border-gray-100 bg-white shadow-lg"
+                                            role="menu"
+                                        >
+                                            <div className="p-2">
+                                                <a
+                                                    href="#"
+                                                    className="block rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
+                                                    role="menuitem"
+                                                >
+                                                    My profile
+                                                </a>
+
+                                                <a
+                                                    href="#"
+                                                    className="block rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
+                                                    role="menuitem"
+                                                >
+                                                    Billing summary
+                                                </a>
+
+                                                <a
+                                                    href="#"
+                                                    className="block rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
+                                                    role="menuitem"
+                                                >
+                                                    Team settings
+                                                </a>
+                                            </div>
+
+                                            <div className="p-2">
+                                                {/* <form method="POST" action="#"> */}
                                                 <button
-                                                    type="submit"
+                                                    onClick={signOut}
+                                                    // type="submit"
                                                     className="flex w-full items-center gap-2 rounded-lg px-4 py-2 text-sm text-red-700 hover:bg-red-50"
                                                     role="menuitem"
                                                 >
-                                                    <svg
-                                                        xmlns="http://www.w3.org/2000/svg"
-                                                        fill="none"
-                                                        viewBox="0 0 24 24"
-                                                        strokeWidth="1.5"
-                                                        stroke="currentColor"
-                                                        className="size-4"
-                                                    >
-                                                        <path
-                                                            strokeLinecap="round"
-                                                            strokeLinejoin="round"
-                                                            d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3"
-                                                        />
-                                                    </svg>
 
                                                     Logout
                                                 </button>
-                                            </form>
+                                                {/* </form> */}
+                                            </div>
                                         </div>
+                                       )}
+
                                     </div>
-                                </div>
+                                )}
+
 
                             </div>
 
@@ -242,7 +239,7 @@ const Header = ({ ToggleLoginPopupFunc }) => {
                                     className="!h-[30px] w-[160px]" alt="Logo" />
                             </Link>
                         )}
-                        <h2>gggggggggg</h2>
+                        <h2>hi</h2>
                     </div>
                 </div>
                 {/* location section */}

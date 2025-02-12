@@ -4,7 +4,7 @@ import { store } from "../store";  // Ensure this import path is correct
 const initialState = {
     data: null,
     loading: false,
-    authUser:null
+    userVerfied:null
 };
 
 export const authSlice = createSlice({
@@ -21,13 +21,13 @@ export const authSlice = createSlice({
         userLogout: (usersignup) => {
             usersignup.data = null; 
         },
-        loggedUser: (usersignup,action) => {
-            usersignup.authUser = action.payload; 
+        setUserVerfied: (state,action) => {
+            state.userVerfied = action.payload; 
         }
     },
 });
 
-export const { updateDataSuccess, userUpdateData, userLogout,loggedUser } = authSlice.actions;
+export const { updateDataSuccess, userUpdateData, userLogout,setUserVerfied } = authSlice.actions;
 export default authSlice.reducer;
 
 export const loadUpdateData = (data) => {

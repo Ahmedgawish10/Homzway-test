@@ -16,18 +16,10 @@ export const fetchDefaultLanguage = createAsyncThunk(
   async (language_code, { rejectWithValue }) => {
     try {
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_END_POINT}get-languages`, 
-        { 
-          params: { 
-            language_code, 
-            type: "web"
-          } 
-        }
-      );
-
-      console.log("API Response:", response);
+        `${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_END_POINT}get-languages`,{ 
+            params: {  language_code,type: "web"  }
+        });
       return response?.data?.data;
-      
     } catch (error) {
       console.error("Error fetching get-languages Data:", error);
       return rejectWithValue(

@@ -26,7 +26,8 @@ import { usePathname, useRouter } from "next/navigation";
 import FirebaseData from '@/config/firebase';
 import CreateAccount from '@/app/(auth)/CreateAccount';
 import { validateForm } from '@/utils';
-import { loggedUser } from '@/store/slices/authSlice';
+import { setUserVerfied } from '@/store/slices/authSlice.js';
+
 const LoginPopup = ({ onClose }) => {
     const router = useRouter()
     const pathname = usePathname()
@@ -84,7 +85,7 @@ const LoginPopup = ({ onClose }) => {
                         fcm_id: fetchFCM || "",
                         type: "email"
                     });
-                    dispatch(loggedUser(response.data))
+                    dispatch(setUserVerfied(user))
                     const data = response.data;
                     setAllModels(false)
                     if (data.error) {
