@@ -124,6 +124,7 @@ const LoginPopup = ({ onClose }) => {
         setAllModels(0)
         router.push("/")
     }
+//    console.log(9,translatedData?.file_name);
    
     return (
         <>
@@ -167,7 +168,7 @@ const LoginPopup = ({ onClose }) => {
                                                     src={GoogleIcon} alt="GitHub"
                                                     className="h-[25px] w-[25px]" />
                                                 <span className='text-[16px] font-bold'> 
-                                                       {translatedData?.file_name?.orSignInWith } 
+                                                       {translatedData?.file_name?.orSignInWith} 
                                                        <span className="px-2"> {translatedData?.file_name?.google } </span>
                                                 </span>
 

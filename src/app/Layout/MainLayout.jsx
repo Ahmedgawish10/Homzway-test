@@ -12,24 +12,25 @@ import FirebaseData from '@/config/firebase.js';
 import { onAuthStateChanged } from 'firebase/auth';
 import { fetchSystemSettings } from '@/store/slices/SsdSlice.js';
 import { useIsRtl } from '@/utils/index.jsx';
-
-const PushNotificationLayout = dynamic(
-  () => import('../../components/firebaseNotification/PushNotificationLayout.jsx'),
-  { ssr: false }
-);
+import {fetchDefaultLanguage} from "@/store/slices/languageSlice.js"
+const PushNotificationLayout = dynamic( () => import('../../components/firebaseNotification/PushNotificationLayout.jsx'), { ssr: false });
+import useLanguage from '@/hooks/useLanguage';
 
 const Layout = ({ children }) => {
   const pathname = usePathname();
   const router = useRouter();
   const { auth } = FirebaseData();
+  const dispatch = useDispatch()
+  const { handleLanguageChange } = useLanguage()
   const isRtl = useIsRtl();
   const isProtectedRoute = protectedRoutes.some((route) => route.test(pathname));
 
   const [isLoading, setIsLoading] = useState(true);
   const [isUserVerified, setUserIsVerified] = useState(false);
   const [showLoginPopup, setShowLoginPopup] = useState(false);
-  const [isAuthChecked, setIsAuthChecked] = useState(false); 
+  const [isAuthChecked, setIsAuthChecked] = useState(false);
   const { language, translatedData } = useSelector((state) => state.Language)
+  const { data } = useSelector((state) => state.Settings)
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -42,7 +43,7 @@ const Layout = ({ children }) => {
       }
       setIsAuthChecked(true);
       setIsLoading(false);
-      document.body.style.overflow = 'auto'; 
+      document.body.style.overflow = 'auto';
     });
 
 
@@ -54,25 +55,37 @@ const Layout = ({ children }) => {
       if (isProtectedRoute && !isUserVerified) {
         setShowLoginPopup(true);
       } else {
-        setShowLoginPopup(false); 
+        setShowLoginPopup(false);
       }
     }
   }, [isProtectedRoute, isUserVerified, isAuthChecked]);
 
-    useEffect(() => {      
-        if (isRtl) {          
-            document.documentElement.dir = "rtl";
-        } else {
-            document.documentElement.dir = "ltr";
-        }
-    }, [language]);
+  useEffect(() => {
+    if (isRtl) {
+      document.documentElement.dir = "rtl";
+    } else {
+      document.documentElement.dir = "ltr";
+    }
+  }, [language]);
 
-  if (isLoading) {     
+  useEffect(() => {
+    // console.log(translatedData);
+
+       if(!translatedData){
+        // console.log(translatedData);
+
+            dispatch(fetchDefaultLanguage("en"))
+       }
+    
+  }, []);
+
+
+  if (isLoading) {
     return <Loader />;
   }
   return (
     <>
-      {isAuthChecked && showLoginPopup ? ( 
+      {isAuthChecked && showLoginPopup ? (
         <LoginPopup onClose={() => setShowLoginPopup(false)} />
       ) : (
         <PushNotificationLayout>

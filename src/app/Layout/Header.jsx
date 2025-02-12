@@ -77,8 +77,6 @@ const Header = ({ ToggleLoginPopupFunc }) => {
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
     //  console.log("ffffffff",UserDatad);
-
-
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const handleToggleMenu = (newState) => {
         setIsMenuOpen((prev) => {
@@ -91,8 +89,7 @@ const Header = ({ ToggleLoginPopupFunc }) => {
         setShowLoginPopup(true);
         document.body.style.overflow = "hidden";
     }
-
-
+    
     return (
         <>
             <header className="bg-white py-3 z-[5] sm:px-4 fixed top-0 w-full hidden sm:block ">

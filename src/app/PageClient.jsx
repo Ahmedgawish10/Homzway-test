@@ -13,16 +13,19 @@ import { CategoryData } from "@/store/slices/categorySlice";
 import { fetchCategories } from "@/store/slices/categorySlice";
 import { fetchAllProducts, fetchFeaturedSections } from '@/store/slices/productsSlice';
 import { setJsonLdData } from "@/store/slices/SeoJsonLdSlice";
+import { fetchSystemSettings } from './../../store/slices/SsdSlice';
 const CatgoriesMin = dynamic(() => import('@/components/categories/CatgoriesMin'), { ssr: false });
 
 export default function Home() {
   const dispatch = useDispatch();
   const { cateData, totalCatItems, catLastPage, catCurrentPage } = useSelector((state) => state.Category);
   const { productsData, featuredSections } = useSelector((state) => state.Products);
-
-  useEffect(() => {
+    
+  useEffect(() => {    
     if (cateData.length === 0) {
       dispatch(fetchCategories());
+      console.log("rrr");
+      
     }
     if (productsData.length === 0) {
       dispatch(fetchAllProducts());
