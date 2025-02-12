@@ -5,7 +5,7 @@ import Loader from '@/components/Loader/Loader.jsx';
 import { usePathname, useRouter } from 'next/navigation';
 import { useDispatch, useSelector } from 'react-redux';
 import dynamic from 'next/dynamic';
-import { protectedRoutes } from '@/components/routes/routes';
+import { protectedRoutes } from '@/components/privateRoutes/routes.jsx';
 import LoginPopup from '@/app/(auth)/login.jsx';
 import FirebaseData from '@/config/firebase.js';
 import { onAuthStateChanged } from 'firebase/auth';
@@ -13,14 +13,12 @@ import { fetchSystemSettings } from '@/store/slices/settingSlice.js';
 import { useIsRtl } from '@/utils/index.jsx';
 import {fetchDefaultLanguage} from "@/store/slices/languageSlice.js"
 const PushNotificationLayout = dynamic( () => import('../../components/firebaseNotification/PushNotificationLayout.jsx'), { ssr: false });
-import useLanguage from '@/hooks/useLanguage';
 import { setUserVerfied } from '@/store/slices/authSlice.js';
 const Layout = ({ children }) => {
   const pathname = usePathname();
   const router = useRouter();
   const { auth } = FirebaseData();
   const dispatch = useDispatch()
-  const { handleLanguageChange } = useLanguage()
   const isRtl = useIsRtl();
   const isProtectedRoute = protectedRoutes.some((route) => route.test(pathname));
   const [isLoading, setIsLoading] = useState(true);
@@ -28,21 +26,17 @@ const Layout = ({ children }) => {
   const [showLoginPopup, setShowLoginPopup] = useState(false);
   const [isAuthChecked, setIsAuthChecked] = useState(false);
   const { language, translatedData } = useSelector((state) => state.Language);
-  const {userVerfied} = useSelector((state) => state.Auth)
   
-
   //check if user looged in and is verfied or not ?
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {      
       if (user && user.emailVerified) {
         setUserIsVerified(true);
-        dispatch(setUserVerfied(user))
-        console.log(user?.emailVerified);
+        dispatch(setUserVerfied(user));
+        console.log("user is vervied",user?.emailVerified);
       } else {
         setUserIsVerified(false);
-        // console.log(user?.emailVerified);
       }
-      setIsAuthChecked(true);
       setIsLoading(false);
     });
     return () => unsubscribe();
@@ -77,7 +71,7 @@ const Layout = ({ children }) => {
   if (isLoading) {
     return <Loader />;
   }
-  // console.log(userVerfied)
+
   return (
     <>
       {isAuthChecked && showLoginPopup ? (

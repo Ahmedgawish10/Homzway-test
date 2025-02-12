@@ -13,6 +13,7 @@
 * {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
   /* font-family: var(--primary-font); */
 
   box-sizing: border-box;
@@ -23,15 +24,6 @@ body{
 
 }
 
-.gg{
-  /* height: 100vh; */
-  transition:  1s;
-  visibility: visible;
-  z-index: 0;
-}
 
-.ggg{
-  /* height: 0px; */
-  visibility: hidden;
-  transition:  5s;
-}
+
+

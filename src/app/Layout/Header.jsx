@@ -1,15 +1,10 @@
 'use client'
 import React, { useEffect, useState, useRef } from 'react'
 import Image from 'next/image'
-import { IoIosAddCircleOutline } from "react-icons/io";
-import { GiHamburgerMenu } from "react-icons/gi";
 import dynamic from 'next/dynamic';
-import { GrLocation } from "react-icons/gr";
-import { FaSearch } from 'react-icons/fa';
 import Link from 'next/link';
 // import 'swiper/css';
 import { getSlug, isEmptyObject, placeholderImage, t, truncate } from '@/utils/index';
-import { BiPlanet } from 'react-icons/bi';
 import { useDispatch, useSelector } from 'react-redux';
 import { MdClose } from 'react-icons/md';
 import { logoutSuccess, userSignUpData } from '@/store/slices/authSlice';
@@ -45,13 +40,13 @@ import useLanguage from '@/hooks/useLanguage';
 import { handleFirebaseAuthError } from "@/utils";
 import { useIsRtl } from '@/utils/index';
 import { BiChat, BiDollarCircle, BiReceipt } from "react-icons/bi"
-import { FaAngleDown } from "react-icons/fa6"
 import { FiUser } from "react-icons/fi"
 import { IoMdNotificationsOutline } from "react-icons/io"
 import { LiaAdSolid } from "react-icons/lia"
 import { LuHeart } from "react-icons/lu"
 import { RiLogoutCircleLine } from "react-icons/ri"
-import { MdDomainVerification, MdOutlineRateReview } from "react-icons/md"
+import {MdOutlineRateReview } from "react-icons/md"
+
 const Header = ({ ToggleLoginPopupFunc }) => {
     const pathname = usePathname()
     const router = useRouter()
@@ -232,7 +227,7 @@ const Header = ({ ToggleLoginPopupFunc }) => {
                         <div className="flex-1  ">
                             <div className="relative">
                                 <form action="" >
-                                    <input className="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md pl-3 pr-28 py-4 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
+                                    <input className="w-full bg-transparent placeholder:text-[17px] md:placeholder:text-xl placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md pl-3 pr-28 py-4 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
                                         placeholder={t('searchItem')} />
                                     <button className="absolute h-full top-0  right-[1px] flex items-center rounded bg-red-600 py-1 px-3 border border-transparent text-center text-sm text-white transition-all shadow-sm hover:shadow focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                                         type="submit" >
@@ -246,15 +241,10 @@ const Header = ({ ToggleLoginPopupFunc }) => {
                             <nav aria-label="Global" className="">
                                 <ul className="flex items-center gap-6 text-sm">
                                     <li className=''>
-
-                                        <>
-                                            <span
-                                                className="font-meduim text-[1.2rem]  cursor-pointer "
+                                            <span className="font-meduim text-[1.2rem]  cursor-pointer hover:text-red-700 transition-all "
                                                 onClick={() => handleLanguageChange(language)}>
                                                 {language === "en" ? "ألعربيه" : "English"}
                                             </span>
-                                        </>
-
                                     </li>
                                     {!userVerfied?.emailVerified && (
                                         <li className='flex-1'>
@@ -264,8 +254,6 @@ const Header = ({ ToggleLoginPopupFunc }) => {
                                             </span>
                                         </li>
                                     )}
-
-
                                 </ul>
                             </nav>
 
@@ -342,7 +330,6 @@ const Header = ({ ToggleLoginPopupFunc }) => {
                                     className="!h-[30px] w-[160px]" alt="Logo" />
                             </Link>
                         )}
-                        <h2>hi</h2>
                     </div>
                 </div>
                 {/* location section */}
@@ -351,7 +338,7 @@ const Header = ({ ToggleLoginPopupFunc }) => {
                     <div className={`flex-1 mt-3  ${isPageScrolled ? " w-[90%] fixed left-1/2 transform -translate-x-1/2 container mx-auto" : ""} top-0 bg-white z-50 shadow-md`}>
                         <div className="relative container mx-auto ">
                             <input
-                                className="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md pl-3 pr-28 py-4 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
+                                className="w-full bg-transparent placeholder:text-[18px] placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md pl-3 pr-28 py-4 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
                                 placeholder={t('searchItem')}
                             />
                             <button

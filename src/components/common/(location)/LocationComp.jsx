@@ -27,14 +27,14 @@ export default function DropdownMenu() {
             <div>
                 <button
                     type="button"
-                    className="flex relative justify-between w-full  gap-x-1.5 rounded-md px-3 py-4 text-sm font-semibold text-gray-900 ring-1 shadow-xs ring-gray-300 ring-inset hover:bg-gray-50"
+                    className="flex relative justify-between w-full  gap-x-1.5 rounded-md px-3 py-4  font-semibold text-gray-900 ring-1 shadow-xs ring-gray-300 ring-inset hover:bg-gray-50"
                     id="menu-button"
                     aria-expanded={isOpen}
                     aria-haspopup="true"
                     onClick={() => setIsOpen(!isOpen)}
                 >
                     <span className={` ${language == "ar" ? " absolute top-1/2  right-5 transform -translate-x-1/2 -translate-y-1/2" : "absolute top-1/2  left-5 transform -translate-x-1/2 -translate-y-1/2"}  text-2xl text-red-600`}><GrLocation /></span>
-                    <span className={` text-sm md:text-[14px] truncate ${language == "ar" ? "ps-12" : "px-6"} `}>
+                    <span className={` text-[18px] truncate ${language == "ar" ? "ps-12" : "px-6"} `}>
                          {UserDatad?.lat!==""?formatLocation(UserDatad):currentLocation}
                          
                           </span>

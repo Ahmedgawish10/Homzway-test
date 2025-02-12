@@ -13,10 +13,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import GoogleIcon from "../../../public/icons/google.svg";
 import FacebookIcon from "../../../public/icons/facebook.svg";
 import Logo1 from "../../../public/icons/logo1.svg";
-import mailVerification from '../../../public/icons/mailVerification.svg'
 import Image from "next/image";
-// import { FaRegEye, FaRegEyeSlash } from "react-icons/fa6";
-import { GoogleAuthProvider, RecaptchaVerifier, createUserWithEmailAndPassword, getAuth, sendEmailVerification, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPhoneNumber, signInWithPopup } from "firebase/auth";
+import {  sendEmailVerification,  signInWithPhoneNumber, signInWithPopup } from "firebase/auth";
 import toast from "react-hot-toast";
 import { handleFirebaseAuthError, t } from "@/utils";
 import { userSignUpApi } from "@/api/apiCalling";

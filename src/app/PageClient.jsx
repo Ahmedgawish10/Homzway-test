@@ -1,20 +1,14 @@
 "use client";
 import Image from "next/image";
-import dynamic from 'next/dynamic';
-import Electronics from "../../public/icons/electronics.svg";
 import Property from "../../public/icons/property.svg";
-import JsonLd from "@/app/_seo/JsonLd";
+import dynamic from 'next/dynamic';
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useMemo, useCallback } from "react";
-import { setCateData } from "@/store/slices/categorySlice";
 import Link from "next/link";
-import axios from "axios";
-import { CategoryData } from "@/store/slices/categorySlice";
 import { fetchCategories } from "@/store/slices/categorySlice";
 import { fetchAllProducts, fetchFeaturedSections } from '@/store/slices/productsSlice';
 import { setJsonLdData } from "@/store/slices/SeoJsonLdSlice";
-import { fetchSystemSettings } from './../../store/slices/SsdSlice';
-const CatgoriesMin = dynamic(() => import('@/components/categories/CatgoriesMin'), { ssr: false });
+const MainCatgories = dynamic(() => import('@/components/categories/MainCatgories'), { ssr: false });
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -23,9 +17,7 @@ export default function Home() {
     
   useEffect(() => {    
     if (cateData.length === 0) {
-      dispatch(fetchCategories());
-      console.log("rrr");
-      
+      dispatch(fetchCategories());      
     }
     if (productsData.length === 0) {
       dispatch(fetchAllProducts());
@@ -113,8 +105,8 @@ export default function Home() {
 
   return (
     <>
-      <div className="">
-        <CatgoriesMin />
+      <div className="home">
+        <MainCatgories />
         <Link href="/ads">test</Link>
       </div>
     </>
