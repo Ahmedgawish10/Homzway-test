@@ -37,7 +37,7 @@ function CatgoriesMin() {
             {
                 breakpoint: 400,
                 settings: {
-                    slidesToShow: 2,
+                    slidesToShow: 1,
                     slidesToScroll: 1,
                 },
             },
@@ -95,8 +95,8 @@ function CatgoriesMin() {
                 </div>
                 {/* catgory style for tablets and less screens*/}
                 <div className="sm:hidden catgories-mobile overflow-hidden bg-red-000 py-[30px]">
-                    <h2 className="text-[18px] pb-6 flex justify-between">
-                        <span> {t('popularCategories')}</span>
+                <h2 className={`   ${language=="en"?"text-[15px]":"text-[19px]"} pb-6 flex justify-between`}>
+                <span> {t('popularCategories')}</span>
                         <AllCategories />
                     </h2>
                     <div className=" container mx-auto ">

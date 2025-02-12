@@ -182,7 +182,7 @@ export default function DropdownMenu({ isMenuOpen, setShowLoginPopup }) {
       </ul>
 
       {/* Follow Us section */}
-      <div className="py-8">
+      <div className="py-4">
         <h1 className="text-center mb-3">Follow Us</h1>
         <div className="bg-white w-full h-auto flex items-center justify-center gap-2 flex-wrap">
           {[
