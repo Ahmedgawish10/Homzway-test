@@ -42,9 +42,16 @@ import LocationComp from "@/components/common/(location)/LocationComp";
 import { getCityData } from '@/store/slices/locationSlice';
 import MenuMobile from "@/components/common/MenuMobile"
 import useLanguage from '@/hooks/useLanguage';
-
+import { handleFirebaseAuthError } from "@/utils";
 import { useIsRtl } from '@/utils/index';
-
+import { BiChat, BiDollarCircle, BiReceipt } from "react-icons/bi"
+import { FaAngleDown } from "react-icons/fa6"
+import { FiUser } from "react-icons/fi"
+import { IoMdNotificationsOutline } from "react-icons/io"
+import { LiaAdSolid } from "react-icons/lia"
+import { LuHeart } from "react-icons/lu"
+import { RiLogoutCircleLine } from "react-icons/ri"
+import { MdDomainVerification, MdOutlineRateReview } from "react-icons/md"
 const Header = ({ ToggleLoginPopupFunc }) => {
     const pathname = usePathname()
     const router = useRouter()
@@ -61,25 +68,23 @@ const Header = ({ ToggleLoginPopupFunc }) => {
     const [loading, setLoading] = useState(0);
     const [isPageScrolled, setIsPageScrolled] = useState(false);
     const [isProfileOpen, setIsProfileOpen] = useState(false);
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+    // header func sticky on scroll 
     const prevScrollState = useRef(false);
     useEffect(() => {
         const handleScroll = () => {
             const shouldBeScrolled = window.scrollY > 200;
-            // Only update state if it has actually changed            
             if (prevScrollState.current !== shouldBeScrolled) {
                 prevScrollState.current = shouldBeScrolled;
                 setIsPageScrolled(shouldBeScrolled);
                 // console.log("Scroll state changed:", shouldBeScrolled);
             }
         };
-
-        // Use passive listener for better performance
         window.addEventListener("scroll", handleScroll, { passive: true });
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
-    //  console.log("ffffffff",UserDatad);
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    // toogle menu in tablet or less screen
     const handleToggleMenu = (newState) => {
         setIsMenuOpen((prev) => {
             const newState = !prev;
@@ -87,14 +92,133 @@ const Header = ({ ToggleLoginPopupFunc }) => {
             return newState;
         });
     };
+    // toogle loggin model
     const TooglePoupLogin = () => {
         setShowLoginPopup(true);
         document.body.style.overflow = "hidden";
     }
-    const TooglePoupProfile=()=>{
-        setIsProfileOpen((prev)=>!prev)
+    // open profile user toggle
+    const TooglePoupProfile = () => {
+        setIsProfileOpen((prev) => !prev)
     }
-
+    // userListsProfile
+    const userListsProfile = [
+        {
+            key: 1,
+            href: '/profile/edit-profile',
+            label: (
+                <div className="profDropIconCont flex gap-2">
+                    <span><FiUser size={16} /></span>
+                    <span>{t('myProfile')}</span>
+                </div>
+            )
+        },
+        {
+            key: 2,
+            href: '/notifications',
+            label: (
+                <div className="profDropIconCont flex gap-2">
+                    <span><IoMdNotificationsOutline size={16} /></span>
+                    <span>{t('notification')}</span>
+                </div>
+            )
+        },
+        {
+            key: 3,
+            href: '/chat',
+            label: (
+                <div className="profDropIconCont flex gap-2">
+                    <span><BiChat size={16} /></span>
+                    <span>{t('chat')}</span>
+                </div>
+            )
+        },
+        {
+            key: 4,
+            href: '/user-subscription',
+            label: (
+                <div className="profDropIconCont flex gap-2">
+                    <span><BiDollarCircle size={16} /></span>
+                    <span>{t('subscription')}</span>
+                </div>
+            )
+        },
+        {
+            key: 5,
+            href: '/ads',
+            label: (
+                <div className="profDropIconCont flex gap-2">
+                    <span><LiaAdSolid size={16} /></span>
+                    <span>{t('ads')}</span>
+                </div>
+            )
+        },
+        {
+            key: 6,
+            href: '/favourites',
+            label: (
+                <div className="profDropIconCont flex gap-2">
+                    <span><LuHeart size={16} /></span>
+                    <span>{t('favorites')}</span>
+                </div>
+            )
+        },
+        {
+            key: 7,
+            href: '/transactions',
+            label: (
+                <div className="profDropIconCont flex gap-2">
+                    <span><BiReceipt size={16} /></span>
+                    <span>{t('transaction')}</span>
+                </div>
+            )
+        },
+        {
+            key: 8,
+            href: '/reviews',
+            label: (
+                <div className="profDropIconCont flex gap-2">
+                    <span><MdOutlineRateReview size={16} /></span>
+                    <span>{t('myReviews')}</span>
+                </div>
+            )
+        },
+        {
+            key: 9,
+            label: (
+                <div className="profDropIconCont flex gap-2">
+                    <span><RiLogoutCircleLine size={16} /></span>
+                    <span>{t('signOut')}</span>
+                </div>
+            )
+        },
+    ]
+    // handle logout func
+    const handleLogout = () => {
+        Swal.fire({
+            title: `${t('areYouSure')} \u200E`,
+            text: `${t('logoutConfirmation')} \u200E`,
+            icon: "warning",
+            showCancelButton: true,
+            customClass: {
+                confirmButton: 'Swal-confirm-buttons',
+                cancelButton: "Swal-cancel-buttons"
+            },
+            confirmButtonText: t("yes"),
+        }).then((result) => {
+            if (result.isConfirmed) {
+             // Clear the recaptchaVerifier by setting it to null
+                // window.recaptchaVerifier = null;
+                // logoutSuccess();
+                signOut()
+                router.push('/')
+                saveOfferData([]);
+                toast.success(t('signOutSuccess'));
+            } else {
+                // toast.error(t('signOutCancelled'));
+            }
+        });
+    };
     return (
         <>
             <header className="bg-white py-3 z-[5] sm:px-4 fixed top-0 w-full hidden sm:block ">
@@ -117,7 +241,6 @@ const Header = ({ ToggleLoginPopupFunc }) => {
                                 </form>
                             </div>
                         </div>
-
                         {/* language & auth(login||user) */}
                         <div className="flex md:items-center justify-between md:justify-end items-center md:gap-2 flex-1 md:flex-none">
                             <nav aria-label="Global" className="">
@@ -156,74 +279,54 @@ const Header = ({ ToggleLoginPopupFunc }) => {
                                     </span>
                                 </div>
                                 {userVerfied?.emailVerified && (
-                                    <div className="profile order-[-2] ">
+                                    <div className="profile order-[-2]">
                                         <div className="profile-img h-full flex items-center">
-                                            <button type="button"
+                                            <button
+                                                type="button"
                                                 onClick={TooglePoupProfile}
-
-                                                className="overflow-hidden rounded-full border border-gray-300 shadow-inner">
+                                                className="overflow-hidden rounded-full border border-gray-300 shadow-inner"
+                                            >
                                                 <img
-                                                    src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                                                    src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fA%3D%3D"
                                                     alt=""
-                                                    className="size-10 object-cover" />
+                                                    className="size-10 object-cover"
+                                                />
                                             </button>
                                         </div>
 
-                                       {isProfileOpen&&( <div
-                                            className="absolute end-0 z-10 mt-4 w-56 divide-y divide-gray-100 rounded-md border border-gray-100 bg-white shadow-lg"
-                                            role="menu"
-                                        >
-                                            <div className="p-2">
-                                                <a
-                                                    href="#"
-                                                    className="block rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
-                                                    role="menuitem"
-                                                >
-                                                    My profile
-                                                </a>
-
-                                                <a
-                                                    href="#"
-                                                    className="block rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
-                                                    role="menuitem"
-                                                >
-                                                    Billing summary
-                                                </a>
-
-                                                <a
-                                                    href="#"
-                                                    className="block rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
-                                                    role="menuitem"
-                                                >
-                                                    Team settings
-                                                </a>
+                                        {isProfileOpen && (
+                                            <div className="absolute end-0 z-10 mt-4 w-56 divide-y divide-gray-100 rounded-md border border-gray-100 bg-white shadow-lg" role="menu" >
+                                                <div className="p-2">
+                                                    {userListsProfile.map(({ key, href, label }) => (
+                                                        href ? (
+                                                            <a
+                                                                key={key}
+                                                                href={href}
+                                                                className="flex items-center gap-2  rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
+                                                                role="menuitem"
+                                                            >
+                                                                {label}
+                                                            </a>
+                                                        ) : (
+                                                            <button
+                                                                key={key}
+                                                                onClick={handleLogout}
+                                                                className="flex w-full items-center gap-2 rounded-lg px-4 py-2 text-sm text-red-700 hover:bg-red-50"
+                                                                role="menuitem"
+                                                            >
+                                                                {label}
+                                                            </button>
+                                                        )
+                                                    ))}
+                                                </div>
                                             </div>
-
-                                            <div className="p-2">
-                                                {/* <form method="POST" action="#"> */}
-                                                <button
-                                                    onClick={signOut}
-                                                    // type="submit"
-                                                    className="flex w-full items-center gap-2 rounded-lg px-4 py-2 text-sm text-red-700 hover:bg-red-50"
-                                                    role="menuitem"
-                                                >
-
-                                                    Logout
-                                                </button>
-                                                {/* </form> */}
-                                            </div>
-                                        </div>
-                                       )}
-
+                                        )}
                                     </div>
                                 )}
 
 
                             </div>
-
-
                         </div>
-
                     </div>
                 </div>
             </header>
