@@ -393,7 +393,7 @@ export const useIsRtl = () => {
 
 export const validateForm = (formData) => {
   const { username, email, password, isLogin } = formData;
-  console.log(formData);
+  // console.log(formData);
   if (!isLogin) {
     if (!isLogin && !username) {
       toast.error(t('nameRequired'));

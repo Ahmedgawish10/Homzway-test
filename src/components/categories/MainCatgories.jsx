@@ -95,7 +95,7 @@ function CatgoriesMin() {
                 </div>
                 {/* catgory style for tablets and less screens*/}
                 <div className="sm:hidden catgories-mobile overflow-hidden bg-red-000 py-[30px]">
-                    <h2 className="text-[22px] pb-6 flex justify-between">
+                    <h2 className="text-[18px] pb-6 flex justify-between">
                         <span> {t('popularCategories')}</span>
                         <AllCategories />
                     </h2>
@@ -104,14 +104,12 @@ function CatgoriesMin() {
                             {cateData
                                 ?.slice(0, 5)
                                 .map((category, index) => {
-                                    const categoryProducts = productsData?.filter((product) => product.category.name === category.name);
                                     return (
-                                        <div className={`cursor-pointer w-full relative flex-1 ${categoryProducts.length === 0 ? "" : "d"}`}
+                                        <div className={`cursor-pointer w-full relative flex-1 `}
                                             key={index}>
                                             <div className="img-cat flex justify-center  group ">
                                                 <div className="rounded-full w-[120px] h-[120px] border hover:border-gray-700 transition-all border-gray-300 p-2 ">
                                                     <img src={category?.image} className="rounded-full w-[100px] h-[100px] " />
-
                                                 </div>
                                             </div>
                                             <div className=" flex justify-center pt-3 ">

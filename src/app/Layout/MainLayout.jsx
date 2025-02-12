@@ -26,17 +26,20 @@ const Layout = ({ children }) => {
   const [showLoginPopup, setShowLoginPopup] = useState(false);
   const [isAuthChecked, setIsAuthChecked] = useState(false);
   const { language, translatedData } = useSelector((state) => state.Language);
+  const {userVerfied,userData} = useSelector((state) => state.Auth)
   
+
   //check if user looged in and is verfied or not ?
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {      
-      if (user && user.emailVerified) {
+      if (user && user.emailVerified && userData )  {
         setUserIsVerified(true);
         dispatch(setUserVerfied(user));
-        console.log("user is vervied",user?.emailVerified);
+        console.log("user is Verified",user.emailVerified)
       } else {
         setUserIsVerified(false);
       }
+      setIsAuthChecked(true)
       setIsLoading(false);
     });
     return () => unsubscribe();
@@ -44,7 +47,7 @@ const Layout = ({ children }) => {
   //check the protected routes and status of user
   useEffect(() => {
     if (isAuthChecked) {
-      if (isProtectedRoute && !isUserVerified) {
+      if (isProtectedRoute && !isUserVerified && !userData ) {
         setShowLoginPopup(true);
       } else {
         setShowLoginPopup(false);

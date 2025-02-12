@@ -3,49 +3,31 @@ import React, { useEffect, useState, useRef } from 'react'
 import Image from 'next/image'
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
-// import 'swiper/css';
 import { getSlug, isEmptyObject, placeholderImage, t, truncate } from '@/utils/index';
 import { useDispatch, useSelector } from 'react-redux';
-import { MdClose } from 'react-icons/md';
 import { logoutSuccess, userSignUpData } from '@/store/slices/authSlice';
 import toast from 'react-hot-toast';
 import Swal from 'sweetalert2';
 import FirebaseData from '@/config/firebase';
-import { settingsData } from '@/store/slices/settingSlice';
-import { getLanguageApi, getLimitsApi } from '@/api/apiCalling';
-import { CurrentLanguageData, setCurrentLanguage } from '@/store/slices/languageSlice';
 import { useRouter, usePathname } from 'next/navigation';
-import { setSearch } from "@/store/slices/searchSlice"
-import { isLogin } from '@/utils/index';
 import { CategoryData, CurrentPage, LastPage, setCatCurrentPage, setCatLastPage, setCateData, setTreeData } from '@/store/slices/categorySlice'
-import { categoryApi } from '@/api/apiCalling'
-// import FilterTree from '../Category/FilterTree';
 import { saveOfferData } from '@/store/slices/offerSlice';
-// import HeaderCategories from './HeaderCategories';
 import LoginPopup from '@/app/(auth)/login.jsx';
-// const ProfileDropdown = dynamic(() => import('../Profile/ProfileDropdown.jsx'))
-const MailSentSucessfully = dynamic(() => import('@/app/(auth)/MailSentSucessfully.jsx'), { ssr: false })
-// const LoginModal = dynamic(() => import('@/app/(auth)/LoginModal.jsx'), { ssr: false })
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
-import fetchCategories from "@/store/slices/settingSlice"
-// import G from "@/app/(auth)/LoginModal"
-// import { fetchSystemSettings } from '@/store/slices/SsdSlice';
-import { fetchSystemSettings } from "@/store/slices/settingSlice";
 import { IoSearchOutline } from "react-icons/io5";
-import { setTranslatedData } from '@/store/slices/languageSlice';
-import LocationComp from "@/components/common/(location)/LocationComp";
-import { getCityData } from '@/store/slices/locationSlice';
-import MenuMobile from "@/components/common/MenuMobile"
-import useLanguage from '@/hooks/useLanguage';
-import { handleFirebaseAuthError } from "@/utils";
-import { useIsRtl } from '@/utils/index';
-import { BiChat, BiDollarCircle, BiReceipt } from "react-icons/bi"
-import { FiUser } from "react-icons/fi"
-import { IoMdNotificationsOutline } from "react-icons/io"
 import { LiaAdSolid } from "react-icons/lia"
 import { LuHeart } from "react-icons/lu"
 import { RiLogoutCircleLine } from "react-icons/ri"
 import {MdOutlineRateReview } from "react-icons/md"
+import { FiUser } from "react-icons/fi"
+import { IoMdNotificationsOutline } from "react-icons/io"
+import LocationComp from "@/components/common/(location)/LocationComp";
+import MenuMobile from "@/components/common/MenuMobile"
+import useLanguage from '@/hooks/useLanguage';
+import { useIsRtl } from '@/utils/index';
+import { BiChat, BiDollarCircle, BiReceipt } from "react-icons/bi"
+import { setUserVerfied } from '@/store/slices/authSlice';
+import { userLogout } from '@/store/slices/authSlice';
 
 const Header = ({ ToggleLoginPopupFunc }) => {
     const pathname = usePathname()
@@ -57,7 +39,7 @@ const Header = ({ ToggleLoginPopupFunc }) => {
     const catCurrentPage = useSelector(CurrentPage)
     const { data } = useSelector((state) => state.Settings)
     const { language, translatedData } = useSelector((state) => state.Language)
-    const { userVerfied } = useSelector((state) => state.Auth)
+    const { userVerfied,userData } = useSelector((state) => state.Auth)
     const { handleLanguageChange } = useLanguage()
     const [showLoginPopup, setShowLoginPopup] = useState(false);
     const [loading, setLoading] = useState(0);
@@ -206,6 +188,7 @@ const Header = ({ ToggleLoginPopupFunc }) => {
                 // window.recaptchaVerifier = null;
                 // logoutSuccess();
                 signOut()
+                 dispatch(userLogout(null))
                 router.push('/')
                 saveOfferData([]);
                 toast.success(t('signOutSuccess'));
@@ -246,7 +229,7 @@ const Header = ({ ToggleLoginPopupFunc }) => {
                                                 {language === "en" ? "ألعربيه" : "English"}
                                             </span>
                                     </li>
-                                    {!userVerfied?.emailVerified && (
+                                    {!userData && (
                                         <li className='flex-1'>
                                             <span onClick={TooglePoupLogin}
                                                 className="font-meduim text-[1.2rem]  cursor-pointer " >
@@ -266,7 +249,7 @@ const Header = ({ ToggleLoginPopupFunc }) => {
                                         <span className="text-xl font-medium ">{translatedData?.file_name?.selling}  </span>
                                     </span>
                                 </div>
-                                {userVerfied?.emailVerified && (
+                                {userData&& (
                                     <div className="profile order-[-2]">
                                         <div className="profile-img h-full flex items-center">
                                             <button

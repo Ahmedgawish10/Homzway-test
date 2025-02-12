@@ -2,7 +2,7 @@ import { createSelector, createSlice } from "@reduxjs/toolkit";
 import { store } from "../store";  // Ensure this import path is correct
 
 const initialState = {
-    data: null,
+    userData: null,
     loading: false,
     userVerfied:null
 };
@@ -13,16 +13,18 @@ export const authSlice = createSlice({
     reducers: {
      
         updateDataSuccess: (usersignup, action) => {
-            usersignup.data = action.payload;
+            usersignup.userData = action.payload;
         },
         userUpdateData: (usersignup, action) => {
             usersignup.data.data = action.payload.data;
         },
         userLogout: (usersignup) => {
-            usersignup.data = null; 
+            usersignup.userData = null; 
         },
         setUserVerfied: (state,action) => {
             state.userVerfied = action.payload; 
+            state.userData = action.payload; 
+
         }
     },
 });

@@ -10,6 +10,7 @@ import { handleFirebaseAuthError, t } from "@/utils";
 import { userSignUpApi } from "@/api/apiCalling";
 import MailSentSucessfully from "@/app/(auth)/MailSentSucessfully";
 import { validateForm } from '@/utils';
+
 const SignUpForm = ({ HideModels,onClose }) => {
   const { auth, handleGoogleSignup } = FirebaseData();
 
@@ -136,6 +137,7 @@ const SignUpForm = ({ HideModels,onClose }) => {
     HideModels(!true)
   }
   const { language,translatedData } = useSelector((state) => state.Language)
+console.log(translatedData);
 
   return (
     <>
@@ -188,7 +190,7 @@ const SignUpForm = ({ HideModels,onClose }) => {
               type="submit" 
               className="w-full bg-rose-700 text-white py-3 rounded text-lg hover:bg-rose-800 transition"
             >
-              {translatedData?.file_name?.verifyEmailAddress}
+              {translatedData?.file_name?.checkEmail}
             </button>
           </form>
         </div>

@@ -14,7 +14,7 @@ import GoogleIcon from "../../../public/icons/google.svg";
 import FacebookIcon from "../../../public/icons/facebook.svg";
 import Logo1 from "../../../public/icons/logo1.svg";
 import Image from "next/image";
-import {  sendEmailVerification,  signInWithPhoneNumber, signInWithPopup } from "firebase/auth";
+import {  sendEmailVerification,  signInWithPhoneNumber, signInWithPopup,signInWithEmailAndPassword  } from "firebase/auth";
 import toast from "react-hot-toast";
 import { handleFirebaseAuthError, t } from "@/utils";
 import { userSignUpApi } from "@/api/apiCalling";
@@ -25,6 +25,7 @@ import FirebaseData from '@/config/firebase';
 import CreateAccount from '@/app/(auth)/CreateAccount';
 import { validateForm } from '@/utils';
 import { setUserVerfied } from '@/store/slices/authSlice.js';
+
 
 const LoginPopup = ({ onClose }) => {
     const router = useRouter()
