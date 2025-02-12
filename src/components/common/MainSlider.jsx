@@ -33,7 +33,7 @@ export default function SimpleSlider() {
                             <div className="img-slider w-full flex justify-center  group ">
                                 <div className="rounded-full p-2  w-full ">
                                     {/* <Image src={sliderItem.image}  alt="v" width={100} height={100} className=" object-cover w-full h-full " /> */}
-                                    <Image src={sliderItem.image} width={983} height={300} alt={sliderItem.id} className="offer_slider_img  w-[100%] h-[300px] " />
+                                    <Image src={sliderItem.image} width={983} height={300} alt={sliderItem.id} className="offer_slider_img  w-[100%] h-[200px]  sm:h-[300px] " />
                                 </div>
                             </div>
 
