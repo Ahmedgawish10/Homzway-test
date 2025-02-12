@@ -1,6 +1,7 @@
 import { createSlice, createSelector, createAsyncThunk } from "@reduxjs/toolkit";
 import {Api} from "@/api/AxiosInterceptors"; // Ensure this is your API handler
 import { GET_LANGUAGE } from "@/api/apiCalling"; // Adjust the path
+import axios from "axios";
 
 const initialState = {
   language: "en",
@@ -12,14 +13,26 @@ const initialState = {
 // Async thunk for fetching language data
 export const fetchDefaultLanguage = createAsyncThunk(
   "language/fetchLanguage",
-  async ({ language_code, type }, { rejectWithValue }) => {
+  async (language_code, { rejectWithValue }) => {
     try {
-      const response = await Api.get(GET_LANGUAGE, {
-        params: { language_code:"en", type:"web" }
-      });      
-      return response.data.data;
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_END_POINT}get-languages`, 
+        { 
+          params: { 
+            language_code, 
+            type: "web"
+          } 
+        }
+      );
+
+      console.log("API Response:", response);
+      return response?.data?.data;
+      
     } catch (error) {
-      return rejectWithValue(error.response?.data || error.message);
+      console.error("Error fetching get-languages Data:", error);
+      return rejectWithValue(
+        error.response?.data || "Failed to fetch get-languages"
+      );
     }
   }
 );
@@ -43,7 +56,7 @@ export const languageSlice = createSlice({
       })
       .addCase(fetchDefaultLanguage.fulfilled, (state, action) => {
         state.loading = false;
-        console.log("gh",action.payload);
+        // console.log("gh",action.payload);
         
         state.translatedData = action.payload;
       })

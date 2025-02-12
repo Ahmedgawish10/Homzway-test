@@ -259,9 +259,7 @@ export const getAreasApi = {
 }
 //GET CURRENT LANG
 export const getLanguageApi = {
-    getLanguage: ({
-        language_code, type
-    } = {}) => {
+    getLanguage: ({language_code, type} = {}) => {
         return Api.get(GET_LANGUAGE, {
             params: {
                 language_code, type

@@ -10,7 +10,7 @@ import { protectedRoutes } from '@/components/routes/routes';
 import LoginPopup from '@/app/(auth)/login.jsx';
 import FirebaseData from '@/config/firebase.js';
 import { onAuthStateChanged } from 'firebase/auth';
-import { fetchSystemSettings } from '@/store/slices/SsdSlice.js';
+import { fetchSystemSettings } from '@/store/slices/settingSlice.js';
 import { useIsRtl } from '@/utils/index.jsx';
 import {fetchDefaultLanguage} from "@/store/slices/languageSlice.js"
 const PushNotificationLayout = dynamic( () => import('../../components/firebaseNotification/PushNotificationLayout.jsx'), { ssr: false });
@@ -24,14 +24,15 @@ const Layout = ({ children }) => {
   const { handleLanguageChange } = useLanguage()
   const isRtl = useIsRtl();
   const isProtectedRoute = protectedRoutes.some((route) => route.test(pathname));
-
   const [isLoading, setIsLoading] = useState(true);
   const [isUserVerified, setUserIsVerified] = useState(false);
   const [showLoginPopup, setShowLoginPopup] = useState(false);
   const [isAuthChecked, setIsAuthChecked] = useState(false);
+  const [defaultSystem, setDefaultSystem] = useState(false);
   const { language, translatedData } = useSelector((state) => state.Language)
   const { data } = useSelector((state) => state.Settings)
 
+  //check if user looged in and is verfied or not ?
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user && user.emailVerified) {
@@ -43,13 +44,10 @@ const Layout = ({ children }) => {
       }
       setIsAuthChecked(true);
       setIsLoading(false);
-      document.body.style.overflow = 'auto';
     });
-
-
     return () => unsubscribe();
-  }, []);
-
+  }, [auth]);
+  //check the protected routes and status of user
   useEffect(() => {
     if (isAuthChecked) {
       if (isProtectedRoute && !isUserVerified) {
@@ -59,7 +57,7 @@ const Layout = ({ children }) => {
       }
     }
   }, [isProtectedRoute, isUserVerified, isAuthChecked]);
-
+  //direction of pages (rtl||ltr)
   useEffect(() => {
     if (isRtl) {
       document.documentElement.dir = "rtl";
@@ -69,16 +67,14 @@ const Layout = ({ children }) => {
   }, [language]);
 
   useEffect(() => {
-    // console.log(translatedData);
+    if (translatedData ==null) {
+      dispatch(fetchSystemSettings()).then((res) => {
+      dispatch(fetchDefaultLanguage(res.payload?.default_language));
+      });
+    }
+  }, [dispatch ]);
 
-       if(!translatedData){
-        // console.log(translatedData);
-
-            dispatch(fetchDefaultLanguage("en"))
-       }
-    
-  }, []);
-
+  //  console.log(data);
 
   if (isLoading) {
     return <Loader />;

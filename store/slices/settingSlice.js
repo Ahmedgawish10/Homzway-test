@@ -9,13 +9,11 @@ import axios from "axios";
 // Async thunk to fetch categories
 export const fetchSystemSettings = createAsyncThunk(
   "settings/fetchSystemSettings",
-  async (type = "", { rejectWithValue }) => {
+  async (type = "web", { rejectWithValue }) => {
     try {
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_END_POINT}get-system-settings`,
-        {params:{type}}
-      );
-
+        `${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_END_POINT}get-system-settings`
+      );        
       return response?.data?.data || [];
     } catch (error) {
       console.error("Error fetching get-system-settings Data:", error);
@@ -63,7 +61,7 @@ export const settingsSlice = createSlice({
       .addCase(fetchSystemSettings.fulfilled, (state, action) => {
         state.loading = false;
         state.data = action.payload;
-        //  console.log(action.payload);
+          // console.log(action.payload);
       })
       .addCase(fetchSystemSettings.rejected, (state, action) => {
         state.loading = false;
