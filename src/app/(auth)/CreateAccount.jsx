@@ -188,7 +188,7 @@ const SignUpForm = ({ HideModels,onClose }) => {
               type="submit" 
               className="w-full bg-rose-700 text-white py-3 rounded text-lg hover:bg-rose-800 transition"
             >
-              Verify email address
+              {translatedData?.file_name?.verifyEmailAddress}
             </button>
           </form>
         </div>

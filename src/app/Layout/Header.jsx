@@ -175,7 +175,7 @@ const V=()=>{
                                         onClick={() => setShowLoginPopup(true)}
                                         className="group cursor-pointer relative inline-flex transition-all hover:bg-red-500 items-center overflow-hidden rounded-[7px] bg-red-600 px-8 py-4 text-white focus:ring-3 focus:outline-hidden"
                                     >
-                                        <span className="text-xl font-medium ">  {language === "en" ? "Sell" : "بيع"} </span>
+                                        <span className="text-xl font-medium ">{translatedData?.file_name?.Selling}  </span>
                                     </span>
                                 </div>
 
