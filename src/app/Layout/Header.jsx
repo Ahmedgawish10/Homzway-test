@@ -199,7 +199,7 @@ const Header = ({ ToggleLoginPopupFunc }) => {
             }
         });
     };
-    console.log(cateData)
+    // console.log(cateData)
     return (
         <>
             <header className="bg-white py-3 z-[5] sm:px-4 fixed top-0 w-full hidden sm:block ">

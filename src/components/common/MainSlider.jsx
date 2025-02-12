@@ -1,55 +1,49 @@
 "use client"
-import React from "react";
+import React, { useEffect, useState, useRef } from 'react'
 import Slider from "react-slick";
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
+import { fetchMainSlider } from "@/store/slices/sliderSlice"
 import Image from 'next/image'
 
 export default function SimpleSlider() {
+    const dispatch = useDispatch()
+    useEffect(() => {
+        dispatch(fetchMainSlider())
+    }, []);
     const { cateData } = useSelector((state) => ({ cateData: state.Category.cateData }), shallowEqual);
     const { language, translatedData } = useSelector((state) => state.Language);
+    const { slider } = useSelector((state) => state.Slider);
+    console.log(slider)
     var settings = {
         dots: true,
         infinite: true,
+        autoplay: true,
         speed: 500,
         slidesToShow: 1,
         slidesToScroll: 1,
     };
     return (
-        <div className=" overflow-hidden h-[200px] bg-orange-700">
+        <div className=" overflow-hidden h-[330px] ">
 
-            <Slider {...settings}>
-            {cateData
-                                ?.slice(0, 5)
-                                .map((category, index) => {
-                                    return (
-                                        <div className={`cursor-pointer w-full relative flex-1 `}
-                                            key={index}>
-                                            <div className="img-cat flex justify-center  group ">
-                                                <div className="rounded-full  w-[100vw] h-[300px]p-2 ">
-                                                    {/* <Image src={category?.image} width={100} height={100} className=" w-[100vw] h-[300px] " /> */}
-                                                    <img src={category?.image} className=" w-[100vw] h-[300px] " />
+            <Slider {...settings} className='h-[300px] sm:container mx-auto '>
+                {slider.map((sliderItem, index) => {
+                    return (
+                        <div className={`cursor-pointer w-full relative flex-1   `}
+                            key={index}>
+                            <div className="img-slider w-full flex justify-center  group ">
+                                <div className="rounded-full p-2  w-full ">
+                                    {/* <Image src={sliderItem.image}  alt="v" width={100} height={100} className=" object-cover w-full h-full " /> */}
+                                    <Image src={sliderItem.image} width={983} height={300} alt={sliderItem.id} className="offer_slider_img  w-[100%] h-[300px] " />
+                                </div>
+                            </div>
 
-                                                </div>
-                                            </div>
-                                            <div className=" flex justify-center pt-3 ">
-                                                <span className="  pb-1 text-center font-semibold ">
-                                                    {language === "en"
-                                                        ? category.name
-                                                        : category?.translations?.map(
-                                                            (translation, i) => (
-                                                                <span key={i}>
-                                                                    {translation.name}
-                                                                </span>
-                                                            )
-                                                        )}
-                                                </span>
-                                            </div>
-                                        </div>
-                                    );
-                                })}
+                        </div>
+                    );
+                })}
             </Slider>
 
         </div>
 
     );
 }
+

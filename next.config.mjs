@@ -1,11 +1,16 @@
 const nextConfig = {
-     reactStrictMode: false,
+  reactStrictMode: false,
   eslint: {
-    ignoreDuringBuilds: true, // Disable ESLint during production builds
-  }
-  };
-  
-  export default nextConfig;
+    ignoreDuringBuilds: true,
+  },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "cloud.homzway.com",
+      },
+    ],
+  },
+};
 
-
-
+export default nextConfig;
