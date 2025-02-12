@@ -23,6 +23,12 @@ body{
   height: 2000px;
 
 }
+@media screen and (max-width:350px) {
+  .header-category{
+    display: none;
+  }
+  
+}
 
 
 

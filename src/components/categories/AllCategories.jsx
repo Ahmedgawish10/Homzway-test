@@ -15,7 +15,6 @@ const DropdownMenu = () => {
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "auto";
   }, [isOpen]);
-console.log(cateData);
 
   return (
     <div className="relative">

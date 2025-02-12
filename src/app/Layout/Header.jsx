@@ -4,7 +4,7 @@ import Image from 'next/image'
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { getSlug, isEmptyObject, placeholderImage, t, truncate } from '@/utils/index';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { logoutSuccess, userSignUpData } from '@/store/slices/authSlice';
 import toast from 'react-hot-toast';
 import Swal from 'sweetalert2';
@@ -18,7 +18,7 @@ import { IoSearchOutline } from "react-icons/io5";
 import { LiaAdSolid } from "react-icons/lia"
 import { LuHeart } from "react-icons/lu"
 import { RiLogoutCircleLine } from "react-icons/ri"
-import {MdOutlineRateReview } from "react-icons/md"
+import { MdOutlineRateReview } from "react-icons/md"
 import { FiUser } from "react-icons/fi"
 import { IoMdNotificationsOutline } from "react-icons/io"
 import LocationComp from "@/components/common/(location)/LocationComp";
@@ -39,7 +39,9 @@ const Header = ({ ToggleLoginPopupFunc }) => {
     const catCurrentPage = useSelector(CurrentPage)
     const { data } = useSelector((state) => state.Settings)
     const { language, translatedData } = useSelector((state) => state.Language)
-    const { userVerfied,userData } = useSelector((state) => state.Auth)
+    const { userVerfied, userData } = useSelector((state) => state.Auth)
+    const { cateData } = useSelector((state) => state.Category, shallowEqual);
+
     const { handleLanguageChange } = useLanguage()
     const [showLoginPopup, setShowLoginPopup] = useState(false);
     const [loading, setLoading] = useState(0);
@@ -184,11 +186,11 @@ const Header = ({ ToggleLoginPopupFunc }) => {
             confirmButtonText: t("yes"),
         }).then((result) => {
             if (result.isConfirmed) {
-             // Clear the recaptchaVerifier by setting it to null
+                // Clear the recaptchaVerifier by setting it to null
                 // window.recaptchaVerifier = null;
                 // logoutSuccess();
                 signOut()
-                 dispatch(userLogout(null))
+                dispatch(userLogout(null))
                 router.push('/')
                 saveOfferData([]);
                 toast.success(t('signOutSuccess'));
@@ -197,6 +199,7 @@ const Header = ({ ToggleLoginPopupFunc }) => {
             }
         });
     };
+    console.log(cateData)
     return (
         <>
             <header className="bg-white py-3 z-[5] sm:px-4 fixed top-0 w-full hidden sm:block ">
@@ -224,10 +227,10 @@ const Header = ({ ToggleLoginPopupFunc }) => {
                             <nav aria-label="Global" className="">
                                 <ul className="flex items-center gap-6 text-sm">
                                     <li className=''>
-                                            <span className="font-meduim text-[1.2rem]  cursor-pointer hover:text-red-700 transition-all "
-                                                onClick={() => handleLanguageChange(language)}>
-                                                {language === "en" ? "ألعربيه" : "English"}
-                                            </span>
+                                        <span className="font-meduim text-[1.2rem]  cursor-pointer hover:text-red-700 transition-all "
+                                            onClick={() => handleLanguageChange(language)}>
+                                            {language === "en" ? "ألعربيه" : "English"}
+                                        </span>
                                     </li>
                                     {!userData && (
                                         <li className='flex-1'>
@@ -249,7 +252,7 @@ const Header = ({ ToggleLoginPopupFunc }) => {
                                         <span className="text-xl font-medium ">{translatedData?.file_name?.selling}  </span>
                                     </span>
                                 </div>
-                                {userData&& (
+                                {userData && (
                                     <div className="profile order-[-2]">
                                         <div className="profile-img h-full flex items-center">
                                             <button
@@ -313,6 +316,30 @@ const Header = ({ ToggleLoginPopupFunc }) => {
                                     className="!h-[30px] w-[160px]" alt="Logo" />
                             </Link>
                         )}
+                        {cateData?.slice(0, 1).map((category, index) => {
+                            return (
+                                <div key={index} className=" header-category group relative flex gap-x-2 rounded-lg  hover:bg-gray-50">
+                                    <div className="mt-1 flex size-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
+                                        <img src={category.image} alt={category.image} className="size-6" width={100} height={100} />
+                                    </div>
+                                    <div>
+                                        <a href={category.link || "#"} className="font-semibold text-gray-900">
+                                            <div className="flex justify-center pt-3">
+                                                <span className="pb-1 text-center font-semibold">
+                                                    {language === "en"
+                                                        ? category.name
+                                                        : category?.translations?.map((translation, i) => (
+                                                            <span key={i}>{translation.name}</span>
+                                                        ))}
+                                                </span>
+                                            </div>
+                                            <span className="absolute "></span>
+                                        </a>
+                                        {category.description && <p className="mt-1 text-gray-600">{category.description}</p>}
+                                    </div>
+                                </div>
+                            );
+                        })}
                     </div>
                 </div>
                 {/* location section */}
