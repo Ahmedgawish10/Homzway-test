@@ -294,10 +294,10 @@ export const handleFirebaseAuthError = (errorCode) => {
 //   return STRIPEData?.data?.stripe_publishable_key || false;
 // };
 
-// export const useIsRtl = () => {
-//   const lang = useSelector(CurrentLanguageData);
-//   return lang?.rtl === true;
-// };
+export const useIsRtl = () => {
+  const lang = store.getState()?.Language?.translatedData  
+  return lang?.rtl === true;
+};
 
 // export const logout = () => {
 //   store.dispatch(logoutSuccess());

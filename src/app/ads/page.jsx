@@ -43,7 +43,7 @@ export default function DropdownMenu() {
 
 // }, [translatedData]);
   return (
-    //  <Layout>
+     <Layout>
     <div className="relative w-full block md:hidden">
       <button
         onClick={ToggleMenu}
@@ -64,7 +64,7 @@ export default function DropdownMenu() {
       </div>
     </div>
 
-    // </Layout>
+     </Layout>
 
   );
 }

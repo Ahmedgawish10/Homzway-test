@@ -39,7 +39,8 @@ const LoginPopup = ({ onClose }) => {
     const [joinWithEmail, setJoinWithEmail] = useState(false);
     const [allModels, setAllModels] = useState(true);
     const fetchFCM = useSelector(Fcmtoken);
-     
+    const { language, translatedData } = useSelector((state) => state.Language)
+
     // hide all models (login register etc....)
     const HideModels = (val) => {
         // setAllModels(val)
@@ -118,27 +119,11 @@ const LoginPopup = ({ onClose }) => {
             onClose()
         }
     }
-    const { language, translatedData } = useSelector((state) => state.Language)
-
     const onClose1 = () => {
-        // console.log("ggggg");
         onClose()
-        console.log(onClose());
-        
+        setAllModels(0)
         router.push("/")
-
     }
-    //  console.log(translatedData);
-    // useEffect(()=>{
-    //     console.log(allModels);
-        
-    //     if(allModels){
-    //         document.body.style.overflow = "hidden";
-    //       }else{
-    //         document.body.style.overflow = "auto";
-    //       }
-
-    // },[allModels])
    
     return (
         <>

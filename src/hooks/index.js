@@ -1,13 +1,33 @@
-// utils/getAuthHeaders.js
-import { store } from '@/store/store'; 
 
-export const getAuthHeaders = () => {
-  const state = store.getState(); 
-  const token = state?.UserSignup?.data?.token;
-  const langCode = state?.CurrentLanguage?.language?.code;
+import { useDispatch, useSelector } from "react-redux";
+import { setCurrentLanguage, setTranslatedData } from "@/store/slices/languageSlice"; // Adjust the path
+import { getLanguageApi } from "@/api/apiCalling"; // Adjust the path
+import { toast } from "react-hot-toast";
 
-  return {
-    authorization: token ? `Bearer ${token}` : undefined,
-    'Content-Language': langCode,
-  };
+export const useLanguage = () => {
+    const dispatch = useDispatch();
+    const {language}= useSelector((state)=>state.Language)
+
+    const handleLanguageChange = async (language_code) => {  
+        try {
+            const res = await getLanguageApi.getLanguage({ language_code:language=="ar"?"en":"ar", type: "web" });
+            if (res?.data?.error) {
+                toast.error(res?.data?.message);
+            } else {
+                dispatch(setCurrentLanguage(language_code=="ar"?"en":"ar"));
+                dispatch(setTranslatedData(res?.data?.data));
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    };
+    return { handleLanguageChange };
+};
+
+
+
+
+export const useIsRtl = () => {
+  const lang = store.getState()?.Language?.translatedData  
+  return lang?.rtl === true;
 };

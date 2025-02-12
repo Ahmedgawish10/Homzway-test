@@ -42,46 +42,24 @@ import LocationComp from "@/components/common/(location)/LocationComp";
 import { getCityData } from '@/store/slices/locationSlice';
 import MenuMobile from "@/components/common/MenuMobile"
 import useLanguage from '@/hooks/useLanguage';
+
+import { useIsRtl } from '@/utils/index';
+
 const Header = ({ ToggleLoginPopupFunc }) => {
     const pathname = usePathname()
     const router = useRouter()
     const dispatch = useDispatch()
     const UserData = useSelector(userSignUpData)
-    const { handleLanguageChange } = useLanguage()
-
-
+    const isRtl = useIsRtl();
     const { signOut } = FirebaseData();
     const catCurrentPage = useSelector(CurrentPage)
-    const [showLoginPopup, setShowLoginPopup] = useState(false);
-    const [loading, setLoading] = useState(true); // Add loading state
     const { data } = useSelector((state) => state.Settings)
     const { language, translatedData } = useSelector((state) => state.Language)
-
-    //dispatch the system settings and fire and get default the language of sysytem and save it in store
-    useEffect(() => {
-        dispatch(fetchSystemSettings())
-            .unwrap()
-            .then(async (response) => {
-                // console.log('Fetched Data:', response);
-                //response?.default_language
-                //    let c = await handleLanguageChange("ar");
-                // dispatch(setCurrentLanguage(language));
-                setLoading(false);
-            })
-            .catch((err) => {
-                console.error('Fetch Error:', err);
-            });
-    }, [dispatch]);
-    // dircetion page rtl or ltr
-    useEffect(() => {
-        if (language == "ar") {
-            document.documentElement.dir = "rtl";
-        } else {
-            document.documentElement.dir = "ltr";
-        }
-    }, [language]);
-
+    const { handleLanguageChange } = useLanguage()
+    const [showLoginPopup, setShowLoginPopup] = useState(false);
+    const [loading, setLoading] = useState(0);
     const [isPageScrolled, setIsPageScrolled] = useState(false);
+  
     const prevScrollState = useRef(false);
     useEffect(() => {
         const handleScroll = () => {
@@ -109,14 +87,11 @@ const Header = ({ ToggleLoginPopupFunc }) => {
             return newState;
         });
     };
-const V=()=>{
-   setShowLoginPopup(true);
-   document.body.style.overflow = "hidden";
-//    console.log(showLoginPopup?9:5);
-    
-}
- 
-// console.log(translatedData);
+    const TooglePoupLogin = () => {
+        setShowLoginPopup(true);
+        document.body.style.overflow = "hidden";
+    }
+
 
     return (
         <>
@@ -146,9 +121,7 @@ const V=()=>{
                             <nav aria-label="Global" className="">
                                 <ul className="flex items-center gap-6 text-sm">
                                     <li className=''>
-                                        {loading ? (
-                                            <div className="text-gray-500  w-[40px] opacity-0"></div>
-                                        ) : (
+                                      
                                             <>
                                                 <span
                                                     className="font-meduim text-[1.2rem]  cursor-pointer "
@@ -156,10 +129,10 @@ const V=()=>{
                                                     {language === "en" ? "ألعربيه" : "English"}
                                                 </span>
                                             </>
-                                        )}
+                                       
                                     </li>
                                     <li className='flex-1'>
-                                        <span onClick={V}
+                                        <span onClick={TooglePoupLogin}
                                             className="font-meduim text-[1.2rem]  cursor-pointer " >
                                             {translatedData?.file_name?.login}
                                         </span>
@@ -175,7 +148,7 @@ const V=()=>{
                                         onClick={() => setShowLoginPopup(true)}
                                         className="group cursor-pointer relative inline-flex transition-all hover:bg-red-500 items-center overflow-hidden rounded-[7px] bg-red-600 px-8 py-4 text-white focus:ring-3 focus:outline-hidden"
                                     >
-                                        <span className="text-xl font-medium ">{translatedData?.file_name?.Selling}  </span>
+                                        <span className="text-xl font-medium ">{translatedData?.file_name?.selling}  </span>
                                     </span>
                                 </div>
 
@@ -268,10 +241,11 @@ const V=()=>{
                         <MenuMobile isMenuOpen={isMenuOpen} handleToggleMenu={handleToggleMenu} setShowLoginPopup={setShowLoginPopup} />
                         {data?.header_logo && (
                             <Link href="/">
-                                <Image priority  src={data.header_logo}  width={200} height={100}
-                                className="!h-[30px] w-[160px]"  alt="Logo"/>
+                                <Image priority src={data.header_logo} width={200} height={100}
+                                    className="!h-[30px] w-[160px]" alt="Logo" />
                             </Link>
                         )}
+                        <h2>gggggggggg</h2>
                     </div>
                 </div>
                 {/* location section */}
@@ -292,7 +266,7 @@ const V=()=>{
                         </div>
                     </div>
                 </div>
-            
+
             </header>
 
 
