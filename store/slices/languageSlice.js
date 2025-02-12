@@ -6,7 +6,7 @@ const initialState = {
 };
 
 export const languageSlice = createSlice({
-    name: "CurrentLanguage",
+    name: "language",
     initialState,
     reducers: {
         setCurrentLanguage: (state, action) => {
@@ -14,7 +14,7 @@ export const languageSlice = createSlice({
         },
         setTranslatedData: (state, action) => {
             state.translatedData = action.payload;
-            console.log(action.payload?.file_name);
+            //  console.log(action.payload?.file_name);
             
         },
     },

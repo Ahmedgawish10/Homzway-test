@@ -47,6 +47,7 @@ export default function Home() {
     return items;
   }, [featuredSections, existingSlugs]);
 
+ 
   const jsonLd = useMemo(() => ({
     "@context": "https://schema.org",
     "@type": "ItemList",
@@ -111,7 +112,7 @@ export default function Home() {
     <>
       <div className="">
         <CatgoriesMin />
-        {/* <Link href="/ads">test</Link> */}
+        <Link href="/ads">test</Link>
       </div>
     </>
   );

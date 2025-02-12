@@ -42,7 +42,7 @@ const LoginPopup = ({ onClose }) => {
      
     // hide all models (login register etc....)
     const HideModels = (val) => {
-        setAllModels(val)
+        // setAllModels(val)
     }
     // handle (show&hide) modelLoginWithEmail
     const modelLoginWithEmail = () => {
@@ -123,11 +123,23 @@ const LoginPopup = ({ onClose }) => {
     const onClose1 = () => {
         // console.log("ggggg");
         onClose()
+        console.log(onClose());
+        
         router.push("/")
 
     }
-    // console.log(onClose());
+    //  console.log(translatedData);
+    // useEffect(()=>{
+    //     console.log(allModels);
+        
+    //     if(allModels){
+    //         document.body.style.overflow = "hidden";
+    //       }else{
+    //         document.body.style.overflow = "auto";
+    //       }
 
+    // },[allModels])
+   
     return (
         <>
             {allModels && (
@@ -157,7 +169,7 @@ const LoginPopup = ({ onClose }) => {
 
                                         <div className="text-center flex flex-col items-center ">
                                             <p className="mb-3 text-2xl leading-9 sm:w-[80%] font-semibold  text-slate-900">
-                                                Login into your Homzway account
+                                            {translatedData?.file_name?.loginTo }  {language=="ar"?"":"  Homzway account"} 
                                             </p>
 
                                         </div>
@@ -169,7 +181,10 @@ const LoginPopup = ({ onClose }) => {
                                                 <Image
                                                     src={GoogleIcon} alt="GitHub"
                                                     className="h-[25px] w-[25px]" />
-                                                <span className='text-[16px] font-bold'>    Login with Google</span>
+                                                <span className='text-[16px] font-bold'> 
+                                                       {translatedData?.file_name?.orSignInWith } 
+                                                       <span className="px-2"> {translatedData?.file_name?.google } </span>
+                                                </span>
 
                                             </button>
                                             <button
@@ -177,7 +192,10 @@ const LoginPopup = ({ onClose }) => {
                                                 <Image
                                                     src={FacebookIcon} alt="Google"
                                                     className="h-[25px] w-[25px]" />
-                                                <span className='text-[16px] font-bold'> Login with Facebook</span>
+                                                   <span className='text-[16px] font-bold'> 
+                                                       {translatedData?.file_name?.orSignInWith } 
+                                                     <span className="px-2"> {translatedData?.file_name?.facebook } </span>
+                                                </span>
                                             </button>
                                         </div>
                                         <div className="flex w-full items-center gap-2 py-6 pb-3 text-xl text-slate-600">
@@ -190,12 +208,18 @@ const LoginPopup = ({ onClose }) => {
                                                 onClick={modelLoginWithEmail}
                                                 className=" hover:bg-[#fef5f5] border-[0.1rem] border-[#f08080] inline-flex h-[48px] w-full items-center justify-center gap-2 rounded  bg-white p-2 text-sm font-medium text-black outline-none focus:ring-2 focus:ring-[#333] focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-60">
                                                 <MdOutlineEmail className="text-[20px] font-extrabold text-[#e00000]" />
-                                                <span className='text-[16px] font-bold'> Login with Email</span>
+                                                <span className='text-[16px] font-bold'> 
+                                                       {translatedData?.file_name?.orSignInWith } 
+                                                     <span className="px-2"> {translatedData?.file_name?.email } </span>
+                                                </span>
                                             </button>
                                             <button
                                                 className=" hover:bg-[#fef5f5] border-[0.1rem] border-[#f08080] inline-flex h-[48px] w-full items-center justify-center gap-2 rounded  bg-white p-2 text-sm font-medium text-black outline-none focus:ring-2 focus:ring-[#333] focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-60">
                                                 <FiPhone className="text-[20px] font-extrabold text-[#e00000]" />
-                                                <span className='text-[16px] font-bold'> Login with Phone</span>
+                                                <span className='text-[16px] font-bold'> 
+                                                       {translatedData?.file_name?.orSignInWith } 
+                                                     <span className="px-2"> {translatedData?.file_name?.phone } </span>
+                                                </span>
                                             </button>
                                         </div>
                                         <div

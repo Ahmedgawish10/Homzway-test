@@ -149,7 +149,8 @@ export const createStickyNote = () => {
 
 export const t = (label) => {
   const langData = store.getState().Language?.translatedData?.file_name?.[label];
-  return langData || enTranslation[label];
+  return langData 
+  // || enTranslation[label];
 };
 
 const ERROR_CODES = {

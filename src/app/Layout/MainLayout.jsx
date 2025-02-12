@@ -8,7 +8,7 @@ import { protectedRoutes } from '@/components/routes/routes';
 import LoginPopup from '@/app/(auth)/login.jsx';
 import FirebaseData from '@/config/firebase.js';
 import { onAuthStateChanged } from 'firebase/auth';
-
+import { fetchSystemSettings } from '@/store/slices/SsdSlice.js';
 const PushNotificationLayout = dynamic(
   () => import('../../components/firebaseNotification/PushNotificationLayout.jsx'),
   { ssr: false }
@@ -29,8 +29,12 @@ const Layout = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user && user.emailVerified) {
         setUserIsVerified(true);
+        // console.log(user?.emailVerified);
+        
       } else {
         setUserIsVerified(false);
+        // console.log(user?.emailVerified);
+
       }
       setIsAuthChecked(true);
       setIsLoading(false);

@@ -1,6 +1,9 @@
 // store/store.js
 import { configureStore } from '@reduxjs/toolkit';
 import { createLogger } from "redux-logger";
+import { persistStore, persistReducer } from 'redux-persist';
+import { combineReducers } from 'redux';
+import storage from 'redux-persist/lib/storage';
 
 import settingsReducer from "@/store/slices/settingSlice";
 import sliderReducer from '@/store/slices/sliderSlice';
@@ -16,11 +19,11 @@ import globalStateReducer from '@/store/slices/globalStateSlice';
 import filterReducer from '@/store/slices/filterSlice';
 import SeoJsonLdSlice from './slices/SeoJsonLdSlice';
 import SsdSlice from './slices/SsdSlice';
-
 import {thunk} from "redux-thunk"; 
-// Create the Redux store Reducers
-export const store = configureStore({
-    reducer: {
+
+
+// Combine reducers if you have multiple
+const rootReducer = combineReducers({
         Settings: settingsReducer,
         Slider: sliderReducer,
         Category: categoryReducer,
@@ -35,8 +38,27 @@ export const store = configureStore({
         Filter: filterReducer,
         JsonLd:SeoJsonLdSlice,
         Ssd:SsdSlice
-      },
-      // middleware: (getDefaultMiddleware) =>
-      //   getDefaultMiddleware().concat(thunk, createLogger()),
-    
 });
+
+// Persist config
+const persistConfig = {
+  key: 'root',
+  storage,
+  // whitelist: ['language']
+};
+
+
+// Persisted reducer
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+// Create store
+export const store = configureStore({
+  reducer: persistedReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false, // Disable warnings for non-serializable state
+    }),
+});
+
+// Persistor
+export const persistor = persistStore(store);

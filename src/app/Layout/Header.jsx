@@ -63,8 +63,9 @@ const Header = ({ ToggleLoginPopupFunc }) => {
             .unwrap()
             .then(async (response) => {
                 // console.log('Fetched Data:', response);
-                let c = await handleLanguageChange(response?.default_language);
-                dispatch(setCurrentLanguage(c?.data?.data ? res?.data?.data : response?.default_language));
+                //response?.default_language
+                //    let c = await handleLanguageChange("ar");
+                // dispatch(setCurrentLanguage(language));
                 setLoading(false);
             })
             .catch((err) => {
@@ -108,14 +109,21 @@ const Header = ({ ToggleLoginPopupFunc }) => {
             return newState;
         });
     };
-
+const V=()=>{
+   setShowLoginPopup(true);
+   document.body.style.overflow = "hidden";
+//    console.log(showLoginPopup?9:5);
+    
+}
+ 
+// console.log(translatedData);
 
     return (
         <>
-            <header className="bg-white py-3 sm:px-4 fixed top-0 w-full hidden sm:block ">
+            <header className="bg-white py-3 z-[5] sm:px-4 fixed top-0 w-full hidden sm:block ">
                 <div className="mx-auto container px-3 sm:px-0 ">
                     <div className="flex gap-3  items-center justify-between">
-                        {/* location */}
+                        {/* location user comp */}
                         <div className="location flex-[0.5]  ">
                             <LocationComp />
                         </div>
@@ -123,14 +131,10 @@ const Header = ({ ToggleLoginPopupFunc }) => {
                         <div className="flex-1  ">
                             <div className="relative">
                                 <form action="" >
-                                    <input
-                                        className="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md pl-3 pr-28 py-4 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
-                                        placeholder={t('searchItem')}
-                                    />
-                                    <button
-                                        className="absolute h-full top-0  right-[1px] flex items-center rounded bg-red-600 py-1 px-3 border border-transparent text-center text-sm text-white transition-all shadow-sm hover:shadow focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-                                        type="submit"
-                                    >
+                                    <input className="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md pl-3 pr-28 py-4 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
+                                        placeholder={t('searchItem')} />
+                                    <button className="absolute h-full top-0  right-[1px] flex items-center rounded bg-red-600 py-1 px-3 border border-transparent text-center text-sm text-white transition-all shadow-sm hover:shadow focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                                        type="submit" >
                                         <IoSearchOutline className='text-2xl' />
                                     </button>
                                 </form>
@@ -148,14 +152,14 @@ const Header = ({ ToggleLoginPopupFunc }) => {
                                             <>
                                                 <span
                                                     className="font-meduim text-[1.2rem]  cursor-pointer "
-                                                    onClick={() => handleLanguageChange(language == "ar" ? "en" : "ar")}>
+                                                    onClick={() => handleLanguageChange(language)}>
                                                     {language === "en" ? "ألعربيه" : "English"}
                                                 </span>
                                             </>
                                         )}
                                     </li>
                                     <li className='flex-1'>
-                                        <span onClick={() => setShowLoginPopup(true)}
+                                        <span onClick={V}
                                             className="font-meduim text-[1.2rem]  cursor-pointer " >
                                             {translatedData?.file_name?.login}
                                         </span>
@@ -292,7 +296,7 @@ const Header = ({ ToggleLoginPopupFunc }) => {
             </header>
 
 
-            {showLoginPopup && <LoginPopup onClose={() => setShowLoginPopup(0)} />}
+            {showLoginPopup && <LoginPopup onClose={() => setShowLoginPopup(false)} />}
         </>
     )
 }

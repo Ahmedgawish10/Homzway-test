@@ -1,11 +1,15 @@
 "use client";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import Layout from "../Layout/MainLayout";
-
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchSystemSettings } from "@/store/slices/settingSlice";
+import { setCurrentLanguage } from "@/store/slices/languageSlice";
+// import useLanguage from "@/hooks/useLanguage";
 export default function DropdownMenu() {
+  const dispatch=useDispatch()
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-   const ToggleMenu=()=>{
+  // const { handleLanguageChange } = useLanguage()
+  const ToggleMenu=()=>{
     setIsMenuOpen((prev) => {
       const newState = !prev; 
       document.body.style.overflow = newState ? "hidden" : "auto";
@@ -13,8 +17,33 @@ export default function DropdownMenu() {
     });
     
   }
+
+
+  //  const { language, translatedData } = useSelector((state) => state.Language);
+//    useEffect(() => {
+//     console.log(translatedData);
+//     if(!translatedData){
+//       console.log("gh");
+      
+//       dispatch(fetchSystemSettings())
+//       .unwrap()
+//       .then(async (response) => {
+//           // console.log('Fetched Data:', response);
+//             // let c = await handleLanguageChange(response?.default_language);
+//           // console.log(response);
+          
+//           dispatch(setCurrentLanguage("ar"));
+//           // setLoading(false);
+//       })
+//       .catch((err) => {
+//           console.error('Fetch Error:', err);
+//       });
+         
+//     }
+
+// }, [translatedData]);
   return (
-    <Layout>
+    //  <Layout>
     <div className="relative w-full block md:hidden">
       <button
         onClick={ToggleMenu}
@@ -34,7 +63,8 @@ export default function DropdownMenu() {
         </ul>
       </div>
     </div>
-    </Layout>
+
+    // </Layout>
 
   );
 }
