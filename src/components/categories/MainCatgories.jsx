@@ -2,8 +2,7 @@
 import React, { memo } from "react";
 import { useSelector, shallowEqual } from "react-redux";
 import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+
 import { handleFirebaseAuthError, t } from "@/utils";
 import AllCategories from "@/components/categories/AllCategories"
 function CatgoriesMin() {

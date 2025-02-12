@@ -225,7 +225,7 @@ const Header = ({ ToggleLoginPopupFunc }) => {
                         {/* language & auth(login||user) */}
                         <div className="flex md:items-center justify-between md:justify-end items-center md:gap-2 flex-1 md:flex-none">
                             <nav aria-label="Global" className="">
-                                <ul className="flex items-center gap-6 text-sm">
+                                <ul className="flex items-center gap-2 text-sm">
                                     <li className=''>
                                         <span className="font-meduim text-[1.2rem]  cursor-pointer hover:text-red-700 transition-all "
                                             onClick={() => handleLanguageChange(language)}>
