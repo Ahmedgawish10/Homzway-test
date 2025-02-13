@@ -2,9 +2,9 @@
 import React, { memo } from "react";
 import { useSelector, shallowEqual } from "react-redux";
 import Slider from "react-slick";
-
 import { handleFirebaseAuthError, t } from "@/utils";
-import AllCategories from "@/components/categories/AllCategories"
+import AllCategories from "@/components/categories/AllCategories";
+
 function CatgoriesMin() {
     const { cateData } = useSelector((state) => ({ cateData: state.Category.cateData }), shallowEqual);
     const { productsData } = useSelector((state) => state.Products);
@@ -69,7 +69,7 @@ function CatgoriesMin() {
                                 </div>
                                   {/* overlay sub categories */}
                                 {categoryProducts.length > 0 && (
-                                    <ul className="hidden  z-[50] absolute w-auto left-0 top-[40px] bg-white shadow-md p-2 space-y-1 group-hover:block">
+                                    <ul className="hidden  z-[50] absolute w-auto left-0 top-[35px] bg-white shadow-md p-2 space-y-1 group-hover:block">
                                         <div className="text-xl line-clamp-1">
                                             Subcategories1
                                         </div>

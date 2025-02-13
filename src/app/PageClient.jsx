@@ -10,6 +10,7 @@ import { fetchAllProducts, fetchFeaturedSections } from '@/store/slices/products
 import { setJsonLdData } from "@/store/slices/SeoJsonLdSlice";
 const MainCatgories = dynamic(() => import('@/components/categories/MainCatgories'), { ssr: false });
 import MainSlider from "@/components/common/MainSlider";
+import HomeCategories from "@/components/categories/HomeCategories";
 export default function Home() {
   const dispatch = useDispatch();
   const { cateData, totalCatItems, catLastPage, catCurrentPage } = useSelector((state) => state.Category);
@@ -108,6 +109,7 @@ export default function Home() {
       <div className="home">
         <MainCatgories />
         <MainSlider/>
+        <HomeCategories/>
         <Link href="/ads">test</Link>
       </div>
     </>

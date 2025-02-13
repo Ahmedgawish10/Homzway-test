@@ -201,6 +201,7 @@ const Header = ({ ToggleLoginPopupFunc }) => {
         <>
             <header className="bg-white py-3 z-[5] sm:px-4 fixed top-0 w-full hidden sm:block ">
                 <div className="mx-auto container px-3 sm:px-0 ">
+                    {/* header one overlay */}
                     <div className="overlay-header flex gap-3 items-center pb-3 ">
                     {data?.header_logo && (
                         <Link href="/">
@@ -217,7 +218,7 @@ const Header = ({ ToggleLoginPopupFunc }) => {
                                 <div>
                                     <a href={category.link || "#"} className="font-semibold text-gray-900">
                                         <div className="flex justify-center pt-3">
-                                            <span className="pb-1 text-center font-semibold">
+                                            <span className="pb-1 line-clamp-1 text-center font-semibold">
                                                 {language === "en"
                                                     ? category.name
                                                     : category?.translations?.map((translation, i) => (
@@ -233,7 +234,7 @@ const Header = ({ ToggleLoginPopupFunc }) => {
                         );
                     })}
                     </div>
-                    
+                     {/* main header  */}
                     <div className="flex gap-3  items-center justify-between">
                         {/* location user comp */}
                         <div className="location flex-[0.5]  ">
