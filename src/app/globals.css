@@ -13,14 +13,12 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  /* font-family: var(--primary-font); */
-
-  box-sizing: border-box;
 }
 body {
   font-family: var(--font-proxima-nova), sans-serif;
   /* height: 2000px; */
 }
+
 /* media xsm */
 @media screen and (max-width: 350px) {
   .header-category {
@@ -33,9 +31,25 @@ body {
     font-size: 10px !important;
     color: rgb(255, 255, 255) !important;
   }
+
+}
+/* mdeia from sm and less */
+@media screen and (max-width: 638px) {
+  .header-lg {
+    display: none;
+  }
+  .mainSlider .slick-dots {
+    bottom: 0px !important;
+  }
+}
+/* mdeia from sm tp lg */
+@media screen and (min-width: 640px) {
+  .layout-header {
+    margin-bottom: 135px;
+  }
 }
 .mainSlider .slick-dots {
-  bottom: 17px !important;
+  bottom: 15px;
 }
 .mainSlider .slick-dots li button::before {
   font-size: 20px;
@@ -44,7 +58,6 @@ body {
   border-radius: 0;
   color: rgb(255, 255, 255);
 }
-
 .mainSlider .slick-slider {
   z-index: 0;
 }
@@ -62,6 +75,82 @@ body {
 }
 
 .slick-active .mainSlider-custom-dot {
-  background-color: #ff6f00; /* Active dot color */
+  background-color: #ff6f00;
 }
 /* end style main slider  */
+/* sell button */
+.sell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  order: 5;
+}
+
+.sell-button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  background-color: #dc2626; 
+  color: white;
+  padding: 10px 32px;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 7px;
+  border: none;
+  transition: all 0.3s ease-in-out;
+}
+
+.sell-button:hover {
+  background-color: #ef4444; 
+}
+
+.sell-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.5); 
+}
+/* custom search nutton  */
+.search-input-item{
+  padding: 15px 60px;
+
+}
+.search-button {
+  position: absolute;
+  height: 100%;
+  top: 0;
+  right: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #dc2626; 
+  color: white;
+  padding: 4px 12px;
+  font-size: 14px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.search-button:hover {
+  background-color: #334155; 
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.search-button:focus {
+  background-color: #334155;
+  box-shadow: none;
+  outline: none;
+}
+
+.search-button:active {
+  background-color: #334155; 
+  box-shadow: none;
+}
+
+.search-button:disabled {
+  pointer-events: none;
+  opacity: 0.5;
+  box-shadow: none;
+}
