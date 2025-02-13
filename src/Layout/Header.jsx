@@ -374,8 +374,8 @@ const Header = ({ ToggleLoginPopupFunc }) => {
                 {/* location section */}
                 <div className="container mx-auto px-3 sm:px-0">
                     {isPageScrolled ? "LocationComp" : <LocationComp />}
-                    <div className={`flex-1 mt-3  rounded-md ${isPageScrolled ? " w-[90%] fixed left-1/2 transform -translate-x-1/2 container mx-auto" : ""} top-0 bg-white z-50 shadow-md`}>
-                        <div className="relative container mx-auto ">
+                    <div className={`flex-1 mt-3  rounded-md ${isPageScrolled ? "  fixed  w-[90%]  container mx-auto" : ""} top-0 bg-white z-50 shadow-md`}>
+                        <div className={`relative container mx-auto px-5  ${isPageScrolled ? " container":""} `}>
                             <input
                                 className="w-full bg-transparent search-input-item placeholder:text-[18px] placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md pl-3 pr-28 py-4 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
                                 placeholder={t('searchItem')}
