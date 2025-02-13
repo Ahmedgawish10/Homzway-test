@@ -1,39 +1,30 @@
-"use client"; // Mark this component as a Client Component
+"use client"; 
 import React, { memo } from "react";
 import Link from "next/link"
 import { useSelector, shallowEqual } from "react-redux";
 import { IoIosArrowForward } from "react-icons/io";
+import { t } from "@/utils/index";
 
-import { t } from "@/utils/index"
 const HomeCategories = () => {
-    const { cateData } = useSelector(
-        (state) => ({ cateData: state.Category.cateData }),
-        shallowEqual
-    );
+    const { cateData } = useSelector((state) => ({ cateData: state.Category.cateData }),shallowEqual );
     const { productsData } = useSelector((state) => state.Products);
     const { language, translatedData } = useSelector((state) => state.Language);
 
-    // Function to filter products by category ID
+    // func to filter products by category 
     const getProductsByCategory = (categoryId) => {
         return productsData?.filter((product) => product.category_id === categoryId);
     };
-    console.log(translatedData);
 
     return (
         <div className="home-categories py-8 ">
             <div className="container mx-auto px-4">
-                {/* Use translated title */}
                 <h2 className="text-2xl font-bold text-start mb-8">
                     <span> {t('popularCategories')}</span>
-
                 </h2>
-
+                 {/* all categories */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                     {cateData?.map((category) => (
-                        <div
-                            key={category.id}
-                            className=" overflow-hidden hover:shadow-lg transition-shadow duration-300"
-                        >
+                        <div key={category.id} className=" overflow-hidden hover:shadow-lg transition-shadow duration-300" >
                             {/* Category Image */}
                             <div className="box-cat flex items-center gap-3 ">
                                 <img src={category.image} alt={category.name} className="w-12 h-12 object-cover rounded-[50%] " />
@@ -49,20 +40,6 @@ const HomeCategories = () => {
                                 </div>
                             </div>
 
-                            {/* Products List */}
-                            {/* <div className="p-4 border-t border-gray-200">
-                                <h4 className="font-bold text-lg mb-2">
-                                    {translatedData?.products || "Sub Category "}:
-                                </h4>
-                                <ul className="space-y-2">
-                                    {getProductsByCategory(category.id)?.map((product) => (
-                                        <li key={product.id} className="text-gray-700">
-                                            🔹 {product.name} - ${product.price}
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div> */}
-
                             {/* all sub categories */}
                             <div className="box-cat flex items-center gap-3 ">
                                 <div className=" flex justify-center">
@@ -77,8 +54,6 @@ const HomeCategories = () => {
                                     </span>
                                 </div>
                             </div>
-
-
                         </div>
                     ))}
                 </div>

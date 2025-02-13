@@ -1,5 +1,4 @@
 import { useDispatch, useSelector } from 'react-redux';
-
 import { useState } from "react";
 import { FaRegEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa6";
@@ -13,17 +12,12 @@ import { validateForm } from '@/utils';
 
 const SignUpForm = ({ HideModels, onClose }) => {
   const { auth, handleGoogleSignup } = FirebaseData();
-
-  const [form, setForm] = useState({
-    username: "",
-    email: "",
-    password: "",
-  });
+  const [form, setForm] = useState({username: "",email: "", password: ""});
   const [showPwd, setShowPwd] = useState(false);
   const [confirmationResult, setConfirmationResult] = useState(null);
   const [modelVerify, setModelVerify] = useState(null);
   const [showLoader, setShowLoader] = useState(false);
-
+  //  handel input create account
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
@@ -98,20 +92,16 @@ const SignUpForm = ({ HideModels, onClose }) => {
       setShowLoader(false)
     }
   };
-
+  // func create account homzway
   const CreateAccount = async (e) => {
     e.preventDefault();
     if (!validateForm(form, t)) return;
     try {
       setShowLoader(true)
-      // setShowLoader(true)
       const userCredential = await createUserWithEmailAndPassword(auth, form.email, form.password);
       const user = userCredential.user;
-      console.log(user);
-
       await sendEmailVerification(user);
       setModelVerify(true)
-
       toast.success("Check your email now!")
       try {
         const response = await userSignUpApi.userSignup({
@@ -122,7 +112,6 @@ const SignUpForm = ({ HideModels, onClose }) => {
           registration: true
         });
         onClose()
-        // CC("dd")
       } catch (error) {
         console.log("errdor", error);
       }
@@ -132,22 +121,20 @@ const SignUpForm = ({ HideModels, onClose }) => {
     } finally {
       setShowLoader(false)
     }
-
-
   };
+  //after success create  hide all models 
   const HideModelsFuc = () => {
     HideModels(!true)
   }
   const { language, translatedData } = useSelector((state) => state.Language)
-  console.log(translatedData);
 
   return (
-    <>
+    <> 
+    {/* create account homzway comp */}
       <div className="flex items-center justify-center ">
         <div className=" w-full bg-white rounded  ">
           <h2 className="text-xl font-bold text-center mb-4">{translatedData?.file_name?.createAccount}</h2>
-
-          {/* Form */}
+          {/* Form create account homzway */}
           <form className="space-y-5" onSubmit={CreateAccount}>
             <div>
               <input
@@ -205,17 +192,13 @@ const SignUpForm = ({ HideModels, onClose }) => {
           </form>
         </div>
       </div>
-      {
-        modelVerify && (
+      {/* after create success show model verfiy email */}
+      {modelVerify && (
           <div onClick={HideModelsFuc} className=" bg-[#ffffff] flex justify-center items-center w-[100vw] h-[100vh] fixed right-0 bottom-0 top-0">
             <MailSentSucessfully />
           </div>
-        )
-
-      }
-
+        )}
     </>
-
   );
 };
 

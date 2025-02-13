@@ -11,40 +11,40 @@ import { useJsApiLoader } from '@react-google-maps/api';
 const GOOGLE_MAPS_LIBRARIES = ['geometry', 'drawing', 'places'];
 
 // Utility Functions state 
-// export const placeholderImage = (e) => {
-//   const settings = store.getState()?.Settings?.data?.data;
-//   const placeholderLogo = settings?.placeholder_image;
+export const placeholderImage = (e) => {
+  const settings = store.getState()?.Settings?.data?.data;
+  const placeholderLogo = settings?.placeholder_image;
 
-//   if (placeholderLogo) {
-//     e.target.src = placeholderLogo;
-//   }
-// };
+  if (placeholderLogo) {
+    e.target.src = placeholderLogo;
+  }
+};
 
-// export const isLogin = () => {
-//   const userData = store.getState()?.UserSignup?.data;
-//   return !!userData?.token;
-// };
+export const isLogin = () => {
+  const userData = store.getState()?.UserSignup?.data;
+  return !!userData?.token;
+};
 
-// export const IsLandingPageOn = () => {
-//   const settings = store.getState()?.Settings?.data?.data;
-//   return Number(settings?.show_landing_page);
-// };
+export const IsLandingPageOn = () => {
+  const settings = store.getState()?.Settings?.data?.data;
+  return Number(settings?.show_landing_page);
+};
 
-// export const getDefaultLatLong = () => {
-//   const settings = store.getState()?.Settings?.data?.data;
-//   const default_latitude = Number(settings?.default_latitude);
-//   const default_longitude = Number(settings?.default_longitude);
+export const getDefaultLatLong = () => {
+  const settings = store.getState()?.Settings?.data?.data;
+  const default_latitude = Number(settings?.default_latitude);
+  const default_longitude = Number(settings?.default_longitude);
 
-//   return {
-//     latitude: default_latitude,
-//     longitude: default_longitude,
-//   };
-// };
+  return {
+    latitude: default_latitude,
+    longitude: default_longitude,
+  };
+};
 
-// export const getPlaceApiKey = () => {
-//   const settings = store.getState()?.Settings?.data?.data;
-//   return "AIzaSyDNMOkBx54Xdt8Jp4AQKDHVH8MpDn0NhLY";
-// };
+export const getPlaceApiKey = () => {
+  const settings = store.getState()?.Settings?.data?.data;
+  return "AIzaSyDNMOkBx54Xdt8Jp4AQKDHVH8MpDn0NhLY";
+};
 
 export const loadGoogleMaps = () => {
   const settings = store.getState()?.Settings?.data?.data;
@@ -149,8 +149,7 @@ export const createStickyNote = () => {
 
 export const t = (label) => {
   const langData = store.getState().Language?.translatedData?.file_name?.[label];
-  return langData 
-  // || enTranslation[label];
+  return langData || enTranslation[label];
 };
 
 const ERROR_CODES = {
@@ -268,31 +267,31 @@ export const handleFirebaseAuthError = (errorCode) => {
   }
 };
 
-// export const truncate = (text, maxLength) => {
-//   if (!text) return '';
-//   const stringText = String(text);
-//   return stringText.length <= maxLength ? text : `${stringText.slice(0, maxLength)}...`;
-// };
+export const truncate = (text, maxLength) => {
+  if (!text) return '';
+  const stringText = String(text);
+  return stringText.length <= maxLength ? text : `${stringText.slice(0, maxLength)}...`;
+};
 
 
 
 
-// export const formatDateMonth = (timestamp) => {
-//   const months = [
-//     'January', 'February', 'March', 'April', 'May', 'June',
-//     'July', 'August', 'September', 'October', 'November', 'December',
-//   ];
-//   const date = new Date(timestamp);
-//   const year = date.getFullYear();
-//   const month = months[date.getMonth()];
-//   const day = String(date.getDate()).padStart(2, '0');
-//   return `${month} ${parseInt(day, 10)}, ${year}`;
-// };
+export const formatDateMonth = (timestamp) => {
+  const months = [
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December',
+  ];
+  const date = new Date(timestamp);
+  const year = date.getFullYear();
+  const month = months[date.getMonth()];
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${month} ${parseInt(day, 10)}, ${year}`;
+};
 
-// export const loadStripeApiKey = () => {
-//   const STRIPEData = store.getState()?.Settings;
-//   return STRIPEData?.data?.stripe_publishable_key || false;
-// };
+export const loadStripeApiKey = () => {
+  const STRIPEData = store.getState()?.Settings;
+  return STRIPEData?.data?.stripe_publishable_key || false;
+};
 
 export const useIsRtl = () => {
   const lang = store.getState()?.Language?.translatedData  
@@ -411,90 +410,86 @@ export const validateForm = (formData) => {
   return true;
 };
 
-// export const isPdf = (url) => url?.toLowerCase().endsWith('.pdf');
+export const isPdf = (url) => url?.toLowerCase().endsWith('.pdf');
 
-// export const IsAdExpired = (SingleListing) => {
-//   if (!SingleListing?.expiry_date) return false;
-//   const expiryDate = new Date(SingleListing.expiry_date);
-//   const currentDate = new Date();
-//   return expiryDate < currentDate;
-// };
+export const IsAdExpired = (SingleListing) => {
+  if (!SingleListing?.expiry_date) return false;
+  const expiryDate = new Date(SingleListing.expiry_date);
+  const currentDate = new Date();
+  return expiryDate < currentDate;
+};
 
-// export const formatMyListingDate = (dateStr) => {
-//   const date = new Date(dateStr);
-//   if (isNaN(date.getTime())) return 'Invalid date';
+export const formatMyListingDate = (dateStr) => {
+  const date = new Date(dateStr);
+  if (isNaN(date.getTime())) return 'Invalid date';
 
-//   const options = { month: 'short', day: '2-digit', year: 'numeric' };
-//   const formattedDate = new Intl.DateTimeFormat('en-US', options).format(date);
-//   const [month, day, year] = formattedDate.split(' ');
-//   return `${month}, ${day.slice(0, -1)}, ${year}`;
-// };
+  const options = { month: 'short', day: '2-digit', year: 'numeric' };
+  const formattedDate = new Intl.DateTimeFormat('en-US', options).format(date);
+  const [month, day, year] = formattedDate.split(' ');
+  return `${month}, ${day.slice(0, -1)}, ${year}`;
+};
 
-// export const getYouTubeVideoId = (url) => {
-//   const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-//   const match = url?.match(regExp);
-//   return match && match[2].length === 11 ? match[2] : null;
-// };
+export const getYouTubeVideoId = (url) => {
+  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+  const match = url?.match(regExp);
+  return match && match[2].length === 11 ? match[2] : null;
+};
 
-// export const getImageClass = (src) => {
-//   if (src?.endsWith('.svg') || src?.endsWith('.png')) {
-//     return 'svgPngBackground';
-//   }
-//   return 'jpgNoBackround';
-// };
+export const getImageClass = (src) => {
+  if (src?.endsWith('.svg') || src?.endsWith('.png')) {
+    return 'svgPngBackground';
+  }
+  return 'jpgNoBackround';
+};
 
-// export const formatProdDate = (dateString) => {
-//   if (!dateString) return '';
-//   const date = new Date(dateString);
-//   const options = { year: 'numeric', month: 'short', day: 'numeric' };
-//   return new Intl.DateTimeFormat('en-US', options).format(date);
-// };
+export const formatProdDate = (dateString) => {
+  if (!dateString) return '';
+  const date = new Date(dateString);
+  const options = { year: 'numeric', month: 'short', day: 'numeric' };
+  return new Intl.DateTimeFormat('en-US', options).format(date);
+};
 
-// export const extractYear = (dateString) => {
-//   const date = new Date(dateString);
-//   return date.getFullYear();
-// };
+export const extractYear = (dateString) => {
+  const date = new Date(dateString);
+  return date.getFullYear();
+};
 
-// export const calculateRatingPercentages = (ratings) => {
-//   const ratingCount = { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 };
-//   ratings?.forEach((rating) => {
-//     const roundedRating = Math.round(rating?.ratings);
-//     if (roundedRating >= 1 && roundedRating <= 5) {
-//       ratingCount[roundedRating] += 1;
-//     }
-//   });
+export const calculateRatingPercentages = (ratings) => {
+  const ratingCount = { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 };
+  ratings?.forEach((rating) => {
+    const roundedRating = Math.round(rating?.ratings);
+    if (roundedRating >= 1 && roundedRating <= 5) {
+      ratingCount[roundedRating] += 1;
+    }
+  });
 
-//   const totalRatings = ratings.length;
-//   const ratingPercentages = {
-//     5: (ratingCount[5] / totalRatings) * 100,
-//     4: (ratingCount[4] / totalRatings) * 100,
-//     3: (ratingCount[3] / totalRatings) * 100,
-//     2: (ratingCount[2] / totalRatings) * 100,
-//     1: (ratingCount[1] / totalRatings) * 100,
-//   };
+  const totalRatings = ratings.length;
+  const ratingPercentages = {
+    5: (ratingCount[5] / totalRatings) * 100,
+    4: (ratingCount[4] / totalRatings) * 100,
+    3: (ratingCount[3] / totalRatings) * 100,
+    2: (ratingCount[2] / totalRatings) * 100,
+    1: (ratingCount[1] / totalRatings) * 100,
+  };
 
-//   return { ratingCount, ratingPercentages };
-// };
+  return { ratingCount, ratingPercentages };
+};
 
-// export const getRoundedRating = (rating) => {
-//   if (!rating) return 0;
-//   const integerPart = Math.floor(rating);
-//   const decimalPart = rating - integerPart;
-//   return decimalPart > 0 ? integerPart + 0.5 : integerPart;
-// };
+export const getRoundedRating = (rating) => {
+  if (!rating) return 0;
+  const integerPart = Math.floor(rating);
+  const decimalPart = rating - integerPart;
+  return decimalPart > 0 ? integerPart + 0.5 : integerPart;
+};
 
 export function formatLocation(locationUser) {
   // console.log(locationUser);
-
   if (typeof locationUser === "object" && locationUser !== null) {
     const formattedAddressParts = locationUser?.formattedAddress?.split(" ");
     const city = formattedAddressParts?.length > 1 ? formattedAddressParts[1]?.replace(",", "") : "";
     const state = locationUser?.state?.replace(" Governorate", "") || "";
 
     return city && state ? `${city}, ${state}` : state;
-
-
-    return locationUser.city
   } else {
     return locationUser || "Location not available";
   }

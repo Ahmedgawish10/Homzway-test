@@ -33,8 +33,8 @@ export default function DropdownMenu() {
                     aria-haspopup="true"
                     onClick={() => setIsOpen(!isOpen)}
                 >
-                    <span className={` ${language == "ar" ? " absolute top-1/2  right-5 transform -translate-x-1/2 -translate-y-1/2" : "absolute top-1/2  left-5 transform -translate-x-1/2 -translate-y-1/2"}  text-2xl text-red-600`}><GrLocation /></span>
-                    <span className={` text-[18px] truncate ${language == "ar" ? "ps-12" : "px-6"} `}>
+                    <span className={` ${language == "ar" ? " absolute top-1/2  right-5 transform -translate-x-1/2 -translate-y-1/2" : "absolute top-1/2  left-5 transform -translate-x-1/2 -translate-y-1/2"}  text-xl text-red-600`}><GrLocation /></span>
+                    <span className={` text-[14px] truncate ${language == "ar" ? "ps-12" : "px-6"} `}>
                          {UserDatad?.lat!==""?formatLocation(UserDatad):currentLocation}
                          
                           </span>

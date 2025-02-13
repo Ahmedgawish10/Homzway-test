@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Test from "@/components/test";
 import Electronics from "../../public/icons/electronics.svg";
 import Property from "../../public/icons/property.svg";
 import Link from "next/link";

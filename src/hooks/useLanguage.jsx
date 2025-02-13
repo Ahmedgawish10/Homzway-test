@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
-import { setCurrentLanguage, setTranslatedData } from "@/store/slices/languageSlice"; // Adjust the path
-import { getLanguageApi } from "@/api/apiCalling"; // Adjust the path
+import { setCurrentLanguage, setTranslatedData } from "@/store/slices/languageSlice";
+import { getLanguageApi } from "@/api/apiCalling"; 
 import { toast } from "react-hot-toast";
 
 const useLanguage = () => {

@@ -1,7 +1,5 @@
 import React from 'react';
 import Link from "next/link"
-// import { MdClose } from "react-icons/md"
-// import { FcGoogle } from "react-icons/fc";
 import { useEffect, useRef, useState } from "react";
 import { IoLinkOutline } from "react-icons/io5";
 import { IoClose } from "react-icons/io5";
@@ -9,7 +7,6 @@ import { MdOutlineEmail } from "react-icons/md";
 import { FiPhone } from "react-icons/fi";
 import { IoIosArrowBack } from "react-icons/io";
 import { useDispatch, useSelector } from 'react-redux';
-
 import GoogleIcon from "../../../public/icons/google.svg";
 import FacebookIcon from "../../../public/icons/facebook.svg";
 import Logo1 from "../../../public/icons/logo1.svg";
@@ -19,13 +16,11 @@ import toast from "react-hot-toast";
 import { handleFirebaseAuthError, t } from "@/utils";
 import { userSignUpApi } from "@/api/apiCalling";
 import { Fcmtoken, settingsData } from "@/store/slices/settingSlice";
-// import { loadUpdateData } from "@/store/slices/authSlice";
 import { usePathname, useRouter } from "next/navigation";
 import FirebaseData from '@/config/firebase';
 import CreateAccount from '@/app/(auth)/CreateAccount';
 import { validateForm } from '@/utils';
 import { setUserVerfied } from '@/store/slices/authSlice.js';
-
 
 const LoginPopup = ({ onClose }) => {
     const router = useRouter()
@@ -124,13 +119,12 @@ const LoginPopup = ({ onClose }) => {
     const onClose1 = () => {
         onClose()
         setAllModels(0)
-        router.push("/")
+        router.push("/");
     }
-    //    console.log(9,translatedData?.file_name);
 
     return (
         <>
-
+            {/* here all models for auth (register login etc...) */}
             {allModels && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-10 top-0 right-0 left-0 ">
                     <div id="login-popup" tabIndex="-1"
@@ -235,14 +229,14 @@ const LoginPopup = ({ onClose }) => {
                                                                 Email address
                                                             </label>
                                                             <input id="email" className="border p-3   shadow-md placeholder:text-base focus:scale-105 ease-in-out duration-300 border-gray-300 rounded-lg w-full"
-                                                             type="email" placeholder={translatedData?.file_name?.enterEmail}
+                                                                type="email" placeholder={translatedData?.file_name?.enterEmail}
                                                                 onChange={(e) => setEmail(e.target.value)} />
                                                         </div>
                                                         <div>
                                                             <label htmlFor="password" className="mb-2  text-lg hidden">
                                                                 Password
                                                             </label>
-                                                            <input id="password"  className="border p-3 shadow-md  placeholder:text-base focus:scale-105 ease-in-out duration-300 border-gray-300 rounded-lg w-full"
+                                                            <input id="password" className="border p-3 shadow-md  placeholder:text-base focus:scale-105 ease-in-out duration-300 border-gray-300 rounded-lg w-full"
                                                                 type="password" placeholder={translatedData?.file_name?.enterPassword}
                                                                 onChange={(e) => setPassword(e.target.value)} />
                                                         </div>

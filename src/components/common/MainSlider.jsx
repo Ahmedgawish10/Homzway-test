@@ -19,8 +19,8 @@ export default function SimpleSlider() {
         speed: 500,
         slidesToShow: 1,
         slidesToScroll: 1,
-        appendDots: dots => (<div> <ul className="mainSlider-custom-dots">{dots}</ul></div> ),
-        customPaging: i => ( <div className="mainSlider-custom-dot"></div>)
+        appendDots: dots => (<div> <ul className="mainSlider-custom-dots">{dots}</ul></div>),
+        customPaging: i => (<div className="mainSlider-custom-dot"></div>)
     };
     return (
         <div className="mainSlider overflow-hidden py-6 ">
@@ -31,7 +31,7 @@ export default function SimpleSlider() {
                             key={index}>
                             <div className="img-slider w-full flex justify-center  group ">
                                 <div className="rounded-full sm:p-2  w-full ">
-                                    <Image src={sliderItem.image} width={983} height={300} alt={sliderItem.id} className="offer_slider_img  w-[100%] h-[180px] sm:h-[240px]    " />
+                                    <Image  priority src={sliderItem.image} width={983} height={300} alt={sliderItem.id} className="offer_slider_img  w-[100%] h-[180px] sm:h-[240px]    " />
                                 </div>
                             </div>
 

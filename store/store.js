@@ -4,39 +4,36 @@ import { createLogger } from "redux-logger";
 import { persistStore, persistReducer } from 'redux-persist';
 import { combineReducers } from 'redux';
 import storage from 'redux-persist/lib/storage';
-
-import settingsReducer from "@/store/slices/settingSlice";
-import sliderReducer from '@/store/slices/sliderSlice';
-import categoryReducer from '@/store/slices/categorySlice'
+import settingSlice from "@/store/slices/settingSlice";
+import sliderSlice from '@/store/slices/sliderSlice';
+import categorySlice from '@/store/slices/categorySlice'
 import productsSlice from './slices/productsSlice';
-import authReducer from '@/store/slices/authSlice';
+import authSlice from '@/store/slices/authSlice';
 import breadCrumbSlice from '@/store/slices/breadCrumbSlice';
-import languageReducer from '@/store/slices/languageSlice'
-import locationReducer from '@/store/slices/locationSlice';
-import offerReducer from '@/store/slices/offerSlice';
-import searchReducer from "@/store/slices/searchSlice"
-import globalStateReducer from '@/store/slices/globalStateSlice';
-import filterReducer from '@/store/slices/filterSlice';
+import languageSlice from '@/store/slices/languageSlice'
+import locationSlice from '@/store/slices/locationSlice';
+import offerSlice from '@/store/slices/offerSlice';
+import searchSlice from "@/store/slices/searchSlice"
+import globalStateSlice from '@/store/slices/globalStateSlice';
+import filterSlice from '@/store/slices/filterSlice';
 import SeoJsonLdSlice from './slices/SeoJsonLdSlice';
-import SsdSlice from './slices/SsdSlice';
 import {thunk} from "redux-thunk"; 
 
-
+// all slicess
 const rootReducer = combineReducers({
-        Settings: settingsReducer,
-        Slider: sliderReducer,
-        Category: categoryReducer,
+        Settings: settingSlice,
+        Slider: sliderSlice,
+        Category: categorySlice,
         Products:productsSlice,
-        Auth: authReducer,
+        Auth: authSlice,
         Breadcrumb: breadCrumbSlice,
-        Language: languageReducer,
-        Location: locationReducer,
-        Offer: offerReducer,
-        Search: searchReducer,
-        GlobalState: globalStateReducer,
-        Filter: filterReducer,
+        Language: languageSlice,
+        Location: locationSlice,
+        Offer: offerSlice,
+        Search: searchSlice,
+        GlobalState: globalStateSlice,
+        Filter: filterSlice,
         JsonLd:SeoJsonLdSlice,
-        Ssd:SsdSlice
 });
 
 // Persist config
@@ -55,9 +52,9 @@ export const store = configureStore({
   reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
-      serializableCheck: false, // Disable warnings for non-serializable state
+      serializableCheck: false,
     }),
 });
 
-// Persistor
+// Persistor 
 export const persistor = persistStore(store);

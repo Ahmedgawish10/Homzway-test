@@ -12,28 +12,23 @@ import { RiMailSendFill } from 'react-icons/ri';
 import { BiPhoneCall } from 'react-icons/bi';
 function Footer() {
   const { language, translatedData } = useSelector((state) => state.Language);
+  const { data } = useSelector((state) => state.Settings)
+    // quickLinks section
   const quickLinks = [
-    { href: '/about-us', text: t('aboutUs') },
     { href: '/contact-us', text: t('contactUs') },
     { href: '/subscription', text: t('subscription') },
     { href: '/blogs', text: t('ourBlog') },
     { href: '/faqs', text: t('faqs') },
   ];
-  const { data } = useSelector((state) => state.Settings)
-
-
-
   return (
     <div>
-
+      {/*just static footer untill the data comes from api */}
       <footer className="bg-white rtl">
         <div className="mx-auto max-w-screen-xl px-4 pb-6 pt-16 sm:px-6 lg:px-8 lg:pt-24">
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
+            {/* scial media */}
             <div>
-              <div className='app_decs'>
-                {translatedData?.file_name?.contactUs}
-              </div>
-
+              <div className='text-xl'> {language == "en" ? "Follow Us" : " تابعنا "} </div>
               <ul className="mt-8 flex justify-center gap-6 sm:justify-start md:gap-8">
                 <li>
                   <a
@@ -124,109 +119,81 @@ function Footer() {
                 </li>
               </ul>
             </div>
-
-            <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-4 lg:col-span-2">
-              <div className="text-center ">
+              
+            <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:col-span-2">
+              {/* about us section */}
+              <div className=" ">
                 <p className="text-lg font-medium text-gray-900">{t('aboutUs')}</p>
-
                 <ul className="mt-8 space-y-4 text-sm">
                   <li>
                     <a className="text-gray-700 transition hover:text-gray-700/75" href="#">
-                      Company History
+                      {language == "en" ? "About Homzway" : " عن Homzway"}
                     </a>
                   </li>
 
                   <li>
                     <a className="text-gray-700 transition hover:text-gray-700/75" href="#">
-                      Meet the Team
+                      {language == "en" ? "Offers Homzway" : " عروض Homzway"}
                     </a>
                   </li>
 
                   <li>
                     <a className="text-gray-700 transition hover:text-gray-700/75" href="#">
-                      Employee Handbook
+                      {language == "en" ? "Jobs Homzway" : " وظايف Homzway"}
                     </a>
                   </li>
-
                   <li>
-                    <a className="text-gray-700 transition hover:text-gray-700/75" href="#"> Careers </a>
+                    <a className="text-gray-700 transition hover:text-gray-700/75" href="#"> {language == "en" ? " Homzway for businesses" : " للاعمال Homzway"} </a>
                   </li>
                 </ul>
               </div>
-
-              <div className="text-center ">
-                <p className="text-lg font-medium text-gray-900">Our Services</p>
-
+              {/* Homzway */}
+              <div className=" ">
+                <p className="text-lg font-medium text-gray-900">HomZway</p>
                 <ul className="mt-8 space-y-4 text-sm">
                   <li>
-                    <a className="text-gray-700 transition hover:text-gray-700/75" href="#">
-                      Web Development
-                    </a>
-                  </li>
-
-                  <li>
-                    <a className="text-gray-700 transition hover:text-gray-700/75" href="#"> Web Design </a>
-                  </li>
-
-                  <li>
-                    <a className="text-gray-700 transition hover:text-gray-700/75" href="#"> Marketing </a>
-                  </li>
-
-                  <li>
-                    <a className="text-gray-700 transition hover:text-gray-700/75" href="#"> Google Ads </a>
-                  </li>
-                </ul>
-              </div>
-
-              <div className="text-center ">
-                <p className="text-lg font-medium text-gray-900">Helpful Links</p>
-
-                <ul className="mt-8 space-y-4 text-sm">
-                  <li>
-                    <a className="text-gray-700 transition hover:text-gray-700/75" href="#"> FAQs </a>
-                  </li>
-
-                  <li>
-                    <a className="text-gray-700 transition hover:text-gray-700/75" href="#"> Support </a>
-                  </li>
-
-                  <li>
-                    <a
-                      className="group flex justify-center gap-1.5 ltr:sm:justify-start rtl:sm:justify-end"
-                      href="#"
-                    >
-                      <span className="text-gray-700 transition group-hover:text-gray-700/75">
-                        Live Chat
-                      </span>
-
-                      <span className="relative flex size-2">
-                        <span
-                          className="absolute inline-flex h-full w-full animate-ping rounded-full bg-teal-400 opacity-75"
-                        ></span>
-                        <span className="relative inline-flex size-2 rounded-full bg-teal-500"></span>
-                      </span>
-                    </a>
-                  </li>
-                </ul>
-              </div>
-
-              <div className="text-center ">
-                <p className="text-lg font-medium text-gray-900">Contact Us</p>
-
-                {quickLinks.map((link, index) => (
-                  <div className='footer_links' key={index}>
-                    <Link href={link.href} className={`${language == "ar" ? "ar-links" : ""}`}>
-                      <span>{link.text}</span>
+                    <Link className="text-gray-700 transition hover:text-gray-700/75" href="#">
+                      {language == "en" ? "Sitemap" : " خريطه الموقع"}
                     </Link>
-                  </div>
-                ))}
+                  </li>
+
+                  <li>
+                    <Link href='/terms-and-condition'>
+                      <span className='terms'>{t('termsConditions')}</span>
+                    </Link>
+                  </li>
+                  <li>
+
+                    <Link href='/privacy-policy'>
+                      <span className='privacy'>{t('privacyPolicy')}</span>
+                    </Link>
+                  </li>
+
+                  <li>
+                    <Link href='/terms-and-condition'>
+                      <span className='help'> {language == "en" ? "Help" : " المساعدة"}</span>
+                    </Link>
+                  </li>
+                </ul>
               </div>
+              {/*quick links  */}
+              <div className=" ">
+                <p className="text-lg font-medium text-gray-900"> {language == "en" ? "Quick Links" : " روابط سريعه "} </p>
+                <ul className="mt-8 space-y-4 text-sm">
+                  {quickLinks.map((link, index) => (
+                    <li className='footer_links' key={index}>
+                      <Link href={link.href} className={`${language == "ar" ? "ar-links" : ""}`}>
+                        <span>{link.text}</span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
             </div>
           </div>
-
-
-
-          <div className='footer-overlay block  sm:flex  sm:justify-between mt-3'>
+          {/*  footer overlay */}
+          <div className='footer-overlay border-t-4 pt-2 block  sm:flex  sm:justify-between mt-3'>
             <div className='copyright'>
               <span>{t('copyright')} © {data?.company_name}  {t('allRightsReserved')}</span>
             </div>
@@ -239,11 +206,6 @@ function Footer() {
               </Link>
             </div>
           </div>
-
-
-
-
-
         </div>
       </footer>
     </div>
