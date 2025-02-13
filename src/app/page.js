@@ -4,7 +4,7 @@ import Property from "../../public/icons/property.svg";
 import Link from "next/link";
 import axios from "axios";
 import PageClint from "@/app/PageClient";
-import MainLayout from "./Layout/MainLayout";
+import MainLayout from "../Layout/MainLayout";
 import JsonLd from "@/app/_seo/JsonLd";
 export const generateMetadata = async () => {
   try {

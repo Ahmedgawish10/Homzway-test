@@ -1,6 +1,6 @@
 'use client'
 import React, { useEffect, useState } from 'react';
-import LayoutHeader from '@/app/Layout/LayoutHeader.jsx';
+import LayoutHeader from '@/Layout/LayoutHeader.jsx';
 import Loader from '@/components/Loader/Loader.jsx';
 import { usePathname, useRouter } from 'next/navigation';
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,7 +12,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { fetchSystemSettings } from '@/store/slices/settingSlice.js';
 import { useIsRtl } from '@/utils/index.jsx';
 import {fetchDefaultLanguage} from "@/store/slices/languageSlice.js"
-const PushNotificationLayout = dynamic( () => import('../../components/firebaseNotification/PushNotificationLayout.jsx'), { ssr: false });
+const PushNotificationLayout = dynamic( () => import('../components/firebaseNotification/PushNotificationLayout.jsx'), { ssr: false });
 import { setUserVerfied } from '@/store/slices/authSlice.js';
 const Layout = ({ children }) => {
   const pathname = usePathname();

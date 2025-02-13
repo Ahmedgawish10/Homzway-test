@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import MainLayout from "../Layout/MainLayout";
+import MainLayout from "../../Layout/MainLayout";
 const DropdownMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
 

@@ -43,14 +43,14 @@ export const getDefaultLatLong = () => {
 
 export const getPlaceApiKey = () => {
   const settings = store.getState()?.Settings?.data?.data;
-  return "AIzaSyDNMOkBx54Xdt8Jp4AQKDHVH8MpDn0NhLY";
+  return settings?.place_api_key;
 };
 
 export const loadGoogleMaps = () => {
   const settings = store.getState()?.Settings?.data?.data;
   return useJsApiLoader({
     id: 'google-map-script',
-    googleMapsApiKey: "AIzaSyDNMOkBx54Xdt8Jp4AQKDHVH8MpDn0NhLY",
+    googleMapsApiKey: settings?.place_api_key,
     libraries: GOOGLE_MAPS_LIBRARIES,
   });
 };
@@ -60,60 +60,60 @@ export const getSlug = (pathname) => {
   return segments[segments.length - 1];
 };
 
-// export const formatDate = (createdAt) => {
-//   const date = new Date(createdAt);
-//   const now = new Date();
-//   const diff = now.getTime() - date.getTime();
-//   const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+export const formatDate = (createdAt) => {
+  const date = new Date(createdAt);
+  const now = new Date();
+  const diff = now.getTime() - date.getTime();
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
 
-//   if (days === 0) {
-//     return t('today');
-//   } else if (days === 1) {
-//     return t('yesterday');
-//   } else if (days < 30) {
-//     return `${days} ${t('daysAgo')}`;
-//   } else if (days < 365) {
-//     const months = Math.floor(days / 30);
-//     return `${months} ${t('month')}${months > 1 ? t('s') : ''} ${t('ago')}`;
-//   } else {
-//     const years = Math.floor(days / 365);
-//     return `${years} ${t('year')}${years > 1 ? t('s') : ''} ${t('ago')}`;
-//   }
-// };
+  if (days === 0) {
+    return t('today');
+  } else if (days === 1) {
+    return t('yesterday');
+  } else if (days < 30) {
+    return `${days} ${t('daysAgo')}`;
+  } else if (days < 365) {
+    const months = Math.floor(days / 30);
+    return `${months} ${t('month')}${months > 1 ? t('s') : ''} ${t('ago')}`;
+  } else {
+    const years = Math.floor(days / 365);
+    return `${years} ${t('year')}${years > 1 ? t('s') : ''} ${t('ago')}`;
+  }
+};
 
-// export const exactPrice = (price) => {
-//   const countryCode = process.env.NEXT_PUBLIC_DEFAULT_COUNTRY?.toUpperCase() || 'US';
-//   const locale = countryLocaleMap[countryCode] || 'en-US';
-//   const settingsData = store.getState()?.Settings?.data?.data;
-//   const currencyPosition = settingsData?.currency_symbol_position;
-//   const currencySymbol = settingsData?.currency_symbol;
+export const exactPrice = (price) => {
+  const countryCode = process.env.NEXT_PUBLIC_DEFAULT_COUNTRY?.toUpperCase() || 'US';
+  const locale = countryLocaleMap[countryCode] || 'en-US';
+  const settingsData = store.getState()?.Settings?.data?.data;
+  const currencyPosition = settingsData?.currency_symbol_position;
+  const currencySymbol = settingsData?.currency_symbol;
 
-//   const formattedNumber = new Intl.NumberFormat(locale, {
-//     maximumFractionDigits: 2,
-//     useGrouping: true,
-//   }).format(Number(price));
+  const formattedNumber = new Intl.NumberFormat(locale, {
+    maximumFractionDigits: 2,
+    useGrouping: true,
+  }).format(Number(price));
 
-//   return currencyPosition === 'right'
-//     ? `${formattedNumber} ${currencySymbol}`
-//     : `${currencySymbol} ${formattedNumber}`;
-// };
+  return currencyPosition === 'right'
+    ? `${formattedNumber} ${currencySymbol}`
+    : `${currencySymbol} ${formattedNumber}`;
+};
 
-// export const formatPriceAbbreviated = (price) => {
-//   const settingsData = store.getState()?.Settings?.data?.data;
-//   const currencySymbol = settingsData?.currency_symbol;
-//   const currencyPosition = settingsData?.currency_symbol_position;
-//   const countryCode = process.env.NEXT_PUBLIC_DEFAULT_COUNTRY?.toUpperCase() || 'US';
-//   const locale = countryLocaleMap[countryCode] || 'en-US';
+export const formatPriceAbbreviated = (price) => {
+  const settingsData = store.getState()?.Settings?.data?.data;
+  const currencySymbol = settingsData?.currency_symbol;
+  const currencyPosition = settingsData?.currency_symbol_position;
+  const countryCode = process.env.NEXT_PUBLIC_DEFAULT_COUNTRY?.toUpperCase() || 'US';
+  const locale = countryLocaleMap[countryCode] || 'en-US';
 
-//   const formattedNumber = new Intl.NumberFormat(locale, {
-//     maximumFractionDigits: 2,
-//     useGrouping: true,
-//   }).format(Number(price));
+  const formattedNumber = new Intl.NumberFormat(locale, {
+    maximumFractionDigits: 2,
+    useGrouping: true,
+  }).format(Number(price));
 
-//   return currencyPosition === 'right'
-//     ? `${formattedNumber} ${currencySymbol}`
-//     : `${currencySymbol} ${formattedNumber}`;
-// };
+  return currencyPosition === 'right'
+    ? `${formattedNumber} ${currencySymbol}`
+    : `${currencySymbol} ${formattedNumber}`;
+};
 
 export const createStickyNote = () => {
   const stickyNote = document.createElement('div');
@@ -273,9 +273,6 @@ export const truncate = (text, maxLength) => {
   return stringText.length <= maxLength ? text : `${stringText.slice(0, maxLength)}...`;
 };
 
-
-
-
 export const formatDateMonth = (timestamp) => {
   const months = [
     'January', 'February', 'March', 'April', 'May', 'June',
@@ -298,97 +295,97 @@ export const useIsRtl = () => {
   return lang?.rtl === true;
 };
 
-// export const logout = () => {
-//   store.dispatch(logoutSuccess());
-// };
+export const logout = () => {
+  store.dispatch(logoutSuccess());
+};
 
-// export const generateSlug = (text) => {
-//   return text
-//     .toLowerCase()
-//     .replace(/[^a-z0-9\s-]/g, '')
-//     .replace(/\s+/g, '-')
-//     .replace(/-+/g, '-')
-//     .replace(/^-+|-+$/g, '');
-// };
+export const generateSlug = (text) => {
+  return text
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/^-+|-+$/g, '');
+};
 
-// export const isEmptyObject = (obj) => {
-//   // console.log(obj);
+export const isEmptyObject = (obj) => {
+  // console.log(obj);
 
-//   return obj && typeof obj === 'object' && Object.keys(obj).length === 0;
-// }
+  return obj && typeof obj === 'object' && Object.keys(obj).length === 0;
+}
 
-// export const measureCategoryWidth = (categoryName) => {
-//   const tempElement = document.createElement('span');
-//   tempElement.style.display = 'inline-block';
-//   tempElement.style.visibility = 'hidden';
-//   tempElement.style.position = 'absolute';
-//   tempElement.innerText = categoryName;
-//   document.body.appendChild(tempElement);
-//   const width = tempElement.offsetWidth + 15; // icon width(12) + gap(3)
-//   document.body.removeChild(tempElement);
-//   return width;
-// };
+export const measureCategoryWidth = (categoryName) => {
+  const tempElement = document.createElement('span');
+  tempElement.style.display = 'inline-block';
+  tempElement.style.visibility = 'hidden';
+  tempElement.style.position = 'absolute';
+  tempElement.innerText = categoryName;
+  document.body.appendChild(tempElement);
+  const width = tempElement.offsetWidth + 15; // icon width(12) + gap(3)
+  document.body.removeChild(tempElement);
+  return width;
+};
 
-// export const formatTime = (dateString) => {
-//   const date = new Date(dateString);
-//   const now = new Date();
-//   const diffInSeconds = Math.floor((now - date) / 1000);
-//   const diffInMinutes = Math.floor(diffInSeconds / 60);
-//   const diffInHours = Math.floor(diffInMinutes / 60);
-//   const diffInDays = Math.floor(diffInHours / 24);
-//   const diffInWeeks = Math.floor(diffInDays / 7);
-//   const diffInMonths = Math.floor(diffInDays / 30);
-//   const diffInYears = Math.floor(diffInDays / 365);
+export const formatTime = (dateString) => {
+  const date = new Date(dateString);
+  const now = new Date();
+  const diffInSeconds = Math.floor((now - date) / 1000);
+  const diffInMinutes = Math.floor(diffInSeconds / 60);
+  const diffInHours = Math.floor(diffInMinutes / 60);
+  const diffInDays = Math.floor(diffInHours / 24);
+  const diffInWeeks = Math.floor(diffInDays / 7);
+  const diffInMonths = Math.floor(diffInDays / 30);
+  const diffInYears = Math.floor(diffInDays / 365);
 
-//   if (diffInSeconds < 60) {
-//     return t('now');
-//   } else if (diffInMinutes < 60) {
-//     return `${diffInMinutes}m`;
-//   } else if (diffInHours < 24) {
-//     return `${diffInHours}h`;
-//   } else if (diffInDays === 1) {
-//     return t('yesterday');
-//   } else if (diffInDays < 7) {
-//     return `${diffInDays}d`;
-//   } else if (diffInWeeks < 4) {
-//     return `${diffInWeeks}w`;
-//   } else if (diffInMonths < 12) {
-//     return `${diffInMonths}mo`;
-//   } else {
-//     return `${diffInYears}y`;
-//   }
-// };
+  if (diffInSeconds < 60) {
+    return t('now');
+  } else if (diffInMinutes < 60) {
+    return `${diffInMinutes}m`;
+  } else if (diffInHours < 24) {
+    return `${diffInHours}h`;
+  } else if (diffInDays === 1) {
+    return t('yesterday');
+  } else if (diffInDays < 7) {
+    return `${diffInDays}d`;
+  } else if (diffInWeeks < 4) {
+    return `${diffInWeeks}w`;
+  } else if (diffInMonths < 12) {
+    return `${diffInMonths}mo`;
+  } else {
+    return `${diffInYears}y`;
+  }
+};
 
-// export const isValidURL = (url) => {
-//   const pattern = /^(ftp|http|https):\/\/[^ "]+$/;
-//   return pattern.test(url);
-// };
+export const isValidURL = (url) => {
+  const pattern = /^(ftp|http|https):\/\/[^ "]+$/;
+  return pattern.test(url);
+};
 
-// export const formatDuration = (duration) => {
-//   const minutes = Math.floor(duration / 60);
-//   const seconds = duration % 60;
-//   return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-// };
+export const formatDuration = (duration) => {
+  const minutes = Math.floor(duration / 60);
+  const seconds = duration % 60;
+  return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+};
 
-// export const formatChatMessageTime = (dateString) => {
-//   const date = new Date(dateString);
-//   return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
-// };
+export const formatChatMessageTime = (dateString) => {
+  const date = new Date(dateString);
+  return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
+};
 
-// export const formatMessageDate = (dateString) => {
-//   const messageDate = new Date(dateString);
-//   const today = new Date();
-//   const yesterday = new Date(today);
-//   yesterday.setDate(yesterday.getDate() - 1);
+export const formatMessageDate = (dateString) => {
+  const messageDate = new Date(dateString);
+  const today = new Date();
+  const yesterday = new Date(today);
+  yesterday.setDate(yesterday.getDate() - 1);
 
-//   if (messageDate.toDateString() === today.toDateString()) {
-//     return t('today');
-//   } else if (messageDate.toDateString() === yesterday.toDateString()) {
-//     return t('yesterday');
-//   } else {
-//     return messageDate.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' });
-//   }
-// };
+  if (messageDate.toDateString() === today.toDateString()) {
+    return t('today');
+  } else if (messageDate.toDateString() === yesterday.toDateString()) {
+    return t('yesterday');
+  } else {
+    return messageDate.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' });
+  }
+};
 
 export const validateForm = (formData) => {
   const { username, email, password, isLogin } = formData;

@@ -28,6 +28,7 @@ import { useIsRtl } from '@/utils/index';
 import { BiChat, BiDollarCircle, BiReceipt } from "react-icons/bi"
 import { setUserVerfied } from '@/store/slices/authSlice';
 import { userLogout } from '@/store/slices/authSlice';
+import { CgProfile } from "react-icons/cg";
 
 const Header = ({ ToggleLoginPopupFunc }) => {
     const pathname = usePathname()
@@ -290,18 +291,8 @@ const Header = ({ ToggleLoginPopupFunc }) => {
                                 </div>
                                 {userData && (
                                     <div className="profile order-[-2]">
-                                        <div className="profile-img h-full flex items-center">
-                                            <button
-                                                type="button"
-                                                onClick={TooglePoupProfile}
-                                                className="overflow-hidden rounded-full border border-gray-300 shadow-inner"
-                                            >
-                                                <img
-                                                    src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fA%3D%3D"
-                                                    alt=""
-                                                    className="size-10 object-cover"
-                                                />
-                                            </button>
+                                        <div className="profile-img h-full w-[20px] flex items-center cursor-pointer "   onClick={TooglePoupProfile}>
+                                                    <CgProfile  className=" text-3xl !w-[180px] !h-[180px] " style={{fontSize:"50px"}} />
                                         </div>
 
                                         {isProfileOpen && (
