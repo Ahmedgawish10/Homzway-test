@@ -186,9 +186,6 @@ const Header = ({ ToggleLoginPopupFunc }) => {
             confirmButtonText: t("yes"),
         }).then((result) => {
             if (result.isConfirmed) {
-                // Clear the recaptchaVerifier by setting it to null
-                // window.recaptchaVerifier = null;
-                // logoutSuccess();
                 signOut()
                 dispatch(userLogout(null))
                 router.push('/')
@@ -199,11 +196,44 @@ const Header = ({ ToggleLoginPopupFunc }) => {
             }
         });
     };
-    // console.log(cateData)
+
     return (
         <>
             <header className="bg-white py-3 z-[5] sm:px-4 fixed top-0 w-full hidden sm:block ">
                 <div className="mx-auto container px-3 sm:px-0 ">
+                    <div className="overlay-header flex gap-3 items-center pb-3 ">
+                    {data?.header_logo && (
+                        <Link href="/">
+                            <Image priority src={data.header_logo} width={200} height={100}
+                                className="!h-[30px] w-[160px]" alt="Logo" />
+                        </Link>
+                    )}
+                    {cateData?.slice(0, 3).map((category, index) => {
+                        return (
+                            <div key={index} className=" header-category group relative flex gap-x-2 rounded-lg  hover:bg-gray-50">
+                                <div className="mt-1 flex size-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
+                                    <img src={category.image} alt={category.image} className="size-6" width={100} height={100} />
+                                </div>
+                                <div>
+                                    <a href={category.link || "#"} className="font-semibold text-gray-900">
+                                        <div className="flex justify-center pt-3">
+                                            <span className="pb-1 text-center font-semibold">
+                                                {language === "en"
+                                                    ? category.name
+                                                    : category?.translations?.map((translation, i) => (
+                                                        <span key={i}>{translation.name}</span>
+                                                    ))}
+                                            </span>
+                                        </div>
+                                        <span className="absolute "></span>
+                                    </a>
+                                    {category.description && <p className="mt-1 text-gray-600">{category.description}</p>}
+                                </div>
+                            </div>
+                        );
+                    })}
+                    </div>
+                    
                     <div className="flex gap-3  items-center justify-between">
                         {/* location user comp */}
                         <div className="location flex-[0.5]  ">
@@ -242,13 +272,10 @@ const Header = ({ ToggleLoginPopupFunc }) => {
                                     )}
                                 </ul>
                             </nav>
-
+                            {/* Sell */}
                             <div className=" md:relative flex  gap-2">
                                 <div className="Sell">
-                                    <span
-                                        onClick={() => setShowLoginPopup(true)}
-                                        className="group cursor-pointer relative inline-flex transition-all hover:bg-red-500 items-center overflow-hidden rounded-[7px] bg-red-600 px-8 py-2.5 text-white focus:ring-3 focus:outline-hidden"
-                                    >
+                                    <span className="group cursor-pointer relative inline-flex transition-all hover:bg-red-500 items-center overflow-hidden rounded-[7px] bg-red-600 px-8 py-2.5 text-white focus:ring-3 focus:outline-hidden" >
                                         <span className="text-xl font-medium ">{translatedData?.file_name?.selling}  </span>
                                     </span>
                                 </div>
@@ -297,8 +324,6 @@ const Header = ({ ToggleLoginPopupFunc }) => {
                                         )}
                                     </div>
                                 )}
-
-
                             </div>
                         </div>
                     </div>
@@ -363,18 +388,12 @@ const Header = ({ ToggleLoginPopupFunc }) => {
 
             </header>
 
-
             {showLoginPopup && <LoginPopup onClose={() => setShowLoginPopup(false)} />}
         </>
     )
 }
 export default Header
 
-{/* <LoginModal IsLoginModalOpen={IsLoginModalOpen} setIsLoginModalOpen={setIsLoginModalOpen} setIsRegisterModalOpen={setIsRegisterModalOpen} IsMailSentOpen={IsMailSentOpen} setIsMailSentOpen={setIsMailSentOpen} IsRegisterModalOpen={IsRegisterModalOpen} openSentMailModal={openSentMailModal} />
-
-<MailSentSucessfully IsMailSentOpen={IsMailSentOpen} OnHide={() => setIsMailSentOpen(false)} IsLoginModalOpen={() => setIsLoginModalOpen(true)} />
-
-<LocationModal IsLocationModalOpen={IsLocationModalOpen} OnHide={() => setIsLocationModalOpen(false)} /> */}
 
 
 
