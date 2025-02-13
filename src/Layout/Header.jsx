@@ -215,7 +215,7 @@ const Header = ({ ToggleLoginPopupFunc }) => {
                         {data?.header_logo && (
                             <Link href="/">
                                 <Image priority src={data.header_logo} width={200} height={100}
-                                    className=" !h-[20px] w-[160px]" alt="Logo" />
+                                    className="!h-[30px] w-[160px]" alt="Logo" />
                             </Link>
                         )}
                         {cateData?.slice(0, 3).map((category, index) => {
@@ -342,7 +342,7 @@ const Header = ({ ToggleLoginPopupFunc }) => {
                         {data?.header_logo && (
                             <Link href="/">
                                 <Image priority src={data.header_logo} width={200} height={100}
-                                    className="!h-[17px] w-[120px]" alt="Logo" />
+                                    className="!h-[30px] w-[160px]" alt="Logo" />
                             </Link>
                         )}
                         {cateData?.slice(0, 1).map((category, index) => {
@@ -375,7 +375,7 @@ const Header = ({ ToggleLoginPopupFunc }) => {
                 <div className="container mx-auto px-3 sm:px-0">
                     {isPageScrolled ? "LocationComp" : <LocationComp />}
                     <div className={`flex-1 mt-3  rounded-md ${isPageScrolled ? "  fixed  w-[90%]  container mx-auto" : ""} top-0 bg-white z-50 shadow-md`}>
-                        <div className={`relative container mx-auto px-5  ${isPageScrolled ? " container":""} `}>
+                        <div className={`relative container mx-auto  ${isPageScrolled ? " px-5  container":""} `}>
                             <input
                                 className="w-full bg-transparent search-input-item placeholder:text-[18px] placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md pl-3 pr-28 py-4 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
                                 placeholder={t('searchItem')}
