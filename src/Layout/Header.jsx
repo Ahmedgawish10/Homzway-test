@@ -265,7 +265,7 @@ const Header = ({ ToggleLoginPopupFunc }) => {
 
                         {/* language & auth(login||user) */}
                         <div className="flex md:items-center justify-between md:justify-end items-center md:gap-2  md:flex-none">
-                            <nav aria-label="Global" className="">
+                            <nav aria-label="Global" className=" px-2">
                                 <ul className="flex items-center gap-2 text-sm">
                                     <li className=''>
                                         <span className="font-meduim text-[1.2rem]  cursor-pointer hover:text-red-700 transition-all "
@@ -288,7 +288,7 @@ const Header = ({ ToggleLoginPopupFunc }) => {
                             <div className=" md:relative flex  gap-2">
                                 <div className="sell">
                                     <button onClick={TooglePoupSell} className="sell-button">
-                                        <span className="text-xl font-medium">
+                                        <span className="text-xl font-medium ">
                                             {translatedData?.file_name?.selling}
                                         </span>
                                     </button>
