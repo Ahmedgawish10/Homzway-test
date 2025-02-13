@@ -1,8 +1,12 @@
 import React from 'react'
-
-const page = () => {
+import Layout from "@/Layout/MainLayout"
+function page() {
   return (
-    <div>page</div>
+    <Layout>
+    <div>
+    transactions
+    </div>
+    </Layout>
   )
 }
 
