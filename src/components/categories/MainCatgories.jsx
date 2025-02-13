@@ -49,8 +49,6 @@ function CatgoriesMin() {
             },
         ],
     };
-
-
     return (
         <div className="catgoriesMin-lg border-t border-slate-200 py-3">
             <div className="container mx-auto px-3">
@@ -61,18 +59,17 @@ function CatgoriesMin() {
                             <div className={`cursor-pointer w-full relative flex-1 ${categoryProducts.length === 0 ? "" : "group"} ${index >= 3 ? "hidden md:block" : ""}`}
                                 key={index}>
                                 <div className=" flex justify-center">
-                                    <span className=" text-xl  box-border border-b-2 border-white hover:text-red-600 hover:border-b-2 pb-1 hover:border-cyan-700 line-clamp-1 text-center">
+                                    <span className=" lg:text-xl  box-border border-b-2 border-white hover:text-red-600 hover:border-b-2 pb-1 hover:border-cyan-700 line-clamp-1 text-center">
                                         {language === "en" ? category.name : category?.translations?.map((translation, i) => (
                                             <span key={i}>
                                                 {translation.name}
                                             </span>
-                                        )
-                                        )}
+                                        ))}
                                     </span>
                                 </div>
                                   {/* overlay sub categories */}
                                 {categoryProducts.length > 0 && (
-                                    <ul className="hidden absolute w-auto left-0 top-[30px] bg-white shadow-md p-2 space-y-1 group-hover:block">
+                                    <ul className="hidden  z-[50] absolute w-auto left-0 top-[40px] bg-white shadow-md p-2 space-y-1 group-hover:block">
                                         <div className="text-xl line-clamp-1">
                                             Subcategories1
                                         </div>

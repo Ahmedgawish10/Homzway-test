@@ -10,10 +10,8 @@ export default function SimpleSlider() {
     useEffect(() => {
         dispatch(fetchMainSlider())
     }, []);
-    const { cateData } = useSelector((state) => ({ cateData: state.Category.cateData }), shallowEqual);
     const { language, translatedData } = useSelector((state) => state.Language);
     const { slider } = useSelector((state) => state.Slider);
-    console.log(slider)
     var settings = {
         dots: true,
         infinite: true,
@@ -21,19 +19,19 @@ export default function SimpleSlider() {
         speed: 500,
         slidesToShow: 1,
         slidesToScroll: 1,
+        appendDots: dots => (<div> <ul className="mainSlider-custom-dots">{dots}</ul></div> ),
+        customPaging: i => ( <div className="mainSlider-custom-dot"></div>)
     };
     return (
-        <div className=" overflow-hidden h-[330px] ">
-
-            <Slider {...settings} className='h-[300px] sm:container mx-auto '>
+        <div className="mainSlider overflow-hidden py-6 ">
+            <Slider {...settings} className='sm:container mx-auto '>
                 {slider.map((sliderItem, index) => {
                     return (
                         <div className={`cursor-pointer w-full relative flex-1   `}
                             key={index}>
                             <div className="img-slider w-full flex justify-center  group ">
-                                <div className="rounded-full p-2  w-full ">
-                                    {/* <Image src={sliderItem.image}  alt="v" width={100} height={100} className=" object-cover w-full h-full " /> */}
-                                    <Image src={sliderItem.image} width={983} height={300} alt={sliderItem.id} className="offer_slider_img  w-[100%] h-[300px] " />
+                                <div className="rounded-full sm:p-2  w-full  ">
+                                    <Image src={sliderItem.image} width={983} height={300} alt={sliderItem.id} className="offer_slider_img  sm:rounded-md w-[100%] h-[180px]  md:h-[240px] " />
                                 </div>
                             </div>
 

@@ -213,7 +213,7 @@ const Header = ({ ToggleLoginPopupFunc }) => {
                         <div className="flex-1  ">
                             <div className="relative">
                                 <form action="" >
-                                    <input className="w-full bg-transparent placeholder:text-[17px] md:placeholder:text-xl placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md pl-3 pr-28 py-4 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
+                                    <input className="w-full bg-transparent placeholder:text-[17px] md:placeholder:text-xl placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md pl-3 pr-28 py-3 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
                                         placeholder={t('searchItem')} />
                                     <button className="absolute h-full top-0  right-[1px] flex items-center rounded bg-red-600 py-1 px-3 border border-transparent text-center text-sm text-white transition-all shadow-sm hover:shadow focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                                         type="submit" >
@@ -247,7 +247,7 @@ const Header = ({ ToggleLoginPopupFunc }) => {
                                 <div className="Sell">
                                     <span
                                         onClick={() => setShowLoginPopup(true)}
-                                        className="group cursor-pointer relative inline-flex transition-all hover:bg-red-500 items-center overflow-hidden rounded-[7px] bg-red-600 px-8 py-4 text-white focus:ring-3 focus:outline-hidden"
+                                        className="group cursor-pointer relative inline-flex transition-all hover:bg-red-500 items-center overflow-hidden rounded-[7px] bg-red-600 px-8 py-2.5 text-white focus:ring-3 focus:outline-hidden"
                                     >
                                         <span className="text-xl font-medium ">{translatedData?.file_name?.selling}  </span>
                                     </span>
@@ -345,7 +345,7 @@ const Header = ({ ToggleLoginPopupFunc }) => {
                 {/* location section */}
                 <div className="container mx-auto px-3 sm:px-0">
                     {isPageScrolled ? "LocationComp" : <LocationComp />}
-                    <div className={`flex-1 mt-3  ${isPageScrolled ? " w-[90%] fixed left-1/2 transform -translate-x-1/2 container mx-auto" : ""} top-0 bg-white z-50 shadow-md`}>
+                    <div className={`flex-1 mt-3  rounded-md ${isPageScrolled ? " w-[90%] fixed left-1/2 transform -translate-x-1/2 container mx-auto" : ""} top-0 bg-white z-50 shadow-md`}>
                         <div className="relative container mx-auto ">
                             <input
                                 className="w-full bg-transparent placeholder:text-[18px] placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md pl-3 pr-28 py-4 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"

@@ -27,7 +27,7 @@ export default function DropdownMenu() {
             <div>
                 <button
                     type="button"
-                    className="flex relative justify-between w-full  gap-x-1.5 rounded-md px-3 py-4  font-semibold text-gray-900 ring-1 shadow-xs ring-gray-300 ring-inset hover:bg-gray-50"
+                    className="flex relative justify-between w-full  gap-x-1.5 rounded-md px-3 py-2.5  font-semibold text-gray-900 ring-1 shadow-xs ring-gray-300 ring-inset hover:bg-gray-50"
                     id="menu-button"
                     aria-expanded={isOpen}
                     aria-haspopup="true"
