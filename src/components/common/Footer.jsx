@@ -201,7 +201,7 @@ function Footer() {
               <Link href='/privacy-policy'>
                 <span className='privacy'>{t('privacyPolicy')}</span>
               </Link>
-              <Link href='/terms-and-condition'>
+              <Link href='/terms'>
                 <span className='terms'>{t('termsConditions')}</span>
               </Link>
             </div>

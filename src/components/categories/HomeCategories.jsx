@@ -44,12 +44,16 @@ const HomeCategories = () => {
                             <div className="box-cat flex items-center gap-3 ">
                                 <div className=" flex justify-center">
                                     <span className=" group sm:text-xl flex gap-2 items-center  text-start line-clamp-1  text-red-600 ">
-
-                                        {language === "en" ? <Link href={`/category/${category.slug}`}>{category.name}</Link> : category?.translations?.map((translation, i) => (
+                                    {language === "en" ? <span >{category.name}</span> : category?.translations?.map((translation, i) => (
+                                            <span className="flex gap-2 items-center" key={i}>
+                                                {translatedData?.file_name?.allItems} {language == "en" ? "in" : "في"}   {translation.name}
+                                            </span>
+                                        ))}
+                                        {/* {language === "en" ? <Link href={`/category/${category.slug}`}>{category.name}</Link> : category?.translations?.map((translation, i) => (
                                             <Link href={`/category/${category.slug}`} className="flex gap-2 items-center" key={i}>
                                                 {translatedData?.file_name?.allItems} {language == "en" ? "in" : "في"}   {translation.name}
                                             </Link>
-                                        ))}
+                                        ))} */}
                                         <IoIosArrowForward  className={`${language=="ar"?"rotate-180 ":" "}`}/>
                                     </span>
                                 </div>
