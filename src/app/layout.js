@@ -19,32 +19,15 @@ const fonts = localFont({
   ],
   variable: "--font-proxima-nova",
 });
-export const generateMetadata = async () => {
-  try {
-    const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_END_POINT}get-system-settings`
-    );
-    const favicon = response?.data?.data?.favicon_icon
-    const placeApiKey = response?.data?.data?.place_api_key
-    return {
-      icons: [{ url: favicon }],
-      placeApiKey
-    }
-  } catch (error) {
-    console.error("Error fetching MetaData:", error);
-    return null;
-  }
-};
+
 
 export default async function RootLayout({ children }) {
-  const metadata = await generateMetadata(); 
-  const placeFirbaseApiKey = metadata?.placeApiKey;
-
+ 
   return (
     <html lang="en">
       <Head>
         {/* just for testing now */}
-        <script async defer src={`https://maps.googleapis.com/maps/api/js?key=${placeFirbaseApiKey}&libraries=places&loading=async`}></script>
+        <script async defer src={`https://maps.googleapis.com/maps/api/js?key=${"AIzaSyDNMOkBx54Xdt8Jp4AQKDHVH8MpDn0NhLY"}&libraries=places&loading=async`}></script>
       </Head>
       <body className={` ${fonts.variable} antialiased`}>
         <StoreProvider>
