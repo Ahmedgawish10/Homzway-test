@@ -20,7 +20,7 @@ const HomeCategories = () => {
     console.log(translatedData);
 
     return (
-        <div className="home-categories py-8 bg-gray-100">
+        <div className="home-categories py-8 ">
             <div className="container mx-auto px-4">
                 {/* Use translated title */}
                 <h2 className="text-2xl font-bold text-start mb-8">

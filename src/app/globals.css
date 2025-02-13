@@ -19,7 +19,7 @@
 }
 body {
   font-family: var(--font-proxima-nova), sans-serif;
-  height: 2000px;
+  /* height: 2000px; */
 }
 /* media xsm */
 @media screen and (max-width: 350px) {

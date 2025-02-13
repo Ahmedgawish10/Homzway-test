@@ -110,7 +110,6 @@ export default function Home() {
         <MainCatgories />
         <MainSlider/>
         <HomeCategories/>
-        <Link href="/ads">test</Link>
       </div>
     </>
   );

@@ -6,6 +6,7 @@ import { Toaster } from "react-hot-toast";
 import Head from "next/head";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import  Footer from "@/components/common/Footer.jsx";
 //local fonts for optmized when preloading pages
 const fonts = localFont({
   src: [
@@ -35,6 +36,7 @@ export default function RootLayout({ children }) {
         <StoreProvider>
         <Toaster position="top-center" reverseOrder={false} />
           {children}
+          <Footer/>
           </StoreProvider>
       </body>
     </html>
