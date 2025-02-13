@@ -214,8 +214,8 @@ const Header = ({ ToggleLoginPopupFunc }) => {
                     <div className="overlay-header flex gap-3 items-center pb-3 ">
                         {data?.header_logo && (
                             <Link href="/">
-                                <Image priority src={data.header_logo} width={200} height={100}
-                                    className="!h-[30px] w-[160px]" alt="Logo" />
+                                <Image priority src={data.header_logo} width={120} height={100}
+                                    className="" alt="Logo" />
                             </Link>
                         )}
                         {cateData?.slice(0, 3).map((category, index) => {
@@ -341,8 +341,8 @@ const Header = ({ ToggleLoginPopupFunc }) => {
                         <MenuMobile isMenuOpen={isMenuOpen} handleToggleMenu={handleToggleMenu} setShowLoginPopup={setShowLoginPopup} />
                         {data?.header_logo && (
                             <Link href="/">
-                                <Image priority src={data.header_logo} width={200} height={100}
-                                    className="!h-[30px] w-[160px]" alt="Logo" />
+                                <Image priority src={data.header_logo} width={120} height={20}
+                                    className="" alt="Logo" />
                             </Link>
                         )}
                         {cateData?.slice(0, 1).map((category, index) => {

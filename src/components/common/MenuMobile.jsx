@@ -138,9 +138,9 @@ export default function DropdownMenu({ isMenuOpen, setShowLoginPopup }) {
     });
   };
   // global class for each item in menu Link
-  const menuItemClass = "p-3 hover:bg-gray-100 cursor-pointer text-[18px] flex gap-2 items-center";
+  const menuItemClass = "p-3 hover:bg-gray-100 cursor-pointer text-[18px] flex gap-2 items-center ";
   return (
-    <div className={`fixed z-10 block md:hidden top-[50px] left-0 w-full bg-white shadow-lg rounded-lg overflow-hidden transition-all duration-300 ease-in-out ${isMenuOpen ? "min-h-[100vh] opacity-100 py-2" : "max-h-0 opacity-0 py-0"}`}>
+    <div className={`fixed z-10 block md:hidden top-[55px] left-0 w-full bg-white shadow-lg rounded-lg overflow-hidden transition-all duration-300 ease-in-out ${isMenuOpen ? "min-h-[100vh] opacity-100 py-2" : "max-h-0 opacity-0 py-0"}`}>
       <ul className="flex flex-col divide-y divide-gray-300 h-[70vh] overflow-auto ">
         <li className={menuItemClass}> <LuCamera /> {translatedData?.file_name?.buySell}</li>
         {userData && (

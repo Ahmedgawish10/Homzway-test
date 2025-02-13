@@ -18,7 +18,10 @@ body {
   font-family: var(--font-proxima-nova), sans-serif;
   /* height: 2000px; */
 }
-
+.header-logo{
+width: 100px;
+height: 20px;
+}
 /* media xsm */
 @media screen and (max-width: 350px) {
   .header-category {
