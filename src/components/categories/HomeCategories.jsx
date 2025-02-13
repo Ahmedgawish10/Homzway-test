@@ -30,7 +30,7 @@ const HomeCategories = () => {
                                 <img src={category.image} alt={category.name} className="w-12 h-12 object-cover rounded-[50%] " />
                                 {/* Category Name & Description */}
                                 <div className=" flex justify-center">
-                                    <span className=" sm:text-xl  text-start line-clamp-1 ">
+                                    <span className=" sm:text-[14px]  text-start line-clamp-1 ">
                                         {language === "en" ? category.name : category?.translations?.map((translation, i) => (
                                             <span key={i}>
                                                 {translation.name}
