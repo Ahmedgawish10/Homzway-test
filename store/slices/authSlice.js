@@ -1,5 +1,5 @@
 import { createSelector, createSlice } from "@reduxjs/toolkit";
-import { store } from "../store";  // Ensure this import path is correct
+import { store } from "@/store/store";  
 
 const initialState = {
     userData: null,
