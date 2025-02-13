@@ -208,7 +208,7 @@ const Header = ({ ToggleLoginPopupFunc }) => {
 
     return (
         <>
-            <header className="bg-white py-3 z-[5] sm:px-4 fixed top-0 w-full hidden sm:block ">
+            <header className=" header-lg  bg-white py-3 z-10 sm:px-4 fixed top-0 w-full  !sm:block ">
                 <div className="mx-auto container px-3 sm:px-0 ">
                     {/* header one overlay */}
                     <div className="overlay-header flex gap-3 items-center pb-3 ">
@@ -246,24 +246,25 @@ const Header = ({ ToggleLoginPopupFunc }) => {
                     {/* main header  */}
                     <div className="flex gap-3  items-center justify-between">
                         {/* location user comp */}
-                        <div className="location flex-[0.5]  ">
+                        <div className="location" style={{flex:"0.5"}}>
                             <LocationComp />
                         </div>
                         {/* search */}
-                        <div className="flex-1  ">
+                        <div className="flex-1">
                             <div className="relative">
                                 <form action="" >
-                                    <input className="w-full bg-transparent placeholder:text-[17px] md:placeholder:text-xl placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md pl-3 pr-28 py-3 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
+                                    <input className="w-full search-input-item bg-transparent placeholder:text-[17px] md:placeholder:text-xl placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md pl-3 pr-28 py-3 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
                                         placeholder={t('searchItem')} />
-                                    <button className="absolute h-full top-0  right-[1px] flex items-center rounded bg-red-600 py-1 px-3 border border-transparent text-center text-sm text-white transition-all shadow-sm hover:shadow focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                                    <button className="search-button"
                                         type="submit" >
                                         <IoSearchOutline className='text-2xl' />
                                     </button>
                                 </form>
                             </div>
                         </div>
+
                         {/* language & auth(login||user) */}
-                        <div className="flex md:items-center justify-between md:justify-end items-center md:gap-2 flex-1 md:flex-none">
+                        <div className="flex md:items-center justify-between md:justify-end items-center md:gap-2  md:flex-none">
                             <nav aria-label="Global" className="">
                                 <ul className="flex items-center gap-2 text-sm">
                                     <li className=''>
@@ -283,16 +284,19 @@ const Header = ({ ToggleLoginPopupFunc }) => {
                                 </ul>
                             </nav>
                             {/* Sell */}
+
                             <div className=" md:relative flex  gap-2">
-                                <div className="Sell">
-                                    <span onClick={TooglePoupSell} className="group cursor-pointer relative inline-flex transition-all hover:bg-red-500 items-center overflow-hidden rounded-[7px] bg-red-600 px-8 py-2.5 text-white focus:ring-3 focus:outline-hidden" >
-                                        <span className="text-xl font-medium ">{translatedData?.file_name?.selling}  </span>
-                                    </span>
+                                <div className="sell">
+                                    <button onClick={TooglePoupSell} className="sell-button">
+                                        <span className="text-xl font-medium">
+                                            {translatedData?.file_name?.selling}
+                                        </span>
+                                    </button>
                                 </div>
                                 {userData && (
                                     <div className="profile order-[-2]">
-                                        <div className="profile-img h-full w-[20px] flex items-center cursor-pointer "   onClick={TooglePoupProfile}>
-                                                    <CgProfile  className=" text-3xl !w-[180px] !h-[180px] " style={{fontSize:"50px"}} />
+                                        <div className="profile-img h-full w-[20px] flex items-center cursor-pointer " onClick={TooglePoupProfile}>
+                                            <CgProfile className=" text-3xl !w-[180px] !h-[180px] " style={{ fontSize: "50px" }} />
                                         </div>
 
                                         {isProfileOpen && (
@@ -373,14 +377,12 @@ const Header = ({ ToggleLoginPopupFunc }) => {
                     <div className={`flex-1 mt-3  rounded-md ${isPageScrolled ? " w-[90%] fixed left-1/2 transform -translate-x-1/2 container mx-auto" : ""} top-0 bg-white z-50 shadow-md`}>
                         <div className="relative container mx-auto ">
                             <input
-                                className="w-full bg-transparent placeholder:text-[18px] placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md pl-3 pr-28 py-4 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
+                                className="w-full bg-transparent search-input-item placeholder:text-[18px] placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md pl-3 pr-28 py-4 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
                                 placeholder={t('searchItem')}
                             />
-                            <button
-                                className="absolute h-full top-0 right-[1px] flex items-center rounded bg-red-600 py-1 px-3 border border-transparent text-center text-sm text-white transition-all shadow-sm hover:shadow focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-                                type="button"
-                            >
-                                <IoSearchOutline className="text-2xl" />
+                            <button className="search-button"
+                                type="submit" >
+                                <IoSearchOutline className='text-2xl' />
                             </button>
                         </div>
                     </div>
@@ -393,17 +395,3 @@ const Header = ({ ToggleLoginPopupFunc }) => {
     )
 }
 export default Header
-
-
-
-
-
-
-
-
-
-
-
-
-
-
