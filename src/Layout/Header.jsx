@@ -215,7 +215,7 @@ const Header = ({ ToggleLoginPopupFunc }) => {
                         {data?.header_logo && (
                             <Link href="/">
                                 <Image priority src={data.header_logo} width={200} height={100}
-                                    className="!h-[30px] w-[160px]" alt="Logo" />
+                                    className=" !h-[20px] w-[160px]" alt="Logo" />
                             </Link>
                         )}
                         {cateData?.slice(0, 3).map((category, index) => {
@@ -342,7 +342,7 @@ const Header = ({ ToggleLoginPopupFunc }) => {
                         {data?.header_logo && (
                             <Link href="/">
                                 <Image priority src={data.header_logo} width={200} height={100}
-                                    className="!h-[30px] w-[160px]" alt="Logo" />
+                                    className="!h-[17px] w-[120px]" alt="Logo" />
                             </Link>
                         )}
                         {cateData?.slice(0, 1).map((category, index) => {
