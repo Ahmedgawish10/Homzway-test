@@ -30,7 +30,7 @@ const HomeCategories = () => {
                                 <img src={category.image} alt={category.name} className="w-12 h-12 object-cover rounded-[50%] " />
                                 {/* Category Name & Description */}
                                 <div className=" flex justify-center">
-                                    <span className=" sm:text-[14px]  text-start line-clamp-1 ">
+                                    <span className=" sm:text-xl  text-start line-clamp-1 ">
                                         {language === "en" ? category.name : category?.translations?.map((translation, i) => (
                                             <span key={i}>
                                                 {translation.name}
@@ -43,7 +43,7 @@ const HomeCategories = () => {
                             {/* all sub categories */}
                             <div className="box-cat flex items-center gap-3 ">
                                 <div className=" flex justify-center">
-                                    <span className=" group sm:text-xl flex gap-2 items-center  text-start line-clamp-1  text-red-600 ">
+                                    <span className=" group sm:text-[16px] flex gap-2 items-center  text-start line-clamp-1  text-red-600 ">
                                     {language === "en" ? <span >{category.name}</span> : category?.translations?.map((translation, i) => (
                                             <span className="flex gap-2 items-center" key={i}>
                                                 {translatedData?.file_name?.allItems} {language == "en" ? "in" : "في"}   {translation.name}
