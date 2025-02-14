@@ -192,6 +192,8 @@ const Header = ({ ToggleLoginPopupFunc }) => {
                 router.push('/')
                 saveOfferData([]);
                 toast.success(t('signOutSuccess'));
+                console.log("fffffffffffffffffffffff");
+                
             } else {
                 // toast.error(t('signOutCancelled'));
             }
@@ -218,7 +220,7 @@ const Header = ({ ToggleLoginPopupFunc }) => {
                                     className="" alt="Logo" />
                             </Link>
                         )}
-                        {cateData?.slice(0, 3).map((category, index) => {
+                        {cateData?.slice(0,3).map((category, index) => {
                             return (
                                 <div key={index} className=" header-category group relative flex gap-x-2 rounded-lg  hover:bg-gray-50">
                                     <div className="mt-1 flex size-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
@@ -253,7 +255,7 @@ const Header = ({ ToggleLoginPopupFunc }) => {
                         <div className="flex-1">
                             <div className="relative">
                                 <form action="" >
-                                    <input className="w-full search-input-item bg-transparent placeholder:text-[17px] md:placeholder:text-xl placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md pl-3 pr-28 py-3 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
+                                    <input className={`${isRtl?"custom-padding":"custom-padding"} search-input-item w-full   bg-transparent placeholder:text-[17px] md:placeholder:text-xl placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow" `} 
                                         placeholder={t('searchItem')} />
                                     <button className="search-button"
                                         type="submit" >
@@ -287,7 +289,7 @@ const Header = ({ ToggleLoginPopupFunc }) => {
 
                             <div className=" md:relative flex  gap-2">
                                 <div className="sell">
-                                    <button onClick={TooglePoupSell} className="sell-button">
+                                    <button onClick={TooglePoupSell} className="sell-button py-2    ">
                                         <span className="text-xl font-medium ">
                                             {translatedData?.file_name?.selling}
                                         </span>
@@ -377,7 +379,7 @@ const Header = ({ ToggleLoginPopupFunc }) => {
                     <div className={`flex-1 mt-3  rounded-md ${isPageScrolled ? "  fixed  w-[90%]  container mx-auto" : ""} top-0 bg-white z-50 shadow-md`}>
                         <div className={`relative container mx-auto  ${isPageScrolled ? " px-5  container":""} `}>
                             <input
-                                className="w-full bg-transparent search-input-item placeholder:text-[18px] placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md pl-3 pr-28 py-4 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
+                                className="search-input-item w-full pl-3 pr-28 py-3 bg-transparent  placeholder:text-[18px] placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md  transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
                                 placeholder={t('searchItem')}
                             />
                             <button className="search-button"

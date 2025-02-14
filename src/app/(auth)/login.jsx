@@ -60,10 +60,10 @@ const LoginPopup = ({ onClose }) => {
     }
     // handle Login to homzway
     const Login = async (e) => {
-        setShowLoader(true)
         e.preventDefault();
         if (!validateForm({ email, password, isLogin: "true" }, t)) return;
         try {
+            setShowLoader(true)
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
             if (!user) {
@@ -73,6 +73,7 @@ const LoginPopup = ({ onClose }) => {
             console.log("User Credential:", userCredential);
             console.log("Email Verified:", user.emailVerified);
             if (user.emailVerified) {
+                
                 try {
                     const response = await userSignUpApi.userSignup({
                         name: user?.displayName || "",

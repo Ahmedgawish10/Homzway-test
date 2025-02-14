@@ -129,7 +129,7 @@ export default function DropdownMenu({ isMenuOpen, setShowLoginPopup }) {
       if (result.isConfirmed) {
         signOut()
         dispatch(userLogout(null))
-        // router.push('/')
+         router.push('/')
         saveOfferData([]);
         toast.success(t('signOutSuccess'));
       } else {

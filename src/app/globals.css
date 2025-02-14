@@ -113,9 +113,11 @@ height: 20px;
   box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.5); 
 }
 /* custom search nutton  */
-.search-input-item{
-  padding: 15px 60px;
-
+.custom-padding{
+  padding: 12px 20px
+}
+.custom-padding{
+  padding: 12px 60px 12px 0px
 }
 .search-button {
   position: absolute;

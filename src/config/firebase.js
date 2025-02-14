@@ -41,7 +41,7 @@ const FirebaseData = () => {
       return null;
     }
   };
-  const fetchToken = async (setFcmToken) => {
+  const fetchToken = async (setFcmToken) => {    
     try {
       if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
         const messaging = await messagingInstance();

@@ -13,7 +13,8 @@ import { fetchSystemSettings } from '@/store/slices/settingSlice.js';
 import { useIsRtl } from '@/utils/index.jsx';
 import {fetchDefaultLanguage} from "@/store/slices/languageSlice.js"
 const PushNotificationLayout = dynamic( () => import('../components/firebaseNotification/PushNotificationLayout.jsx'), { ssr: false });
-import { setUserVerfied } from '@/store/slices/authSlice.js';
+import Footer from "@/components/common/Footer.jsx"
+
 const Layout = ({ children }) => {
   const pathname = usePathname();
   const router = useRouter();
@@ -27,65 +28,57 @@ const Layout = ({ children }) => {
   const [isAuthChecked, setIsAuthChecked] = useState(false);
   const { language, translatedData } = useSelector((state) => state.Language);
   const {userVerfied,userData} = useSelector((state) => state.Auth)
-  
 
-  //check if user looged in and is verfied or not ?
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {      
-      if (user && user.emailVerified && userData )  {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user && user.emailVerified && userData) {
         setUserIsVerified(true);
-        dispatch(setUserVerfied(user));
-        console.log("user is Verified",user.emailVerified)
+        dispatch(setUserVerfied(user));        
       } else {
         setUserIsVerified(false);
       }
-      setIsAuthChecked(true)
+      setIsAuthChecked(true);
       setIsLoading(false);
     });
+
     return () => unsubscribe();
-  }, [auth]);
-  //check the protected routes and status of user
+  }, [auth, dispatch, userData]);
+
   useEffect(() => {
-    if (isAuthChecked) {
-      if (isProtectedRoute && !isUserVerified && !userData ) {
-        setShowLoginPopup(true);
-      } else {
-        setShowLoginPopup(false);
-      }
+    if (isAuthChecked && isProtectedRoute && isUserVerified === false) {
+      setShowLoginPopup(true);
     }
   }, [isProtectedRoute, isUserVerified, isAuthChecked]);
-  //direction of pages (rtl||ltr)
-  useEffect(() => {
-    if (isRtl) {
-      document.documentElement.dir = "rtl";
-    } else {
-      document.documentElement.dir = "ltr";
-    }
-  }, [language]);
-  //  if there is no language get the default language from sysytem 
-  useEffect(() => {
-    if (translatedData ==null) {
-      dispatch(fetchSystemSettings()).then((res) => {
-      dispatch(fetchDefaultLanguage(res.payload?.default_language));
-      });
-    }
-  }, [dispatch ]);
 
-  if (isLoading) {
+//direction of pages (rtl||ltr)
+useEffect(() => {
+    document.documentElement.dir = isRtl?"rtl":"ltr";
+}, [language]);
+//  if there is no language get the default language from sysytem 
+useEffect(() => {
+  if (!translatedData) {
+    dispatch(fetchSystemSettings()).then((res) => {
+    dispatch(fetchDefaultLanguage(res.payload?.default_language));
+    });
+  }
+}, [dispatch ]);
+
+  const handleClosePopup = () => {
+    setShowLoginPopup(false);
+    router.replace("/"); 
+  };
+
+  if (!isAuthChecked || isLoading) {
     return <Loader />;
   }
 
   return (
-    <>
-      {isAuthChecked && showLoginPopup ? (
-        <LoginPopup onClose={() => setShowLoginPopup(false)} />
-      ) : (
-        <PushNotificationLayout>
-          <LayoutHeader />
-          {children}
-        </PushNotificationLayout>
-      )}
-    </>
+    <PushNotificationLayout>
+      {!isProtectedRoute || isUserVerified ? <LayoutHeader /> : null}
+      {isProtectedRoute && isUserVerified === false && showLoginPopup && (<LoginPopup onClose={handleClosePopup}/> )}
+      {!isProtectedRoute || isUserVerified ? <main>{children}</main> : null}
+      {!isProtectedRoute || isUserVerified ? <Footer /> : null}
+    </PushNotificationLayout>
   );
 };
 

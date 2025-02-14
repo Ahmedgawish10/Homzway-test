@@ -3,7 +3,6 @@ import { StoreProvider } from "../../store/StoreProvider";
 import localFont from "next/font/local";
 import { Toaster } from "react-hot-toast";
 import Head from "next/head";
-import Footer from "@/components/common/Footer.jsx";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./globals.css";
@@ -50,7 +49,6 @@ export default async function RootLayout({ children }) {
         <StoreProvider>
           <Toaster position="top-center" reverseOrder={false} />
           {children}
-          <Footer />
           
         </StoreProvider>
       </body>
