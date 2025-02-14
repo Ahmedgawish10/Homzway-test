@@ -76,7 +76,7 @@ useEffect(() => {
     <PushNotificationLayout>
       {!isProtectedRoute || isUserVerified ? <LayoutHeader /> : null}
       {isProtectedRoute && isUserVerified === false && showLoginPopup && (<LoginPopup onClose={handleClosePopup}/> )}
-      {!isProtectedRoute || isUserVerified ? <main>{children}</main> : null}
+      {!isProtectedRoute || isUserVerified ? <main className='flex-1'>{children}</main> : null}
       {!isProtectedRoute || isUserVerified ? <Footer /> : null}
     </PushNotificationLayout>
   );

@@ -139,7 +139,7 @@ const PushNotificationLayout = ({ children, onNotificationReceived, setActiveTab
   }, [defaultSelected])
 
   return (
-    <div className="flex-1 ">{React.isValidElement(children) ? React.cloneElement(children, { notification }) : children}</div>
+    <div className="flex flex-col min-h-screen ">{React.isValidElement(children) ? React.cloneElement(children, { notification }) : children}</div>
   );
 }
 
