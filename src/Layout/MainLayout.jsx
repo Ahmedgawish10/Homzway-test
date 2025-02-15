@@ -14,6 +14,7 @@ import { useIsRtl } from '@/utils/index.jsx';
 import {fetchDefaultLanguage} from "@/store/slices/languageSlice.js"
 const PushNotificationLayout = dynamic( () => import('../components/firebaseNotification/PushNotificationLayout.jsx'), { ssr: false });
 import Footer from "@/components/common/Footer.jsx"
+import { setUserVerfied } from '@/store/slices/authSlice.js';
 
 const Layout = ({ children }) => {
   const pathname = usePathname();
